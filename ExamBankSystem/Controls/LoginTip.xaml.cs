@@ -43,7 +43,9 @@ namespace ExamBankSystem.Controls
         {
             LoginTeachingTip.IsOpen = false;
         }
-
+        /// <summary>
+        /// 点击登录
+        /// </summary>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(User.Text))
@@ -84,7 +86,8 @@ namespace ExamBankSystem.Controls
                     ResourcesHelper.GetString(ResourceKey.LoginSuccess),
                     InfoBarSeverity.Success
                     );
-                CurrentData.CurrentUser = user;
+                DbHelper.UpdateUserLoginTime(user.Name);
+                CurrentData.CurrentUser = DbHelper.GetUser(User.Text);
                 Hide();
                 EventHelper.InvokeLoginEvent(this);
             }

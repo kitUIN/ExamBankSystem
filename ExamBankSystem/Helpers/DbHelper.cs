@@ -146,7 +146,8 @@ namespace ExamBankSystem.Helpers
         }
 
         #endregion
-        
+
+        #region User
         /// <summary>
         /// 从数据库中获取用户
         /// </summary>
@@ -156,7 +157,7 @@ namespace ExamBankSystem.Helpers
             using (var db = new SqliteConnection($"Filename={_dbpath}"))
             {
                 db.Open();
-                SqliteCommand selectCommand = db.CreateCommand();
+                var selectCommand = db.CreateCommand();
                 selectCommand.CommandText = $"SELECT * FROM {DbTableName.Users} WHERE user = @user;";
                 selectCommand.Parameters.AddWithValue("@user", user);
 
@@ -164,12 +165,7 @@ namespace ExamBankSystem.Helpers
 
                 while (query.Read())
                 {
-                    return new User
-                    {
-                        Name= query.GetString(0),
-                        Password= query.GetString(1),
-                        Role= query.GetString(2)
-                    };
+                    return User.FromDb(query);
                 }
             }
             return null;
@@ -183,7 +179,7 @@ namespace ExamBankSystem.Helpers
             {
                 db.Open();
 
-                SqliteCommand insertCommand = db.CreateCommand();
+                var insertCommand = db.CreateCommand();
                 insertCommand.CommandText = $"INSERT INTO {DbTableName.Users} VALUES (@User, @Password, @Role);";
                 insertCommand.Parameters.AddWithValue("@User", user.Name);
                 insertCommand.Parameters.AddWithValue("@Password", user.Password);
@@ -192,5 +188,80 @@ namespace ExamBankSystem.Helpers
                 insertCommand.ExecuteReader();
             }
         }
+        /// <summary>
+        /// 更新用户登录时间
+        /// </summary>
+        public static void UpdateUserLoginTime(string userName)
+        {
+            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            {
+                db.Open();
+
+                var insertCommand = db.CreateCommand();
+                insertCommand.CommandText = $"UPDATE {DbTableName.Users} SET lastLoginTime = @loginTime WHERE user = @user;";
+                insertCommand.Parameters.AddWithValue("@loginTime", DateTimeHelper.GetTimeStamp());
+                insertCommand.Parameters.AddWithValue("@user", userName);
+                insertCommand.ExecuteReader();
+            }
+        }
+        #endregion
+
+        #region ExamSubject
+        /// <summary>
+        /// 从数据库中获取考试科目
+        /// </summary>
+        public static ExamSubject GetExamSubject(string name)
+        {
+            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            {
+                db.Open();
+                var selectCommand = db.CreateCommand();
+                selectCommand.CommandText = $"SELECT * FROM {DbTableName.ExamSubjects} WHERE subject = @Name;";
+                selectCommand.Parameters.AddWithValue("@Name", name);
+
+                var query = selectCommand.ExecuteReader();
+
+                while (query.Read())
+                {
+                    return ExamSubject.FromDb(query);
+                }
+            }
+            return null;
+        }
+        /// <summary>
+        /// 插入考试科目到数据库中
+        /// </summary>
+        public static void InsertExamSubject(ExamSubject subject)
+        {
+            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            {
+                db.Open();
+
+                var insertCommand = db.CreateCommand();
+                insertCommand.CommandText = $"INSERT INTO {DbTableName.ExamSubjects} VALUES (@Name, @CreateTime, @UpdateTime);";
+                insertCommand.Parameters.AddWithValue("@Name", subject.Name);
+                var t = DateTimeHelper.GetTimeStamp();
+                insertCommand.Parameters.AddWithValue("@CreateTime", t);
+                insertCommand.Parameters.AddWithValue("@UpdateTime",t);
+                insertCommand.ExecuteReader();
+            }
+        }
+        /// <summary>
+        /// 更新用户登录时间
+        /// </summary>
+        public static void UpdateExamSubjectName(string newName,string oldName)
+        {
+            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            {
+                db.Open();
+
+                var insertCommand = db.CreateCommand();
+                insertCommand.CommandText = $"UPDATE {DbTableName.ExamSubjects} SET subject = @Name WHERE subject = @OldName;";
+                insertCommand.Parameters.AddWithValue("@loginTime", DateTimeHelper.GetTimeStamp());
+                insertCommand.Parameters.AddWithValue("@user", userName);
+                insertCommand.ExecuteReader();
+            }
+        }
+        #endregion
     }
 }

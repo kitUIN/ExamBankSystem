@@ -32,9 +32,10 @@
                     </Grid.RowDefinitions>
                     <TextBlock
                         Grid.Row="0"
+                        Margin="0,0,0,20"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        FontSize="29"
+                        FontSize="20"
                         Text="{ex:Locale Key=ExamBankSystem}" />
                     <Grid Grid.Row="1" ColumnSpacing="10">
                         <Grid.ColumnDefinitions>

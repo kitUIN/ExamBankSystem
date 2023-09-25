@@ -1,6 +1,7 @@
 ﻿using ExamBankSystem.Enums;
 using ExamBankSystem.Helpers;
 using ExamBankSystem.Models;
+using ExamBankSystem.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,7 +35,7 @@ namespace ExamBankSystem.ViewModels
             FootItems.Add(new Category()
             {
                 Name = ResourcesHelper.GetString(ResourceKey.Login),
-                Tag = "Login",
+                Tag = CategoryTag.Login,
                 Icon =  new FontIcon() { Glyph = "\uE77B" }
             });
         }
@@ -47,28 +48,43 @@ namespace ExamBankSystem.ViewModels
             MenuItems.Clear();
             MenuItems.Add(new Category()
             {
-                Name = ResourcesHelper.GetString(ResourceKey.ExamSubjects),
-                Tag = "ExamSubjects",
-                Icon = new FontIcon() { Glyph = "\uEA41" }
-            });
-            MenuItems.Add(new Category()
-            {
-                Name = ResourcesHelper.GetString(ResourceKey.KnowledgePoints),
-                Tag = "KnowledgePoints",
-                Icon = new FontIcon() { Glyph = "\uE70B" }
-            });
-            MenuItems.Add(new Category()
-            {
-                Name = ResourcesHelper.GetString(ResourceKey.Questions),
-                Tag = "Questions",
-                Icon = new FontIcon() { Glyph = "\uE721" }
-            });
-            MenuItems.Add(new Category()
-            {
                 Name = ResourcesHelper.GetString(ResourceKey.TestPapers),
-                Tag = "TestPapers",
+                Tag = CategoryTag.TestPaper,
                 Icon = new FontIcon() { Glyph = "\uE82D" }
             });
+            FootItems.Add(new Category()
+            {
+                Name = CurrentData.CurrentUser.Name,
+                Tag = CategoryTag.User,
+                Icon = new FontIcon() { Glyph = "\uE77B" }
+            });
+            if (CurrentData.CurrentUser.Role == UserRole.Admin)
+            {
+                MenuItems.Add(new Category()
+                {
+                    Name = ResourcesHelper.GetString(ResourceKey.ExamSubjects),
+                    Tag = CategoryTag.ExamSubject,
+                    Icon = new FontIcon() { Glyph = "\uEA41" }
+                });
+                MenuItems.Add(new Category()
+                {
+                    Name = ResourcesHelper.GetString(ResourceKey.KnowledgePoints),
+                    Tag = CategoryTag.KnowledgePoint,
+                    Icon = new FontIcon() { Glyph = "\uE70B" }
+                });
+                MenuItems.Add(new Category()
+                {
+                    Name = ResourcesHelper.GetString(ResourceKey.Questions),
+                    Tag = CategoryTag.Question,
+                    Icon = new FontIcon() { Glyph = "\uE721" }
+                });
+                MenuItems.Add(new Category()
+                {
+                    Name = ResourcesHelper.GetString(ResourceKey.UserManager),
+                    Tag = CategoryTag.UserManager,
+                    Icon = new FontIcon() { Glyph = "\uE779" }
+                });
+            }
         }
 
     }

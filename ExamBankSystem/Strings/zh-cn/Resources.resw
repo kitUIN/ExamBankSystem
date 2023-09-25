@@ -159,4 +159,7 @@
   <data name="TestPapers" xml:space="preserve">
     <value>试卷</value>
   </data>
+  <data name="UserManager" xml:space="preserve">
+    <value>用户管理</value>
+  </data>
 </root>

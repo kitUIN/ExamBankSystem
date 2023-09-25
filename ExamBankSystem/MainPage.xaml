@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:ExamBankSystem.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="using:ExamBankSystem.Extensions"
     xmlns:local="using:ExamBankSystem"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:ExamBankSystem.Models"
@@ -22,12 +23,11 @@
             <Grid
                 x:Name="AppTitleBar"
                 Grid.Row="0"
-                Margin="32,0,0,0"
                 Background="Transparent">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition x:Name="LeftPaddingColumn" Width="0" />
+                    <ColumnDefinition x:Name="LeftPaddingColumn" Width="Auto" />
                     <ColumnDefinition />
-                    <ColumnDefinition x:Name="RightPaddingColumn" Width="0" />
+                    <ColumnDefinition x:Name="RightPaddingColumn" Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Image
                     Grid.Column="1"
@@ -41,8 +41,8 @@
                     Grid.Column="1"
                     Margin="28,0,0,0"
                     VerticalAlignment="Center"
-                    Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="App title" />
+                    Style="{ThemeResource CaptionTextBlockStyle}"
+                    Text="{ex:Locale Key=ExamBankSystem}" />
             </Grid>
             <muxc:NavigationView
                 Grid.Row="1"
@@ -65,7 +65,7 @@
                             Tag="{x:Bind Tag}" />
                     </DataTemplate>
                 </muxc:NavigationView.MenuItemTemplate>
-
+                <Frame x:Name="ContentFrame" />
             </muxc:NavigationView>
         </Grid>
 

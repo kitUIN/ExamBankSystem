@@ -4,6 +4,7 @@ using ExamBankSystem.Enums;
 using ExamBankSystem.Helpers;
 using ExamBankSystem.Models;
 using ExamBankSystem.ViewModels;
+using ExamBankSystem.Views;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -51,15 +52,28 @@ namespace ExamBankSystem
         {
             LoginTip.Open();
         }
-
+        /// <summary>
+        /// 点击左侧的导航项
+        /// </summary>
         private void NavigationView_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
         {
-            if(args.InvokedItemContainer is NavigationViewItem  item && item.Tag is string tag)
+            if(args.InvokedItemContainer is NavigationViewItem  item && item.Tag is CategoryTag tag)
             {
                 switch (tag)
                 {
-                    case "Login":
+                    case CategoryTag.Login:
                         LoginTip.Open();
+                        break;
+                    case CategoryTag.ExamSubject:
+                        ContentFrame.Navigate(typeof(ExamSubjectView));
+                        break;
+                    case CategoryTag.User:
+                        break;
+                    case CategoryTag.KnowledgePoint:
+                        break;
+                    case CategoryTag.Question:
+                        break;
+                    case CategoryTag.QuestionPaper:
                         break;
                 }
             }

@@ -19,5 +19,6 @@
         ExamSubjects,
         Questions,
         TestPapers,
+        UserManager,
     }
 }
