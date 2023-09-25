@@ -25,19 +25,9 @@
                     RowSpacing="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBlock
-                        Grid.Row="0"
-                        Margin="0,0,0,15"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        FontSize="20"
-                        Text="{ex:Locale Key=ExamBankSystem}" />
-                    <Grid Grid.Row="1" ColumnSpacing="10">
+                    <Grid Grid.Row="1" ColumnSpacing="15">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -45,30 +35,12 @@
                         <TextBlock
                             Grid.Column="0"
                             VerticalAlignment="Center"
-                            Text="{ex:Locale Key=User}" />
-                        <TextBox x:Name="User" Grid.Column="1" />
+                            Text="{ex:Locale Key=ExamSubjects}" />
+                        <TextBox x:Name="ExamSubject" Grid.Column="1" />
                     </Grid>
-                    <Grid Grid.Row="2" ColumnSpacing="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock
-                            Grid.Column="0"
-                            VerticalAlignment="Center"
-                            Text="{ex:Locale Key=Password}" />
-                        <PasswordBox
-                            x:Name="Password"
-                            Grid.Column="1"
-                            KeyDown="Password_KeyDown" />
-                    </Grid>
-                    <CheckBox
-                        x:Name="Remember"
-                        Grid.Row="3"
-                        Content="{ex:Locale Key=RememberMe}" />
                     <Button
-                        Grid.Row="4"
-                        HorizontalAlignment="Stretch"
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
                         Click="Button_Click"
                         Content="{ex:Locale Key=Login}" />
                 </Grid>

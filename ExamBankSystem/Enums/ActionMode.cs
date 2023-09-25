@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace ExamBankSystem.Enums
 {
-    public enum ExamSubjectTipMode
+    public enum ActionMode
     {
+        Show,
+        Hide,
         Add,
         Edit,
         Delete,

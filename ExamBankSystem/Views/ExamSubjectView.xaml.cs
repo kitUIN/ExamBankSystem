@@ -1,4 +1,7 @@
-﻿using ExamBankSystem.ViewModels;
+﻿using ExamBankSystem.Args;
+using ExamBankSystem.Enums;
+using ExamBankSystem.Helpers;
+using ExamBankSystem.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +17,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-
 namespace ExamBankSystem.Views
 {
     /// <summary>
@@ -27,6 +29,26 @@ namespace ExamBankSystem.Views
         {
             this.InitializeComponent(); 
         }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            ViewModel.ActionEvent += ViewModel_ActionEvent;
+        }
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            ViewModel.ActionEvent -= ViewModel_ActionEvent;
+        }
+        private void ViewModel_ActionEvent(object sender, ActionEventArg e)
+        {
+            if(e.ActionMode == ActionMode.Show)
+            {
+                ExamSubjectTip.Open();
+            }
+            else if(e.ActionMode == ActionMode.Hide)
+            {
+                ExamSubjectTip.Hide();
+            }
+        }
+
         /// <summary>
         /// 列表选择变化响应
         /// </summary>

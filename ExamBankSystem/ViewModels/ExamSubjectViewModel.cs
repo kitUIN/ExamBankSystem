@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ExamBankSystem.Args;
 using ExamBankSystem.Helpers;
 using ExamBankSystem.Models;
 using System;
@@ -14,6 +15,10 @@ namespace ExamBankSystem.ViewModels
 {
     public partial class ExamSubjectViewModel: ObservableObject
     {
+        /// <summary>
+        /// 操作事件
+        /// </summary>
+        public event EventHandler<ActionEventArg> ActionEvent;
         [ObservableProperty]
         private bool canEdit = false;
         [ObservableProperty]

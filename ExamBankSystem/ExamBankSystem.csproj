@@ -120,7 +120,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Args\ActionEventArg.cs" />
     <Compile Include="Args\TopGridEventArg.cs" />
+    <Compile Include="Controls\ExamSubjectTip.xaml.cs">
+      <DependentUpon>ExamSubjectTip.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LoginTip.xaml.cs">
       <DependentUpon>LoginTip.xaml</DependentUpon>
     </Compile>
@@ -130,7 +134,7 @@
     <Compile Include="Enums\CategoryTag.cs" />
     <Compile Include="Enums\ConfigKey.cs" />
     <Compile Include="Enums\DbTableName.cs" />
-    <Compile Include="Enums\ExamSubjectTipMode.cs" />
+    <Compile Include="Enums\ActionMode.cs" />
     <Compile Include="Enums\UserRole.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Helpers\DateTimeHelper.cs" />
@@ -181,6 +185,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\ExamSubjectTip.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\LoginTip.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

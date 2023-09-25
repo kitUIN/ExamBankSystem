@@ -37,13 +37,13 @@
         </CommandBar>
         <Grid
             Grid.Row="1"
-            Padding="10,0"
+            Padding="15,0,15,0"
             VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="140" />
+                <ColumnDefinition Width="150" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="150" />
-                <ColumnDefinition Width="140" />
+                <ColumnDefinition Width="150" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="{ex:Locale Key=KnowledgePoints}" />
             <TextBlock Grid.Column="1" Text="{ex:Locale Key=Content}" />

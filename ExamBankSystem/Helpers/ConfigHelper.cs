@@ -10,11 +10,11 @@ namespace ExamBankSystem.Helpers
     {
         public static void Init()
         {
-            if (Contains(ConfigKey.LastUserName))
+            if (!Contains(ConfigKey.LastUserName))
             {
                 Set(ConfigKey.LastUserName, "");
             }
-            if (Contains(ConfigKey.LastUserPassword))
+            if (!Contains(ConfigKey.LastUserPassword))
             {
                 Set(ConfigKey.LastUserPassword, "");
             }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ExamBankSystem.Enums;
+using ExamBankSystem.Helpers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,6 +22,21 @@ namespace ExamBankSystem.Controls
         public ExamSubjectTip()
         {
             this.InitializeComponent();
+        }
+        /// <summary>
+        /// 显示
+        /// </summary>
+        public void Open()
+        {
+            AddTeachingTip.IsOpen = true;
+
+        }
+        /// <summary>
+        /// 隐藏
+        /// </summary>
+        public void Hide()
+        {
+            AddTeachingTip.IsOpen = false;
         }
     }
 }
