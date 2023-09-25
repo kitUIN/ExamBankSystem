@@ -69,12 +69,20 @@ namespace ExamBankSystem
                         break;
                     case CategoryTag.User:
                         break;
+                    case CategoryTag.UserManager:
+                        ContentFrame.Navigate(typeof(UserManagerView));
+                        break;
                     case CategoryTag.KnowledgePoint:
                         ContentFrame.Navigate(typeof(KnowledgePointView));
                         break;
                     case CategoryTag.Question:
+                        ContentFrame.Navigate(typeof(QuestionView));
                         break;
                     case CategoryTag.QuestionPaper:
+                        // ContentFrame.Navigate(typeof(KnowledgePointView));
+                        break;
+                    case CategoryTag.TestPaper:
+                        ContentFrame.Navigate(typeof(TestPaperView));
                         break;
                 }
             }

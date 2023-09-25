@@ -157,11 +157,21 @@
     <Compile Include="ViewModels\ExamSubjectViewModel.cs" />
     <Compile Include="ViewModels\KnowledgePointViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\UserManagerViewModel.cs" />
     <Compile Include="Views\ExamSubjectView.xaml.cs">
       <DependentUpon>ExamSubjectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\KnowledgePointView.xaml.cs">
       <DependentUpon>KnowledgePointView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\QuestionView.xaml.cs">
+      <DependentUpon>QuestionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TestPaperView.xaml.cs">
+      <DependentUpon>TestPaperView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserManagerView.xaml.cs">
+      <DependentUpon>UserManagerView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +218,18 @@
     <Page Include="Views\KnowledgePointView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\QuestionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TestPaperView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserManagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

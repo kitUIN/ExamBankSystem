@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ExamBankSystem.Args;
+using ExamBankSystem.Helpers;
 using ExamBankSystem.Models;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,13 @@ namespace ExamBankSystem.ViewModels
         {
             CanEdit = count == 1;
             CanDelete = count > 0;
+        }
+        public KnowledgePointViewModel()
+        {
+            foreach (var item in DbHelper.GetKnowledgePoints())
+            {
+                KnowledgePoints.Add(item);
+            }
         }
         [RelayCommand]
         private void Edit()

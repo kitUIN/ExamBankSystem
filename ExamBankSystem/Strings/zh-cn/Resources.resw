@@ -180,4 +180,10 @@
   <data name="Content" xml:space="preserve">
     <value>内容</value>
   </data>
+  <data name="Submit" xml:space="preserve">
+    <value>提交</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>搜索</value>
+  </data>
 </root>

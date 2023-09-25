@@ -26,5 +26,7 @@
         Edit,
         Delete,
         Content,
+        Submit,
+        Search,
     }
 }

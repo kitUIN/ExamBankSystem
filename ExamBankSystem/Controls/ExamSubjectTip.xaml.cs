@@ -29,7 +29,6 @@ namespace ExamBankSystem.Controls
         public void Open()
         {
             AddTeachingTip.IsOpen = true;
-
         }
         /// <summary>
         /// 隐藏

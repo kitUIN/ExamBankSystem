@@ -17,26 +17,39 @@
                 <RowDefinition Height="32" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <CommandBar
-                Grid.Row="0"
-                Background="Transparent"
-                DefaultLabelPosition="Right"
-                IsOpen="False">
-                <AppBarButton
-                    Command="{x:Bind ViewModel.AddCommand}"
-                    Icon="Add"
-                    Label="{ex:Locale Key=Add}" />
-                <AppBarButton
-                    Command="{x:Bind ViewModel.EditCommand}"
-                    Icon="Edit"
-                    IsEnabled="{x:Bind ViewModel.CanEdit}"
-                    Label="{ex:Locale Key=Edit}" />
-                <AppBarButton
-                    Command="{x:Bind ViewModel.DeleteCommand}"
-                    Icon="Delete"
-                    IsEnabled="{x:Bind ViewModel.CanDelete}"
-                    Label="{ex:Locale Key=Delete}" />
-            </CommandBar>
+            <Grid Grid.Row="0" Padding="10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox
+                    Grid.Column="0"
+                    Height="32"
+                    MinWidth="200"
+                    MaxWidth="300"
+                    HorizontalAlignment="Left"
+                    PlaceholderText="{ex:Locale Key=Search}" />
+                <CommandBar
+                    Grid.Column="1"
+                    Background="Transparent"
+                    DefaultLabelPosition="Right"
+                    IsOpen="False">
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.AddCommand}"
+                        Icon="Add"
+                        Label="{ex:Locale Key=Add}" />
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.EditCommand}"
+                        Icon="Edit"
+                        IsEnabled="{x:Bind ViewModel.CanEdit, Mode=OneWay}"
+                        Label="{ex:Locale Key=Edit}" />
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.DeleteCommand}"
+                        Icon="Delete"
+                        IsEnabled="{x:Bind ViewModel.CanDelete, Mode=OneWay}"
+                        Label="{ex:Locale Key=Delete}" />
+                </CommandBar>
+            </Grid>
             <Grid
                 Grid.Row="1"
                 Padding="15,0,10,0"
