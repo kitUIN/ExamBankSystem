@@ -24,7 +24,7 @@ namespace ExamBankSystem.ViewModels
         public ObservableCollection<ExamSubject> ExamSubjects { get; set; } = new ObservableCollection<ExamSubject>();
         public ExamSubjectViewModel()
         {
-            foreach(var examSubject in DbHelper.GetExamSubject())
+            foreach(var examSubject in DbHelper.GetExamSubjects())
             {
                 ExamSubjects.Add(examSubject);
             }

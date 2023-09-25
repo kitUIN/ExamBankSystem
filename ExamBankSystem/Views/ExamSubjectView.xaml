@@ -28,13 +28,13 @@
             <AppBarButton
                 Command="{x:Bind ViewModel.EditCommand}"
                 Icon="Edit"
-                Label="{ex:Locale Key=Edit}"
-                Visibility="{x:Bind ViewModel.CanEdit}" />
+                IsEnabled="{x:Bind ViewModel.CanEdit}"
+                Label="{ex:Locale Key=Edit}" />
             <AppBarButton
                 Command="{x:Bind ViewModel.DeleteCommand}"
                 Icon="Delete"
-                Label="{ex:Locale Key=Delete}"
-                Visibility="{x:Bind ViewModel.CanDelete}" />
+                IsEnabled="{x:Bind ViewModel.CanDelete}"
+                Label="{ex:Locale Key=Delete}" />
         </CommandBar>
         <Grid
             Grid.Row="1"

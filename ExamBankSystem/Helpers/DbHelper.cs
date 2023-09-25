@@ -210,7 +210,7 @@ namespace ExamBankSystem.Helpers
         /// <summary>
         /// 从数据库中获取考试科目
         /// </summary>
-        public static List<ExamSubject> GetExamSubject()
+        public static List<ExamSubject> GetExamSubjects()
         {
             List<ExamSubject> res = new List<ExamSubject>(); 
             using (var db = new SqliteConnection($"Filename={_dbpath}"))
@@ -282,7 +282,7 @@ namespace ExamBankSystem.Helpers
             }
         }
         /// <summary>
-        /// 更新用户登录时间
+        /// 更新科目名称
         /// </summary>
         public static void UpdateExamSubjectName(string newName,string oldName)
         {
@@ -291,12 +291,110 @@ namespace ExamBankSystem.Helpers
                 db.Open();
 
                 var insertCommand = db.CreateCommand();
-                insertCommand.CommandText = $"UPDATE {DbTableName.ExamSubjects} SET subject = @Name WHERE subject = @oldName;";
+                insertCommand.CommandText = $"UPDATE {DbTableName.ExamSubjects} SET subject = @Name, updateTime = @UpdateTime WHERE subject = @oldName;";
                 insertCommand.Parameters.AddWithValue("@Name", newName);
+                insertCommand.Parameters.AddWithValue("@UpdateTime", DateTimeHelper.GetTimeStamp());
                 insertCommand.Parameters.AddWithValue("@oldName", oldName);
                 insertCommand.ExecuteReader();
             }
         }
+        #endregion
+
+        #region KnowledgePoint
+        /// <summary>
+        /// 从数据库中获取知识点
+        /// </summary>
+        public static List<KnowledgePoint> GetKnowledgePoints()
+        {
+            var res = new List<KnowledgePoint>();
+            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            {
+                db.Open();
+                var selectCommand = db.CreateCommand();
+                selectCommand.CommandText = $"SELECT * FROM {DbTableName.KnowledgePoints} ;";
+                var query = selectCommand.ExecuteReader();
+                while (query.Read())
+                {
+                    res.Add(KnowledgePoint.FromDb(query));
+                }
+            }
+            return res;
+        }
+        /// <summary>
+        /// 从数据库中获取知识点
+        /// </summary>
+        public static KnowledgePoint GetKnowledgePoint(string name)
+        {
+            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            {
+                db.Open();
+                var selectCommand = db.CreateCommand();
+                selectCommand.CommandText = $"SELECT * FROM {DbTableName.KnowledgePoints} WHERE name = @Name;";
+
+                selectCommand.Parameters.AddWithValue("@Name", name);
+
+                var query = selectCommand.ExecuteReader();
+
+                while (query.Read())
+                {
+                    return KnowledgePoint.FromDb(query);
+                }
+            }
+            return null;
+        }
+        /// <summary>
+        /// 插入考试科目到数据库中
+        /// </summary>
+        public static void InsertKnowledgePoint(KnowledgePoint instance)
+        {
+            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            {
+                db.Open();
+
+                var insertCommand = db.CreateCommand();
+                insertCommand.CommandText = $"INSERT INTO {DbTableName.KnowledgePoints} VALUES (@Name, @Content, @CreateTime, @UpdateTime);";
+                insertCommand.Parameters.AddWithValue("@Name", instance.Name);
+                var t = DateTimeHelper.GetTimeStamp();
+                insertCommand.Parameters.AddWithValue("@Content", instance.Knowledge);
+                insertCommand.Parameters.AddWithValue("@CreateTime", t);
+                insertCommand.Parameters.AddWithValue("@UpdateTime", t);
+                insertCommand.ExecuteReader();
+            }
+        }
+        /// <summary>
+        /// 从数据库中删除知识点
+        /// </summary>
+        public static void DeleteKnowledgePoint(string key)
+        {
+            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            {
+                db.Open();
+
+                var command = db.CreateCommand();
+                command.CommandText = $"DELETE FROM {DbTableName.KnowledgePoints} WHERE name = @Name;";
+                command.Parameters.AddWithValue("@Name", key);
+                command.ExecuteReader();
+            }
+        }
+        /// <summary>
+        /// 更新科目
+        /// </summary>
+        public static void UpdateKnowledgePoint(KnowledgePoint obj, string key)
+        {
+            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            {
+                db.Open();
+
+                var insertCommand = db.CreateCommand();
+                insertCommand.CommandText = $"UPDATE {DbTableName.KnowledgePoints} SET name = @Name, knowledge = @Knowledge, updateTime = @UpdateTime WHERE name = @OldName;";
+                insertCommand.Parameters.AddWithValue("@Name", obj.Name);
+                insertCommand.Parameters.AddWithValue("@Knowledge", obj.Knowledge);
+                insertCommand.Parameters.AddWithValue("@UpdateTime", DateTimeHelper.GetTimeStamp());
+                insertCommand.Parameters.AddWithValue("@OldName", key);
+                insertCommand.ExecuteReader();
+            }
+        }
+        
         #endregion
     }
 }
