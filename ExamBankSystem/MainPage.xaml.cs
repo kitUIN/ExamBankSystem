@@ -81,7 +81,7 @@ namespace ExamBankSystem
                     case CategoryTag.QuestionPaper:
                         // ContentFrame.Navigate(typeof(KnowledgePointView));
                         break;
-                    case CategoryTag.TestPaper:
+                    case CategoryTag.ManageTestPaper:
                         ContentFrame.Navigate(typeof(TestPaperView));
                         break;
                 }

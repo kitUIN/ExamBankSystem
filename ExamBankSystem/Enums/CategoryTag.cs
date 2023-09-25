@@ -12,9 +12,12 @@ namespace ExamBankSystem.Enums
         KnowledgePoint,
         ExamSubject,
         Question,
-        TestPaper,
         QuestionPaper,
         Login,
         UserManager,
+        FindTestPaper,
+        MergeTestPaper,
+        ManageTestPaper,
+        
     }
 }

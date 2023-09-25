@@ -46,12 +46,6 @@ namespace ExamBankSystem.ViewModels
         {
             FootItems.Clear();
             MenuItems.Clear();
-            MenuItems.Add(new Category()
-            {
-                Name = ResourcesHelper.GetString(ResourceKey.TestPapers),
-                Tag = CategoryTag.TestPaper,
-                Icon = new FontIcon() { Glyph = "\uE82D" }
-            });
             FootItems.Add(new Category()
             {
                 Name = CurrentData.CurrentUser.Name,
@@ -76,7 +70,7 @@ namespace ExamBankSystem.ViewModels
                 {
                     Name = ResourcesHelper.GetString(ResourceKey.Questions),
                     Tag = CategoryTag.Question,
-                    Icon = new FontIcon() { Glyph = "\uE721" }
+                    Icon = new FontIcon() { Glyph = "\uEADF" }
                 });
                 MenuItems.Add(new Category()
                 {
@@ -85,6 +79,33 @@ namespace ExamBankSystem.ViewModels
                     Icon = new FontIcon() { Glyph = "\uE779" }
                 });
             }
+            
+            MenuItems.Add(new Category()
+            {
+                Name = ResourcesHelper.GetString(ResourceKey.TestPapers),
+                Icon = new FontIcon() { Glyph = "\uE82D" },
+                Children = new ObservableCollection<Category>()
+                {
+                    new Category()
+                    {
+                        Name = ResourcesHelper.GetString(ResourceKey.Find),
+                        Tag = CategoryTag.FindTestPaper,
+                        Icon = new FontIcon() { Glyph = "\uE721" },
+                    },
+                    new Category()
+                    {
+                        Name = ResourcesHelper.GetString(ResourceKey.Merge),
+                        Tag = CategoryTag.MergeTestPaper,
+                        Icon = new FontIcon() { Glyph = "\uEA61" },
+                    },
+                    new Category()
+                    {
+                        Name = ResourcesHelper.GetString(ResourceKey.Manage),
+                        Tag = CategoryTag.ManageTestPaper,
+                        Icon = new FontIcon() { Glyph = "\uE9F5" },
+                    },
+                }
+            });
         }
 
     }

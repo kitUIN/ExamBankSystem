@@ -186,4 +186,46 @@
   <data name="Search" xml:space="preserve">
     <value>搜索</value>
   </data>
+  <data name="SingleChoice" xml:space="preserve">
+    <value>单选题</value>
+  </data>
+  <data name="MultipleChoice" xml:space="preserve">
+    <value>多选题</value>
+  </data>
+  <data name="FillBlank" xml:space="preserve">
+    <value>填空题</value>
+  </data>
+  <data name="Judgment" xml:space="preserve">
+    <value>判断题</value>
+  </data>
+  <data name="ShortAnswer" xml:space="preserve">
+    <value>简答题</value>
+  </data>
+  <data name="Design" xml:space="preserve">
+    <value>设计题</value>
+  </data>
+  <data name="Program" xml:space="preserve">
+    <value>编程题</value>
+  </data>
+  <data name="AddOne" xml:space="preserve">
+    <value>单个新增</value>
+  </data>
+  <data name="AddMulti" xml:space="preserve">
+    <value>批量导入</value>
+  </data>
+  <data name="Manage" xml:space="preserve">
+    <value>管理</value>
+  </data>
+  <data name="Merge" xml:space="preserve">
+    <value>组卷</value>
+  </data>
+  <data name="Find" xml:space="preserve">
+    <value>查询</value>
+  </data>
+  <data name="Subjects" xml:space="preserve">
+    <value>科目</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>编号</value>
+  </data>
 </root>

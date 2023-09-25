@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExamBankSystem.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,18 +14,23 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
 namespace ExamBankSystem.Views
 {
-    /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
-    /// </summary>
+
     public sealed partial class QuestionView : Page
     {
+        private QuestionsViewModel ViewModel { get; } = new QuestionsViewModel();
         public QuestionView()
         {
             this.InitializeComponent();
+        }
+        /// <summary>
+        /// 列表选择变化响应
+        /// </summary>
+        private void MainList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.SelectionChanged(MainList.SelectedItems.Count);
         }
     }
 }

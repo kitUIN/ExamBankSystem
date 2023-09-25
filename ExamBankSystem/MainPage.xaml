@@ -41,7 +41,7 @@
                     Grid.Column="1"
                     Margin="28,0,0,0"
                     VerticalAlignment="Center"
-                    Style="{ThemeResource CaptionTextBlockStyle}"
+                    FontSize="14"
                     Text="{ex:Locale Key=ExamBankSystem}" />
             </Grid>
             <muxc:NavigationView
