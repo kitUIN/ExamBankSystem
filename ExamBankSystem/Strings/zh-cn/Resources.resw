@@ -117,34 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cancel" xml:space="preserve">
-    <value>取消</value>
-  </data>
-  <data name="Confirm" xml:space="preserve">
-    <value>确认</value>
-  </data>
-  <data name="CreateFolder" xml:space="preserve">
-    <value>新建文件夹</value>
-  </data>
-  <data name="DuplicateImport" xml:space="preserve">
-    <value>相同漫画已经存在</value>
-  </data>
-  <data name="ImportError" xml:space="preserve">
-    <value>导入错误</value>
-  </data>
-  <data name="LocalTag" xml:space="preserve">
-    <value>本地</value>
+  <data name="Login" xml:space="preserve">
+    <value>登录</value>
   </data>
   <data name="User" xml:space="preserve">
-    <value>用户</value>
+    <value>账号</value>
   </data>
-  <data name="Plugin" xml:space="preserve">
-    <value>插件</value>
+  <data name="Password" xml:space="preserve">
+    <value>密码</value>
   </data>
-  <data name="BookShelf" xml:space="preserve">
-    <value>书架</value>
+  <data name="RememberMe" xml:space="preserve">
+    <value>记住我</value>
   </data>
-  <data name="Download" xml:space="preserve">
-    <value>下载</value>
+  <data name="ExamBankSystem" xml:space="preserve">
+    <value>试卷管理系统</value>
+  </data>
+  <data name="UseNameNull" xml:space="preserve">
+    <value>账号不能为空</value>
+  </data>
+  <data name="PasswordNull" xml:space="preserve">
+    <value>密码不能为空</value>
+  </data>
+  <data name="PasswordError" xml:space="preserve">
+    <value>密码错误</value>
+  </data>
+  <data name="UserNull" xml:space="preserve">
+    <value>用户不存在</value>
+  </data>
+  <data name="LoginSuccess" xml:space="preserve">
+    <value>登录成功</value>
+  </data>
+  <data name="KnowledgePoints" xml:space="preserve">
+    <value>知识点</value>
+  </data>
+  <data name="ExamSubjects" xml:space="preserve">
+    <value>考试科目</value>
+  </data>
+  <data name="Questions" xml:space="preserve">
+    <value>题目</value>
+  </data>
+  <data name="TestPapers" xml:space="preserve">
+    <value>试卷</value>
   </data>
 </root>

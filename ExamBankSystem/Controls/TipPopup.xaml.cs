@@ -1,6 +1,10 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 
-namespace ShadowViewer.Controls
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls;
+
+namespace ExamBankSystem.Controls
 {
     /// <summary>
     /// 消息提醒.
@@ -13,15 +17,17 @@ namespace ShadowViewer.Controls
         /// </summary>
         public string Text
         {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
+            get => (string)GetValue(TextProperty);
+            set => SetValue(TextProperty, value);
         }
+
         /// <summary>
         /// <see cref="Text"/>的依赖属性.
         /// </summary>
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register(nameof(Text), typeof(string), typeof(TipPopup), new PropertyMetadata(string.Empty));
-        
+            DependencyProperty.Register(nameof(Text), typeof(string), typeof(TipPopup),
+                new PropertyMetadata(string.Empty));
+
         /// <summary>
         /// 显示文本.
         /// </summary>
@@ -30,11 +36,13 @@ namespace ShadowViewer.Controls
             get { return (InfoBarSeverity)GetValue(SeverityProperty); }
             set { SetValue(SeverityProperty, value); }
         }
+
         /// <summary>
         /// <see cref="Text"/>的依赖属性.
         /// </summary>
         public static readonly DependencyProperty SeverityProperty =
-            DependencyProperty.Register(nameof(Severity), typeof(InfoBarSeverity), typeof(TipPopup), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register(nameof(Severity), typeof(InfoBarSeverity), typeof(TipPopup),
+                new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TipPopup"/> class.
@@ -42,6 +50,7 @@ namespace ShadowViewer.Controls
         public TipPopup() => InitializeComponent();
 
         public double DisplaySeconds { get; set; } = 2;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TipPopup"/> class.
         /// </summary>
@@ -55,6 +64,5 @@ namespace ShadowViewer.Controls
             DisplaySeconds = displaySeconds;
             Severity = type;
         }
-
     }
 }

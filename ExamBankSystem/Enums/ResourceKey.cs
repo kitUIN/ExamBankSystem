@@ -1,7 +1,23 @@
 ﻿namespace ExamBankSystem.Enums
 {
-    public class ResourceKey
+    /// <summary>
+    /// 本地化键,对应Strings文件夹中的resources.resw文件
+    /// </summary>
+    public enum ResourceKey
     {
-        
+        User,
+        Password,
+        Login,
+        RememberMe,
+        ExamBankSystem,
+        UseNameNull,
+        PasswordNull,
+        PasswordError,
+        UserNull,
+        LoginSuccess,
+        KnowledgePoints,
+        ExamSubjects,
+        Questions,
+        TestPapers,
     }
 }
