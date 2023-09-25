@@ -251,7 +251,7 @@ namespace ExamBankSystem.Helpers
         /// <summary>
         /// 插入考试科目到数据库中
         /// </summary>
-        public static void InsertExamSubject(ExamSubject subject)
+        public static void InsertExamSubject(string name)
         {
             using (var db = new SqliteConnection($"Filename={_dbpath}"))
             {
@@ -259,7 +259,7 @@ namespace ExamBankSystem.Helpers
 
                 var insertCommand = db.CreateCommand();
                 insertCommand.CommandText = $"INSERT INTO {DbTableName.ExamSubjects} VALUES (@Name, @CreateTime, @UpdateTime);";
-                insertCommand.Parameters.AddWithValue("@Name", subject.Name);
+                insertCommand.Parameters.AddWithValue("@Name", name);
                 var t = DateTimeHelper.GetTimeStamp();
                 insertCommand.Parameters.AddWithValue("@CreateTime", t);
                 insertCommand.Parameters.AddWithValue("@UpdateTime",t);

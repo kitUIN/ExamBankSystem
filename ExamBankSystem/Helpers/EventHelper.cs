@@ -23,6 +23,7 @@ namespace ExamBankSystem.Helpers
         /// 顶部窗体通知事件
         /// </summary>
         public static event EventHandler<TopGridEventArg> TopGridEvent;
+
         /// <summary>
         /// 触发登录事件
         /// </summary>
@@ -44,7 +45,7 @@ namespace ExamBankSystem.Helpers
         /// </summary>
         public static void InvokeTipPopup(object sender,string text="", InfoBarSeverity type = InfoBarSeverity.Informational, double displaySeconds = 2)
         {
-            TopGridEvent?.Invoke(sender, 
+            InvokeTopGridEvent(sender, 
                 new TopGridEventArg(
                         new TipPopup(text, type,displaySeconds),
                         TopGridMode.Tip));

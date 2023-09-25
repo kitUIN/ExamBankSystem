@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ExamBankSystem.Args;
+using ExamBankSystem.Enums;
 using ExamBankSystem.Helpers;
 using ExamBankSystem.Models;
 using System;
@@ -9,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Windows.UI.Xaml.Controls;
 
 namespace ExamBankSystem.ViewModels
@@ -29,7 +31,15 @@ namespace ExamBankSystem.ViewModels
         public ObservableCollection<ExamSubject> ExamSubjects { get; set; } = new ObservableCollection<ExamSubject>();
         public ExamSubjectViewModel()
         {
-            foreach(var item in DbHelper.GetExamSubjects())
+            Refresh();
+        }
+        /// <summary>
+        /// 刷新列表
+        /// </summary>
+        public void Refresh()
+        {
+            ExamSubjects.Clear();
+            foreach (var item in DbHelper.GetExamSubjects())
             {
                 ExamSubjects.Add(item);
             }
@@ -43,19 +53,36 @@ namespace ExamBankSystem.ViewModels
             CanDelete = count > 0;
         }
         [RelayCommand]
-        private void Edit()
+        private void Edit(object obj)
         {
-
+            if(obj is ExamSubject subject)
+            {
+                ActionEvent?.Invoke(this, new ActionEventArg()
+                {
+                    TipMode = TipMode.Show,
+                    ActionMode = ActionMode.Edit,
+                    Source = subject.Name
+                });
+            }
         }
         [RelayCommand]
         private void Add()
         {
-
+            ActionEvent?.Invoke(this, new ActionEventArg()
+            {
+                TipMode = TipMode.Show,
+                ActionMode = ActionMode.Add,
+            });
         }
         [RelayCommand]
-        private void Delete()
+        private void Delete(object obj)
         {
-
+            ActionEvent?.Invoke(this, new ActionEventArg()
+            {
+                TipMode = TipMode.Show,
+                ActionMode = ActionMode.Delete,
+                Source = obj
+            });
         }
     }
 }

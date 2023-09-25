@@ -128,6 +128,9 @@
     <Compile Include="Controls\LoginTip.xaml.cs">
       <DependentUpon>LoginTip.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\QuestionTip.xaml.cs">
+      <DependentUpon>QuestionTip.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TipPopup.xaml.cs">
       <DependentUpon>TipPopup.xaml</DependentUpon>
     </Compile>
@@ -136,6 +139,7 @@
     <Compile Include="Enums\DbTableName.cs" />
     <Compile Include="Enums\ActionMode.cs" />
     <Compile Include="Enums\QuestionType.cs" />
+    <Compile Include="Enums\TipMode.cs" />
     <Compile Include="Enums\UserRole.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Helpers\DateTimeHelper.cs" />
@@ -146,6 +150,7 @@
     <Compile Include="Extensions\LocaleExtension.cs" />
     <Compile Include="Helpers\DbHelper.cs" />
     <Compile Include="Helpers\ResourcesHelper.cs" />
+    <Compile Include="Helpers\XamlHelper.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -206,6 +211,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\LoginTip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\QuestionTip.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

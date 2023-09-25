@@ -101,11 +101,8 @@ namespace ExamBankSystem
                         if (e.Element is ContentDialog dialog)
                         {
                             dialog.XamlRoot = XamlRoot;
-
                             await dialog.ShowAsync();
-
                         }
-
                         break;
                     case TopGridMode.Dialog:
                         

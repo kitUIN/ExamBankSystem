@@ -42,5 +42,16 @@
         Find,
         Subjects,
         Id,
+        QuestionType,
+        Answer,
+        Rank,
+        ExamSubjectNull,
+        Exist,
+        AddSuccess,
+        EditSuccess,
+        DeleteSuccess,
+        Cancel,
+        Confirm,
+        DeleteMessage,
     }
 }

@@ -8,8 +8,6 @@ namespace ExamBankSystem.Enums
 {
     public enum ActionMode
     {
-        Show,
-        Hide,
         Add,
         Edit,
         Delete,

@@ -169,7 +169,7 @@
     <value>更新时间</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>新增</value>
+    <value>添加</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>修改</value>
@@ -208,10 +208,10 @@
     <value>编程题</value>
   </data>
   <data name="AddOne" xml:space="preserve">
-    <value>单个新增</value>
+    <value>添加一个</value>
   </data>
   <data name="AddMulti" xml:space="preserve">
-    <value>批量导入</value>
+    <value>批量添加</value>
   </data>
   <data name="Manage" xml:space="preserve">
     <value>管理</value>
@@ -227,5 +227,38 @@
   </data>
   <data name="Id" xml:space="preserve">
     <value>编号</value>
+  </data>
+  <data name="QuestionType" xml:space="preserve">
+    <value>题型</value>
+  </data>
+  <data name="Rank" xml:space="preserve">
+    <value>难度</value>
+  </data>
+  <data name="Answer" xml:space="preserve">
+    <value>答案</value>
+  </data>
+  <data name="ExamSubjectNull" xml:space="preserve">
+    <value>科目不能为空</value>
+  </data>
+  <data name="Exist" xml:space="preserve">
+    <value>已存在</value>
+  </data>
+  <data name="AddSuccess" xml:space="preserve">
+    <value>添加成功</value>
+  </data>
+  <data name="EditSuccess" xml:space="preserve">
+    <value>修改成功</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="DeleteSuccess" xml:space="preserve">
+    <value>删除成功</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="DeleteMessage" xml:space="preserve">
+    <value>确定要删除吗,删除后无法恢复!</value>
   </data>
 </root>
