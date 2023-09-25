@@ -87,7 +87,7 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        <controls:ExamSubjectTip x:Name="ExamSubjectTip" />
+        <controls:ExamSubjectTip x:Name="CommmandTip" />
     </Grid>
 
 </Page>

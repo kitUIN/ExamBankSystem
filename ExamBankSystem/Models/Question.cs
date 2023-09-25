@@ -87,5 +87,9 @@ namespace ExamBankSystem.Models
                 UpdateTime = DateTimeHelper.ToDateTime(query.GetInt64(10)),
             };
         }
+        public string TypeToString(QuestionType type)
+        {
+            return ResourcesHelper.GetString(EnumHelper.GetEnum<ResourceKey>(type.ToString()));
+        }
     }
 }

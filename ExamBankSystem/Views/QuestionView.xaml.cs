@@ -1,8 +1,13 @@
-﻿using ExamBankSystem.ViewModels;
+﻿using ExamBankSystem.Args;
+using ExamBankSystem.Controls;
+using ExamBankSystem.Enums;
+using ExamBankSystem.Helpers;
+using ExamBankSystem.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Resources;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -25,6 +30,34 @@ namespace ExamBankSystem.Views
         {
             this.InitializeComponent();
         }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            ViewModel.ActionEvent += ViewModel_ActionEvent;
+            CommmandTip.RefreshEvent += CommmandTip_RefreshEvent;
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            ViewModel.ActionEvent -= ViewModel_ActionEvent;
+            CommmandTip.RefreshEvent -= CommmandTip_RefreshEvent;
+        }
+
+        private void CommmandTip_RefreshEvent(object sender, EventArgs e)
+        {
+            ViewModel.Refresh();
+        }
+
+        private void ViewModel_ActionEvent(object sender, ActionEventArg e)
+        {
+            if (e.TipMode == TipMode.Show)
+            {
+                CommmandTip.Show(e.ActionMode, e.Source);
+            }
+            else if (e.TipMode == TipMode.Hide)
+            {
+                CommmandTip.Hide();
+            }
+        }
         /// <summary>
         /// 列表选择变化响应
         /// </summary>
@@ -32,5 +65,7 @@ namespace ExamBankSystem.Views
         {
             ViewModel.SelectionChanged(MainList.SelectedItems.Count);
         }
+
+        
     }
 }

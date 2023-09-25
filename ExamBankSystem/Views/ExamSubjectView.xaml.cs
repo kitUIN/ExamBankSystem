@@ -32,16 +32,16 @@ namespace ExamBankSystem.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ViewModel.ActionEvent += ViewModel_ActionEvent;
-            ExamSubjectTip.RefreshEvent += ExamSubjectTip_RefreshEvent;
+            CommmandTip.RefreshEvent += CommmandTip_RefreshEvent;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             ViewModel.ActionEvent -= ViewModel_ActionEvent;
-            ExamSubjectTip.RefreshEvent -= ExamSubjectTip_RefreshEvent;
+            CommmandTip.RefreshEvent -= CommmandTip_RefreshEvent;
         }
 
-        private void ExamSubjectTip_RefreshEvent(object sender, EventArgs e)
+        private void CommmandTip_RefreshEvent(object sender, EventArgs e)
         {
             ViewModel.Refresh();
         }
@@ -50,11 +50,11 @@ namespace ExamBankSystem.Views
         {
             if(e.TipMode == TipMode.Show)
             {
-                ExamSubjectTip.Show(e.ActionMode,e.Source);
+                CommmandTip.Show(e.ActionMode,e.Source);
             }
             else if(e.TipMode == TipMode.Hide)
             {
-                ExamSubjectTip.Hide();
+                CommmandTip.Hide();
             }
         }
 

@@ -18,6 +18,7 @@
             PreferredPlacement="Center">
             <muxc:TeachingTip.Content>
                 <Grid
+                    Width="250"
                     Padding="10,20"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -26,9 +27,9 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="1" ColumnSpacing="10">
+                    <Grid Grid.Row="0" ColumnSpacing="10">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="70" />
+                            <ColumnDefinition Width="50" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <TextBlock
@@ -39,14 +40,23 @@
                     </Grid>
                     <Grid Grid.Row="1" ColumnSpacing="10">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="70" />
+                            <ColumnDefinition Width="50" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <TextBlock
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Text="{ex:Locale Key=QuestionType}" />
-                        <TextBox x:Name="QuestionType" Grid.Column="1" />
+                        <ComboBox x:Name="QuestionType" Grid.Column="1">
+                            <ComboBoxItem Content="{ex:Locale Key=SingleChoice}" Tag="SingleChoice" />
+                            <ComboBoxItem Content="{ex:Locale Key=MultipleChoice}" Tag="MultipleChoice" />
+                            <ComboBoxItem Content="{ex:Locale Key=FillBlank}" Tag="FillBlank" />
+                            <ComboBoxItem Content="{ex:Locale Key=Judgment}" Tag="Judgment" />
+                            <ComboBoxItem Content="{ex:Locale Key=ShortAnswer}" Tag="ShortAnswer" />
+                            <ComboBoxItem Content="{ex:Locale Key=Design}" Tag="Design" />
+                            <ComboBoxItem Content="{ex:Locale Key=Program}" Tag="Program" />
+                        </ComboBox>
+
                     </Grid>
                 </Grid>
             </muxc:TeachingTip.Content>

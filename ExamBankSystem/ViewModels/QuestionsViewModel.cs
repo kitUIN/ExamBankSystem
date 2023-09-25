@@ -3,6 +3,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ExamBankSystem.Args;
+using ExamBankSystem.Enums;
 using ExamBankSystem.Helpers;
 using ExamBankSystem.Models;
 using System;
@@ -37,6 +38,11 @@ namespace ExamBankSystem.ViewModels
         }
         public QuestionsViewModel()
         {
+            Refresh();
+        }
+        public void Refresh()
+        {
+            Questions.Clear();
             foreach (var item in DbHelper.GetQuestions())
             {
                 Questions.Add(item);
@@ -48,9 +54,13 @@ namespace ExamBankSystem.ViewModels
 
         }
         [RelayCommand]
-        private void Add()
+        private void AddOne()
         {
-
+            ActionEvent?.Invoke(this, new ActionEventArg()
+            {
+                TipMode = TipMode.Show,
+                ActionMode = ActionMode.Add,
+            });
         }
         [RelayCommand]
         private void Delete()

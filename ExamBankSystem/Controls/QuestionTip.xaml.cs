@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExamBankSystem.Enums;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,12 +14,15 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-//https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
-
 namespace ExamBankSystem.Controls
 {
     public sealed partial class QuestionTip : UserControl
     {
+        /// <summary>
+        /// 请求刷新事件
+        /// </summary>
+        public event EventHandler RefreshEvent;
+
         public QuestionTip()
         {
             this.InitializeComponent();
@@ -27,9 +31,16 @@ namespace ExamBankSystem.Controls
         /// <summary>
         /// 显示
         /// </summary>
-        public void Show()
+        public void Show(ActionMode mode, object obj = null)
         {
-            MainTeachingTip.IsOpen = true;
+            switch (mode)
+            {
+                case ActionMode.Add:
+                    MainTeachingTip.IsOpen = true;
+                    break;
+                case ActionMode.Edit:
+                    break;
+            }
         }
         /// <summary>
         /// 隐藏
