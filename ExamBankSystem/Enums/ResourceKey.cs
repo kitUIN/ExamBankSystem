@@ -22,5 +22,9 @@
         UserManager,
         CreateTime,
         UpdateTime,
+        Add,
+        Edit,
+        Delete,
+        Content,
     }
 }

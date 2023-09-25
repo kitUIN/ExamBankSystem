@@ -70,6 +70,7 @@ namespace ExamBankSystem
                     case CategoryTag.User:
                         break;
                     case CategoryTag.KnowledgePoint:
+                        ContentFrame.Navigate(typeof(KnowledgePointView));
                         break;
                     case CategoryTag.Question:
                         break;
