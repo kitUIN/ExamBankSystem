@@ -25,7 +25,14 @@ namespace ExamBankSystem.Views
         private ExamSubjectViewModel ViewModel { get; } = new ExamSubjectViewModel();
         public ExamSubjectView()
         {
-            this.InitializeComponent();
+            this.InitializeComponent(); 
+        }
+        /// <summary>
+        /// 列表选择变化响应
+        /// </summary>
+        private void MainList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.SelectionChanged(MainList.SelectedItems.Count);
         }
     }
 }

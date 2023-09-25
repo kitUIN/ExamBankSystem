@@ -6,8 +6,19 @@ using Windows.Storage;
 namespace ExamBankSystem.Helpers
 {
 
-    public class ConfigHelper
+    public static class ConfigHelper
     {
+        public static void Init()
+        {
+            if (Contains(ConfigKey.LastUserName))
+            {
+                Set(ConfigKey.LastUserName, "");
+            }
+            if (Contains(ConfigKey.LastUserPassword))
+            {
+                Set(ConfigKey.LastUserPassword, "");
+            }
+        }
         private const string Container = "ExamBankSystem";
 
         public static bool Contains(string key, string container = Container)
@@ -16,6 +27,10 @@ namespace ExamBankSystem.Helpers
                     ApplicationData.Current.LocalSettings.CreateContainer(container,
                         ApplicationDataCreateDisposition.Always);
             return coreSettings.Values.ContainsKey(key);
+        }
+        public static bool Contains(ConfigKey key)
+        {
+            return Contains(key.ToString());
         }
 
         private static object Get(string key, string container = Container)
@@ -33,7 +48,10 @@ namespace ExamBankSystem.Helpers
                         ApplicationDataCreateDisposition.Always);
             coreSettings.Values[key] = value;
         }
-
+        public static void Set(ConfigKey key, object value)
+        {
+            Set(key.ToString(), value);
+        }
         public static string GetString(string key, string container = Container)
         {
             return (string)Get(key, container);

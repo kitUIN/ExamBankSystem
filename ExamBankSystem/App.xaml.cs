@@ -35,7 +35,7 @@ namespace ExamBankSystem
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             DbHelper.InitializeDatabase();
-            
+            ConfigHelper.Init();
         }
 
         /// <summary>

@@ -20,5 +20,7 @@
         Questions,
         TestPapers,
         UserManager,
+        CreateTime,
+        UpdateTime,
     }
 }

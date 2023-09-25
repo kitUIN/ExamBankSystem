@@ -210,6 +210,25 @@ namespace ExamBankSystem.Helpers
         /// <summary>
         /// 从数据库中获取考试科目
         /// </summary>
+        public static List<ExamSubject> GetExamSubject()
+        {
+            List<ExamSubject> res = new List<ExamSubject>(); 
+            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            {
+                db.Open();
+                var selectCommand = db.CreateCommand();
+                selectCommand.CommandText = $"SELECT * FROM {DbTableName.ExamSubjects} ;";
+                var query = selectCommand.ExecuteReader();
+                while (query.Read())
+                {
+                    res.Add(ExamSubject.FromDb(query));
+                }
+            }
+            return res;
+        }
+        /// <summary>
+        /// 从数据库中获取考试科目
+        /// </summary>
         public static ExamSubject GetExamSubject(string name)
         {
             using (var db = new SqliteConnection($"Filename={_dbpath}"))
@@ -217,6 +236,7 @@ namespace ExamBankSystem.Helpers
                 db.Open();
                 var selectCommand = db.CreateCommand();
                 selectCommand.CommandText = $"SELECT * FROM {DbTableName.ExamSubjects} WHERE subject = @Name;";
+
                 selectCommand.Parameters.AddWithValue("@Name", name);
 
                 var query = selectCommand.ExecuteReader();
@@ -247,6 +267,21 @@ namespace ExamBankSystem.Helpers
             }
         }
         /// <summary>
+        /// 从数据库中删除考试科目
+        /// </summary>
+        public static void DeleteExamSubject(string key)
+        {
+            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            {
+                db.Open();
+
+                var command = db.CreateCommand();
+                command.CommandText = $"DELETE FROM {DbTableName.ExamSubjects} WHERE subject = @Name;";
+                command.Parameters.AddWithValue("@Name", key);
+                command.ExecuteReader();
+            }
+        }
+        /// <summary>
         /// 更新用户登录时间
         /// </summary>
         public static void UpdateExamSubjectName(string newName,string oldName)
@@ -256,9 +291,9 @@ namespace ExamBankSystem.Helpers
                 db.Open();
 
                 var insertCommand = db.CreateCommand();
-                insertCommand.CommandText = $"UPDATE {DbTableName.ExamSubjects} SET subject = @Name WHERE subject = @OldName;";
-                insertCommand.Parameters.AddWithValue("@loginTime", DateTimeHelper.GetTimeStamp());
-                insertCommand.Parameters.AddWithValue("@user", userName);
+                insertCommand.CommandText = $"UPDATE {DbTableName.ExamSubjects} SET subject = @Name WHERE subject = @oldName;";
+                insertCommand.Parameters.AddWithValue("@Name", newName);
+                insertCommand.Parameters.AddWithValue("@oldName", oldName);
                 insertCommand.ExecuteReader();
             }
         }

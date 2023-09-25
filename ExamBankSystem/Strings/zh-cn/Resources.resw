@@ -162,4 +162,10 @@
   <data name="UserManager" xml:space="preserve">
     <value>用户管理</value>
   </data>
+  <data name="CreateTime" xml:space="preserve">
+    <value>创建时间</value>
+  </data>
+  <data name="UpdateTime" xml:space="preserve">
+    <value>更新时间</value>
+  </data>
 </root>

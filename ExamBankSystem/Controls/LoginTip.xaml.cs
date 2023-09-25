@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -35,6 +36,21 @@ namespace ExamBankSystem.Controls
         public void Open()
         {
             LoginTeachingTip.IsOpen = true;
+            var name = ConfigHelper.GetString(ConfigKey.LastUserName);
+            var pwd = ConfigHelper.GetString(ConfigKey.LastUserPassword);
+            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(pwd))
+            {
+                Remember.IsChecked = true;
+                User.Text = name;
+                Password.Password = pwd;
+                Button_Click(this,null);
+            }
+            else
+            {
+                Remember.IsChecked = false;
+                User.Text = "";
+                Password.Password = "";
+            }
         }
         /// <summary>
         /// 隐藏
@@ -88,8 +104,29 @@ namespace ExamBankSystem.Controls
                     );
                 DbHelper.UpdateUserLoginTime(user.Name);
                 CurrentData.CurrentUser = DbHelper.GetUser(User.Text);
+                if (Remember.IsChecked.Value)
+                {
+                    ConfigHelper.Set(ConfigKey.LastUserName, User.Text);
+                    ConfigHelper.Set(ConfigKey.LastUserPassword, Password.Password);
+                }
+                else
+                {
+                    ConfigHelper.Set(ConfigKey.LastUserName, "");
+                    ConfigHelper.Set(ConfigKey.LastUserPassword, "");
+                }
                 Hide();
                 EventHelper.InvokeLoginEvent(this);
+            }
+        }
+         
+        /// <summary>
+        /// 回车登录
+        /// </summary>
+        private void Password_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if(e.Key == Windows.System.VirtualKey.Enter)
+            {
+                Button_Click(sender, e);
             }
         }
     }
