@@ -273,4 +273,7 @@
   <data name="LastLoginTime" xml:space="preserve">
     <value>最后登录</value>
   </data>
+  <data name="AllPoint" xml:space="preserve">
+    <value>总分</value>
+  </data>
 </root>

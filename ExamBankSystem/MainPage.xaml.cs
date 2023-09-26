@@ -60,6 +60,7 @@ namespace ExamBankSystem
             ViewModel.Logout();
             ConfigHelper.Set(ConfigKey.LastUserName, "");
             ConfigHelper.Set(ConfigKey.LastUserPassword, "");
+            ContentFrame.Content = null;
             LoginTip.Open();
         }
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)
@@ -93,8 +94,8 @@ namespace ExamBankSystem
                     case CategoryTag.Question:
                         ContentFrame.Navigate(typeof(QuestionView));
                         break;
-                    case CategoryTag.QuestionPaper:
-                        // ContentFrame.Navigate(typeof(KnowledgePointView));
+                    case CategoryTag.FindTestPaper:
+                        ContentFrame.Navigate(typeof(TestPaperView));
                         break;
                     case CategoryTag.ManageTestPaper:
                         ContentFrame.Navigate(typeof(TestPaperView));

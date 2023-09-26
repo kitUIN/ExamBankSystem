@@ -17,7 +17,7 @@ namespace ExamBankSystem.Helpers
         /// </summary>
         public static DateTime ToDateTime(long timestamp)
         {
-            return new DateTime(new DateTime(1970, 1, 1, 0, 0, 0).Ticks + timestamp * 10000);
+            return new DateTime(new DateTime(1970, 1, 1, 8, 0, 0).Ticks + timestamp * 10000);
         }
         /// <summary>
         /// 获取当前时间戳(13位)(毫秒)

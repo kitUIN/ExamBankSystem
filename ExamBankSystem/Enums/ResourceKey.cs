@@ -57,6 +57,6 @@
         Logout,
         Role,
         LastLoginTime,
-
+        AllPoint,
     }
 }

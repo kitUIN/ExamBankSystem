@@ -26,7 +26,7 @@ namespace ExamBankSystem.ViewModels
         [ObservableProperty]
         private bool canDelete = false;
         /// <summary>
-        /// 知识点列表
+        /// 问题列表
         /// </summary>
         public ObservableCollection<Question> Questions { get; set; } = new ObservableCollection<Question>();
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExamBankSystem.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace ExamBankSystem.Views
     /// </summary>
     public sealed partial class TestPaperView : Page
     {
+        private TestPaperViewModel ViewModel { get; } =  new TestPaperViewModel();
         public TestPaperView()
         {
             this.InitializeComponent();
