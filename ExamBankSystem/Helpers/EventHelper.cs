@@ -20,6 +20,10 @@ namespace ExamBankSystem.Helpers
         /// </summary>
         public static event EventHandler LoginEvent;
         /// <summary>
+        /// 登出事件
+        /// </summary>
+        public static event EventHandler LogoutEvent;
+        /// <summary>
         /// 顶部窗体通知事件
         /// </summary>
         public static event EventHandler<TopGridEventArg> TopGridEvent;
@@ -31,6 +35,14 @@ namespace ExamBankSystem.Helpers
         public static void InvokeLoginEvent(object sender)
         {
             LoginEvent?.Invoke(sender, EventArgs.Empty);
+        }
+        /// <summary>
+        /// 触发登出事件
+        /// </summary>
+        /// <param name="sender"></param>
+        public static void InvokeLogoutEvent(object sender)
+        {
+            LogoutEvent?.Invoke(sender, EventArgs.Empty);
         }
         /// <summary>
         /// 触发顶部窗体通知事件

@@ -53,5 +53,7 @@
         Cancel,
         Confirm,
         DeleteMessage,
+        ChangePassword,
+        Logout,
     }
 }

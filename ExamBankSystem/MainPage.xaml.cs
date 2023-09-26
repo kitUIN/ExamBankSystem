@@ -3,6 +3,7 @@ using ExamBankSystem.Controls;
 using ExamBankSystem.Enums;
 using ExamBankSystem.Helpers;
 using ExamBankSystem.Models;
+using ExamBankSystem.Utils;
 using ExamBankSystem.ViewModels;
 using ExamBankSystem.Views;
 using Microsoft.UI.Xaml.Controls;
@@ -32,7 +33,7 @@ namespace ExamBankSystem
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private MainViewModel ViewModel { get; } = new MainViewModel();
+        private MainViewModel ViewModel { get; set; } = new MainViewModel();
         public MainPage()
         {
             this.InitializeComponent();
@@ -42,11 +43,24 @@ namespace ExamBankSystem
         {
             EventHelper.TopGridEvent += Caller_TopGridEvent;
             EventHelper.LoginEvent += EventHelper_LoginEvent;
+            EventHelper.LogoutEvent += EventHelper_LogoutEvent;
         }
+
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             EventHelper.TopGridEvent -= Caller_TopGridEvent;
             EventHelper.LoginEvent -= EventHelper_LoginEvent;
+            EventHelper.LogoutEvent -= EventHelper_LogoutEvent;
+        }
+
+
+        private void EventHelper_LogoutEvent(object sender, EventArgs e)
+        {
+            CurrentData.CurrentUser = null;
+            ViewModel.Logout();
+            ConfigHelper.Set(ConfigKey.LastUserName, "");
+            ConfigHelper.Set(ConfigKey.LastUserPassword, "");
+            LoginTip.Open();
         }
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)
         {
@@ -68,6 +82,7 @@ namespace ExamBankSystem
                         ContentFrame.Navigate(typeof(ExamSubjectView));
                         break;
                     case CategoryTag.User:
+                        ContentFrame.Navigate(typeof(UserView));
                         break;
                     case CategoryTag.UserManager:
                         ContentFrame.Navigate(typeof(UserManagerView));

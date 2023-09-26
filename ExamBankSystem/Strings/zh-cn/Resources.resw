@@ -261,4 +261,10 @@
   <data name="DeleteMessage" xml:space="preserve">
     <value>确定要删除吗,删除后无法恢复!</value>
   </data>
+  <data name="Logout" xml:space="preserve">
+    <value>登出</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>修改密码</value>
+  </data>
 </root>

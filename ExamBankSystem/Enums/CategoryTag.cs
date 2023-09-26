@@ -18,6 +18,6 @@ namespace ExamBankSystem.Enums
         FindTestPaper,
         MergeTestPaper,
         ManageTestPaper,
-        
+        TestPaper,
     }
 }

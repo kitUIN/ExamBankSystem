@@ -32,11 +32,20 @@ namespace ExamBankSystem.ViewModels
 
         public MainViewModel()
         {
+            Logout();
+        }
+        /// <summary>
+        /// 登出
+        /// </summary>
+        public void Logout()
+        {
+            FootItems.Clear();
+            MenuItems.Clear();
             FootItems.Add(new Category()
             {
                 Name = ResourcesHelper.GetString(ResourceKey.Login),
                 Tag = CategoryTag.Login,
-                Icon =  new FontIcon() { Glyph = "\uE77B" }
+                Icon = new FontIcon() { Glyph = "\uE77B" }
             });
         }
         /// <summary>
@@ -79,12 +88,14 @@ namespace ExamBankSystem.ViewModels
                     Icon = new FontIcon() { Glyph = "\uE779" }
                 });
             }
-            
-            MenuItems.Add(new Category()
+            if (CurrentData.CurrentUser.Role != UserRole.Student)
             {
-                Name = ResourcesHelper.GetString(ResourceKey.TestPapers),
-                Icon = new FontIcon() { Glyph = "\uE82D" },
-                Children = new ObservableCollection<Category>()
+                MenuItems.Add(new Category()
+                {
+                    Name = ResourcesHelper.GetString(ResourceKey.TestPapers),
+                    Icon = new FontIcon() { Glyph = "\uE82D" },
+                    Tag = CategoryTag.TestPaper,
+                    Children = new ObservableCollection<Category>()
                 {
                     new Category()
                     {
@@ -105,7 +116,9 @@ namespace ExamBankSystem.ViewModels
                         Icon = new FontIcon() { Glyph = "\uE9F5" },
                     },
                 }
-            });
+                });
+            }
+                
         }
 
     }

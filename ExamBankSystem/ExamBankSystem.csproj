@@ -169,6 +169,7 @@
     <Compile Include="ViewModels\QuestionsViewModel.cs" />
     <Compile Include="ViewModels\TestPaperViewModel.cs" />
     <Compile Include="ViewModels\UserManagerViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Views\ExamSubjectView.xaml.cs">
       <DependentUpon>ExamSubjectView.xaml</DependentUpon>
     </Compile>
@@ -183,6 +184,9 @@
     </Compile>
     <Compile Include="Views\UserManagerView.xaml.cs">
       <DependentUpon>UserManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserView.xaml.cs">
+      <DependentUpon>UserView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -245,6 +249,10 @@
     <Page Include="Views\UserManagerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
