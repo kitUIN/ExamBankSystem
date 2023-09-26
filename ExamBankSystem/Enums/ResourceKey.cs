@@ -58,5 +58,6 @@
         Role,
         LastLoginTime,
         AllPoint,
+        OpenDb,
     }
 }

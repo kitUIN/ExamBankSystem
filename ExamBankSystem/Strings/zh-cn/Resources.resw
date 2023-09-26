@@ -276,4 +276,7 @@
   <data name="AllPoint" xml:space="preserve">
     <value>总分</value>
   </data>
+  <data name="OpenDb" xml:space="preserve">
+    <value>打开数据库文件夹</value>
+  </data>
 </root>
