@@ -1,4 +1,6 @@
 ﻿using ExamBankSystem.Enums;
+using ExamBankSystem.Helpers;
+using ExamBankSystem.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,6 +41,8 @@ namespace ExamBankSystem.Controls
                     MainTeachingTip.IsOpen = true;
                     break;
                 case ActionMode.Edit:
+                    if (obj is Question question)
+                    DbHelper.UpdateQuestion(question, question.Id);
                     break;
             }
         }
