@@ -151,6 +151,27 @@ namespace ExamBankSystem.Helpers
         /// <summary>
         /// 从数据库中获取用户
         /// </summary>
+        public static List<User> GetUsers()
+        {
+            var res = new List<User>();
+            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            {
+                db.Open();
+                var selectCommand = db.CreateCommand();
+                selectCommand.CommandText = $"SELECT * FROM {DbTableName.Users};";
+
+                var query = selectCommand.ExecuteReader();
+
+                while (query.Read())
+                {
+                    res.Add( User.FromDb(query));
+                }
+            }
+            return res;
+        }
+        /// <summary>
+        /// 从数据库中获取用户
+        /// </summary>
         /// <param name="user">用户名</param>
         public static User GetUser(string user)
         {

@@ -6,9 +6,106 @@
     xmlns:ex="using:ExamBankSystem.Extensions"
     xmlns:local="using:ExamBankSystem.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:ExamBankSystem.Models"
     mc:Ignorable="d">
 
     <Grid>
-        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="32" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Padding="10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox
+                    Grid.Column="0"
+                    Height="32"
+                    MinWidth="200"
+                    MaxWidth="300"
+                    HorizontalAlignment="Left"
+                    PlaceholderText="{ex:Locale Key=Search}" />
+                <CommandBar
+                    Grid.Column="1"
+                    Background="Transparent"
+                    DefaultLabelPosition="Right"
+                    IsOpen="False">
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.AddCommand}"
+                        Icon="Add"
+                        Label="{ex:Locale Key=Add}" />
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.EditCommand}"
+                        Icon="Edit"
+                        IsEnabled="{x:Bind ViewModel.CanEdit, Mode=OneWay}"
+                        Label="{ex:Locale Key=Edit}" />
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.DeleteCommand}"
+                        Icon="Delete"
+                        IsEnabled="{x:Bind ViewModel.CanDelete, Mode=OneWay}"
+                        Label="{ex:Locale Key=Delete}" />
+                </CommandBar>
+            </Grid>
+            <Grid
+                Grid.Row="1"
+                Padding="15,0,15,0"
+                VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="150" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{ex:Locale Key=User}" />
+                <TextBlock Grid.Column="1" Text="{ex:Locale Key=Password}" />
+                <TextBlock Grid.Column="2" Text="{ex:Locale Key=Role}" />
+                <TextBlock Grid.Column="3" Text="{ex:Locale Key=CreateTime}" />
+                <TextBlock Grid.Column="4" Text="{ex:Locale Key=LastLoginTime}" />
+            </Grid>
+            <ListView
+                x:Name="MainList"
+                Grid.Row="2"
+                ItemsSource="{x:Bind ViewModel.Users}"
+                SelectionMode="Single">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:User">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                Text="{x:Bind Name, Mode=OneWay}"
+                                TextTrimming="CharacterEllipsis" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Text="{x:Bind Password, Mode=OneWay}"
+                                TextTrimming="CharacterEllipsis" />
+                            <TextBlock
+                                Grid.Column="2"
+                                Text="{x:Bind Role, Mode=OneWay}"
+                                TextTrimming="CharacterEllipsis" />
+                            <TextBlock
+                                Grid.Column="3"
+                                Text="{x:Bind CreateTime, Mode=OneWay}"
+                                TextTrimming="CharacterEllipsis" />
+                            <TextBlock
+                                Grid.Column="4"
+                                Text="{x:Bind LastLoginTime, Mode=OneWay}"
+                                TextTrimming="CharacterEllipsis" />
+
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </Page>

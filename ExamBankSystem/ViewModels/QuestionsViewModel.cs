@@ -49,11 +49,6 @@ namespace ExamBankSystem.ViewModels
             }
         }
         [RelayCommand]
-        private void Edit()
-        {
-
-        }
-        [RelayCommand]
         private void AddOne()
         {
             ActionEvent?.Invoke(this, new ActionEventArg()
@@ -63,9 +58,27 @@ namespace ExamBankSystem.ViewModels
             });
         }
         [RelayCommand]
-        private void Delete()
+        private void Edit(object obj)
         {
-
+            if (obj is ExamSubject subject)
+            {
+                ActionEvent?.Invoke(this, new ActionEventArg()
+                {
+                    TipMode = TipMode.Show,
+                    ActionMode = ActionMode.Edit,
+                    Source = subject.Name
+                });
+            }
+        }
+        [RelayCommand]
+        private void Delete(object obj)
+        {
+            ActionEvent?.Invoke(this, new ActionEventArg()
+            {
+                TipMode = TipMode.Show,
+                ActionMode = ActionMode.Delete,
+                Source = obj
+            });
         }
     }
 }

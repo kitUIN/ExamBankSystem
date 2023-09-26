@@ -55,5 +55,8 @@
         DeleteMessage,
         ChangePassword,
         Logout,
+        Role,
+        LastLoginTime,
+
     }
 }
