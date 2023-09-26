@@ -40,6 +40,7 @@ namespace ExamBankSystem.Controls
             var pwd = ConfigHelper.GetString(ConfigKey.LastUserPassword);
             if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(pwd))
             {
+                
                 Remember.IsChecked = true;
                 User.Text = name;
                 Password.Password = pwd;
@@ -72,7 +73,7 @@ namespace ExamBankSystem.Controls
                     );
                 return;
             }
-            var user = DbHelper.GetUser(User.Text);
+            
             if (string.IsNullOrEmpty(Password.Password))
             {
                 EventHelper.InvokeTipPopup(this,
@@ -81,6 +82,7 @@ namespace ExamBankSystem.Controls
                     );
                 return;
             }
+            var user = DbHelper.GetUser(User.Text);
             if (user == null)
             {
                 EventHelper.InvokeTipPopup(this,

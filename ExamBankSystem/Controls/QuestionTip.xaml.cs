@@ -25,6 +25,7 @@ namespace ExamBankSystem.Controls
         /// </summary>
         public event EventHandler RefreshEvent;
 
+        private int id;
         public QuestionTip()
         {
             this.InitializeComponent();
@@ -41,8 +42,10 @@ namespace ExamBankSystem.Controls
                     MainTeachingTip.IsOpen = true;
                     break;
                 case ActionMode.Edit:
-                    if (obj is Question question)
-                    DbHelper.UpdateQuestion(question, question.Id);
+                    if (obj is int _id)
+                    {
+                        id = _id;
+                    }
                     break;
             }
         }
@@ -52,6 +55,16 @@ namespace ExamBankSystem.Controls
         public void Hide()
         {
             MainTeachingTip.IsOpen = false;
+        }
+
+        public void AddOne(Question question)
+        {
+            DbHelper.InsertQuestion(question);
+        }
+        public void EditOne(Question question)
+        {
+
+            DbHelper.UpdateQuestion(question, id);
         }
     }
 }

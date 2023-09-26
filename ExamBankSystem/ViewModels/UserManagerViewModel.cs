@@ -25,7 +25,7 @@ namespace ExamBankSystem.ViewModels
         [ObservableProperty]
         private bool canDelete = false;
         /// <summary>
-        /// 考试科目列表
+        /// 用户列表
         /// </summary>
         public ObservableCollection<User> Users { get; set; } = new ObservableCollection<User>();
         public UserManagerViewModel()
