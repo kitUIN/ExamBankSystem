@@ -17,48 +17,105 @@
             Title="{ex:Locale Key=Add}"
             PreferredPlacement="Center">
             <muxc:TeachingTip.Content>
-                <Grid
-                    Width="250"
-                    Padding="10,20"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    RowSpacing="10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0" ColumnSpacing="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock
-                            Grid.Column="0"
-                            VerticalAlignment="Center"
-                            Text="{ex:Locale Key=Subjects}" />
-                        <TextBox x:Name="Subject" Grid.Column="1" />
-                    </Grid>
-                    <Grid Grid.Row="1" ColumnSpacing="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock
-                            Grid.Column="0"
-                            VerticalAlignment="Center"
-                            Text="{ex:Locale Key=QuestionType}" />
-                        <ComboBox x:Name="QuestionType" Grid.Column="1">
-                            <ComboBoxItem Content="{ex:Locale Key=SingleChoice}" Tag="SingleChoice" />
-                            <ComboBoxItem Content="{ex:Locale Key=MultipleChoice}" Tag="MultipleChoice" />
-                            <ComboBoxItem Content="{ex:Locale Key=FillBlank}" Tag="FillBlank" />
-                            <ComboBoxItem Content="{ex:Locale Key=Judgment}" Tag="Judgment" />
-                            <ComboBoxItem Content="{ex:Locale Key=ShortAnswer}" Tag="ShortAnswer" />
-                            <ComboBoxItem Content="{ex:Locale Key=Design}" Tag="Design" />
-                            <ComboBoxItem Content="{ex:Locale Key=Program}" Tag="Program" />
-                        </ComboBox>
+                <ScrollViewer>
+                    <Grid
+                        Width="250"
+                        Padding="10,20"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        RowSpacing="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Text="{ex:Locale Key=Subjects}" />
+                            <TextBox x:Name="Subject" Grid.Column="1" />
+                        </Grid>
+                        <Grid Grid.Row="1" ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Text="{ex:Locale Key=QuestionType}" />
+                            <ComboBox x:Name="QuestionType" Grid.Column="1">
+                                <ComboBoxItem Content="{ex:Locale Key=SingleChoice}" Tag="SingleChoice" />
+                                <ComboBoxItem Content="{ex:Locale Key=MultipleChoice}" Tag="MultipleChoice" />
+                                <ComboBoxItem Content="{ex:Locale Key=FillBlank}" Tag="FillBlank" />
+                                <ComboBoxItem Content="{ex:Locale Key=Judgment}" Tag="Judgment" />
+                                <ComboBoxItem Content="{ex:Locale Key=ShortAnswer}" Tag="ShortAnswer" />
+                                <ComboBoxItem Content="{ex:Locale Key=Design}" Tag="Design" />
+                                <ComboBoxItem Content="{ex:Locale Key=Program}" Tag="Program" />
+                            </ComboBox>
+                        </Grid>
 
+                        <Grid Grid.Row="2" ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Text="{ex:Locale Key=Questions}" />
+                            <TextBox x:Name="Question" Grid.Column="1" />
+                        </Grid>
+
+                        <Grid Grid.Row="3" ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Text="{ex:Locale Key=Answer}" />
+                            <TextBox x:Name="Answer" Grid.Column="1" />
+                        </Grid>
+                        <Grid Grid.Row="4" ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Text="{ex:Locale Key=KnowledgePoints}" />
+                            <TextBox x:Name="KnowledgePoint" Grid.Column="1" />
+                        </Grid>
+                        <Grid Grid.Row="5" ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Text="{ex:Locale Key=Rank}" />
+                            <ComboBox x:Name="Rank" Grid.Column="1">
+                                <ComboBoxItem Content="1" Tag="1" />
+                                <ComboBoxItem Content="2" Tag="2" />
+                                <ComboBoxItem Content="3" Tag="3" />
+                                <ComboBoxItem Content="4" Tag="4" />
+                                <ComboBoxItem Content="5" Tag="5" />
+                            </ComboBox>
+                        </Grid>
                     </Grid>
-                </Grid>
+                </ScrollViewer>
             </muxc:TeachingTip.Content>
         </muxc:TeachingTip>
     </Grid>
