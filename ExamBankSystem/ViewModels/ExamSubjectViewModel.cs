@@ -21,8 +21,14 @@ namespace ExamBankSystem.ViewModels
         /// 操作事件
         /// </summary>
         public event EventHandler<ActionEventArg> ActionEvent;
+        /// <summary>
+        /// 是否允许按下修改按钮
+        /// </summary>
         [ObservableProperty]
         private bool canEdit = false;
+        /// <summary>
+        /// 是否允许按下删除按钮
+        /// </summary>
         [ObservableProperty]
         private bool canDelete = false;
         /// <summary>

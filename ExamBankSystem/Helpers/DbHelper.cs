@@ -19,7 +19,20 @@ namespace ExamBankSystem.Helpers
     public partial class DbHelper
     {
         private static string _dbpath;
-
+        private static T Execute<T>(Func<SqliteCommand,SqliteCommand> command, Func<SqliteDataReader,T> res)
+        {
+            using var db = new SqliteConnection($"Filename={_dbpath}");
+            db.Open();
+            var dbCommand = command(db.CreateCommand());
+            return res(dbCommand.ExecuteReader());
+        }
+        private static void Execute(Func<SqliteCommand,SqliteCommand> command)
+        {
+            using var db = new SqliteConnection($"Filename={_dbpath}");
+            db.Open();
+            var dbCommand = command(db.CreateCommand());
+            dbCommand.ExecuteReader();
+        }
         #region Initialize
 
         /// <summary>
@@ -47,7 +60,7 @@ namespace ExamBankSystem.Helpers
         private static async void CreateTestPapersTable(SqliteConnection db)
         {
             var tableCommand = "CREATE TABLE IF NOT EXISTS `TestPapers` (" +
-                               "`id` INT AUTO_INCREMENT  PRIMARY KEY, " +
+                               "`id` INTEGER PRIMARY KEY AUTOINCREMENT , " +
                                "`name` NVARCHAR(2048) NOT NULL, " +
                                "`point` INT NOT NULL, " +
                                "`isExamine` BOOLEAN NOT NULL, " +
@@ -65,7 +78,7 @@ namespace ExamBankSystem.Helpers
         private static async void CreateQuestionPapersTable(SqliteConnection db)
         {
             var tableCommand = "CREATE TABLE IF NOT EXISTS `QuestionPapers` (" +
-                               "`id` INT AUTO_INCREMENT  PRIMARY KEY, " +
+                               "`id` INTEGER PRIMARY KEY AUTOINCREMENT , " +
                                "`testPaperId` INT NOT NULL, " +
                                "`questionIndex` INT NOT NULL, " +
                                "`questionId` INT NOT NULL, " +
@@ -79,9 +92,6 @@ namespace ExamBankSystem.Helpers
 
         #endregion
 
-        
-       
-       
         public static void InsertQuestionPaper(QuestionPaper instance)
         {
             using (var db = new SqliteConnection($"Filename={_dbpath}"))

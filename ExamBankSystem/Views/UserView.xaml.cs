@@ -13,7 +13,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
+using ExamBankSystem.Enums;
+using ExamBankSystem.Extensions;
+using ExamBankSystem.Helpers;
 
 namespace ExamBankSystem.Views
 {
@@ -25,5 +27,6 @@ namespace ExamBankSystem.Views
         {
             this.InitializeComponent();
         }
+
     }
 }

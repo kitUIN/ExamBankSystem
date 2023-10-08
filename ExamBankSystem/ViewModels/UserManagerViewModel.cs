@@ -20,14 +20,20 @@ namespace ExamBankSystem.ViewModels
         /// 操作事件
         /// </summary>
         public event EventHandler<ActionEventArg> ActionEvent;
+        /// <summary>
+        /// 重置按钮是否亮起
+        /// </summary>
         [ObservableProperty]
-        private bool canEdit = false;
+        private bool canReset = false;
+        /// <summary>
+        /// 删除按钮是否亮起
+        /// </summary>
         [ObservableProperty]
         private bool canDelete = false;
         /// <summary>
         /// 用户列表
         /// </summary>
-        public ObservableCollection<User> Users { get; set; } = new ObservableCollection<User>();
+        public ObservableCollection<User> Users { get; } = new ObservableCollection<User>();
         public UserManagerViewModel()
         {
             Refresh();
@@ -48,8 +54,7 @@ namespace ExamBankSystem.ViewModels
         /// </summary>
         public void SelectionChanged(int count)
         {
-            CanEdit = count == 1;
-            CanDelete = count > 0;
+            CanDelete = CanReset = count > 0;
         }
         
         [RelayCommand]
@@ -62,17 +67,14 @@ namespace ExamBankSystem.ViewModels
             });
         }
         [RelayCommand]
-        private void Edit(object obj)
+        private void Reset(object obj)
         {
-            if (obj is ExamSubject subject)
+            ActionEvent?.Invoke(this, new ActionEventArg()
             {
-                ActionEvent?.Invoke(this, new ActionEventArg()
-                {
-                    TipMode = TipMode.Show,
-                    ActionMode = ActionMode.Edit,
-                    Source = subject.Name
-                });
-            }
+                TipMode = TipMode.Show,
+                ActionMode = ActionMode.Reset,
+                Source = obj
+            });
         }
         [RelayCommand]
         private void Delete(object obj)

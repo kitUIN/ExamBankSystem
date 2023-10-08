@@ -27,9 +27,38 @@ namespace ExamBankSystem.Helpers
             Action<ContentDialog, ContentDialogButtonClickEventArgs> primaryAction = null,
             Action<ContentDialog, ContentDialogButtonClickEventArgs> closeAction = null)
         {
+            return CreateThinkDialog(ResourcesHelper.GetString(ResourceKey.Delete),
+                ResourcesHelper.GetString(ResourceKey.DeleteMessage),
+                primaryAction,
+                closeAction
+            );
+        }
+
+        /// <summary>
+        /// 删除二次确认通知ContentDialog
+        /// </summary>
+        public static ContentDialog CreateResetPasswordDialog(
+            Action<ContentDialog, ContentDialogButtonClickEventArgs> primaryAction = null,
+            Action<ContentDialog, ContentDialogButtonClickEventArgs> closeAction = null)
+        {
+            return CreateThinkDialog(ResourcesHelper.GetString(ResourceKey.ResetPassword),
+                ResourcesHelper.GetString(ResourceKey.ResetPasswordMessage),
+                primaryAction,
+                closeAction
+            );
+        }
+        /// <summary>
+        /// 二次确认通知ContentDialog
+        /// </summary>
+        private static ContentDialog CreateThinkDialog(
+            string title,
+            string message,
+            Action<ContentDialog, ContentDialogButtonClickEventArgs> primaryAction = null,
+            Action<ContentDialog, ContentDialogButtonClickEventArgs> closeAction = null)
+        {
             ContentDialog dialog = CreateContentDialog();
-            dialog.Title = ResourcesHelper.GetString(ResourceKey.Delete);
-            dialog.Content = ResourcesHelper.GetString(ResourceKey.DeleteMessage);
+            dialog.Title = title;
+            dialog.Content = message;
             dialog.IsPrimaryButtonEnabled = true;
             dialog.CloseButtonText = ResourcesHelper.GetString(ResourceKey.Cancel);
             dialog.PrimaryButtonText = ResourcesHelper.GetString(ResourceKey.Confirm);

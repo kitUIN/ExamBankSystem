@@ -59,5 +59,15 @@
         LastLoginTime,
         AllPoint,
         OpenDb,
+        ResetPassword,
+        OldPassword,
+        NewPassword,
+        PasswordNot,
+        PasswordDifferent,
+        OldPasswordError,
+        ChangePasswordSuccess,
+        Teacher,
+        ResetPasswordMessage,
+        ResetSuccess,
     }
 }

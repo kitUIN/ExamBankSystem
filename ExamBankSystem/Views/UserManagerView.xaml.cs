@@ -13,6 +13,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using ExamBankSystem.Args;
+using ExamBankSystem.Enums;
 
 
 namespace ExamBankSystem.Views
@@ -24,6 +26,44 @@ namespace ExamBankSystem.Views
         public UserManagerView()
         {
             this.InitializeComponent();
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            ViewModel.ActionEvent += ViewModel_ActionEvent;
+            CommandTip.RefreshEvent += CommandTip_RefreshEvent;
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            ViewModel.ActionEvent -= ViewModel_ActionEvent;
+            CommandTip.RefreshEvent -= CommandTip_RefreshEvent;
+        }
+
+        private void CommandTip_RefreshEvent(object sender, EventArgs e)
+        {
+            ViewModel.Refresh();
+        }
+
+        private void ViewModel_ActionEvent(object sender, ActionEventArg e)
+        {
+            switch (e.TipMode)
+            {
+                case TipMode.Show:
+                    CommandTip.Show(e.ActionMode,e.Source);
+                    break;
+                case TipMode.Hide:
+                    CommandTip.Hide();
+                    break;
+                default:
+                    break;
+            }
+        }
+        /// <summary>
+        /// 列表选择变化响应
+        /// </summary>
+        private void MainList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.SelectionChanged(MainList.SelectedItems.Count);
         }
     }
 }

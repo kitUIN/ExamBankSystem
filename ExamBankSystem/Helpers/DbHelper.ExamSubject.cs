@@ -8,14 +8,17 @@ namespace ExamBankSystem.Helpers
     public partial class DbHelper
     {
         #region ExamSubject
+
+        
+        
         /// <summary>
         /// 创建考试科目表
         /// </summary>
         private static async void CreateExamSubjectsTable(SqliteConnection db)
         {
             var tableCommand = "CREATE TABLE IF NOT EXISTS `ExamSubjects` (" +
-                               "`id` INT AUTO_INCREMENT  PRIMARY KEY, " +
-                               "`subject` NVARCHAR(30) PRIMARY KEY, " +
+                               "`id` INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                               "`subject` NVARCHAR(30) , " +
                                "`createTime` TIMESTAMP NOT NULL, " +
                                "`updateTime` TIMESTAMP NULL " +
                                ")";
@@ -27,19 +30,19 @@ namespace ExamBankSystem.Helpers
         /// </summary>
         public static List<ExamSubject> GetExamSubjects()
         {
-            var res = new List<ExamSubject>(); 
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            return Execute(selectCommand =>
             {
-                db.Open();
-                var selectCommand = db.CreateCommand();
                 selectCommand.CommandText = $"SELECT * FROM {DbTableName.ExamSubjects} ;";
-                var query = selectCommand.ExecuteReader();
+                return selectCommand;
+            }, query =>
+            {
+                var res = new List<ExamSubject>();
                 while (query.Read())
                 {
                     res.Add(ExamSubject.FromDb(query));
                 }
-            }
-            return res;
+                return res;
+            });
         }
         /// <summary>
         /// 从数据库中获取考试科目
@@ -93,9 +96,8 @@ namespace ExamBankSystem.Helpers
             using (var db = new SqliteConnection($"Filename={_dbpath}"))
             {
                 db.Open();
-
                 var insertCommand = db.CreateCommand();
-                insertCommand.CommandText = $"INSERT INTO {DbTableName.ExamSubjects} VALUES (@Name, @CreateTime, @UpdateTime);";
+                insertCommand.CommandText = $"INSERT INTO {DbTableName.ExamSubjects} VALUES (null, @Name, @CreateTime, @UpdateTime);";
                 insertCommand.Parameters.AddWithValue("@Name", name);
                 var t = DateTimeHelper.GetTimeStamp();
                 insertCommand.Parameters.AddWithValue("@CreateTime", t);
@@ -134,6 +136,13 @@ namespace ExamBankSystem.Helpers
                 insertCommand.Parameters.AddWithValue("@oldName", oldName);
                 insertCommand.ExecuteReader();
             }
+        }
+        /// <summary>
+        /// 考试科目下是否有问题
+        /// </summary>
+        public static void HasAnyQuestion(int id)
+        {
+            
         }
         #endregion
     }

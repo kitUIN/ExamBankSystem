@@ -9,6 +9,7 @@
             <controls:XamlControlsResources.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
             </controls:XamlControlsResources.MergedDictionaries>
+
         </controls:XamlControlsResources>
     </Application.Resources>
 </Application>

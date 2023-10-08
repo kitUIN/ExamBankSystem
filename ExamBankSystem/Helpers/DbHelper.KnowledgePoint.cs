@@ -13,8 +13,8 @@ namespace ExamBankSystem.Helpers
         private static async void CreateKnowledgePointsTable(SqliteConnection db)
         {
             var tableCommand = "CREATE TABLE IF NOT EXISTS `KnowledgePoints` (" +
-                               "`id` INT AUTO_INCREMENT  PRIMARY KEY, " +
-                               "`name` NVARCHAR(100) PRIMARY KEY, " +
+                               "`id` INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                               "`name` NVARCHAR(100), " +
                                "`knowledge` NTEXT NOT NULL, " +
                                "`createTime` TIMESTAMP NOT NULL, " +
                                "`updateTime` TIMESTAMP NULL " +

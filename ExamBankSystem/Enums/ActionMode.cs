@@ -11,5 +11,6 @@ namespace ExamBankSystem.Enums
         Add,
         Edit,
         Delete,
+        Reset,
     }
 }

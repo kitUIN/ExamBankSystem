@@ -4,6 +4,7 @@ using ExamBankSystem.Utils;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -91,7 +92,9 @@ namespace ExamBankSystem.Controls
                     );
                 return;
             }
-            if (user.Password != Password.Password)
+            var password = Password.Password.Length == 32 ? Password.Password:HashHelper.Hash_MD5_32(Password.Password);
+            Debug.WriteLine(password);
+            if (password != user.Password)
             {
                 EventHelper.InvokeTipPopup(this,
                     ResourcesHelper.GetString(ResourceKey.PasswordError),
@@ -104,12 +107,12 @@ namespace ExamBankSystem.Controls
                     ResourcesHelper.GetString(ResourceKey.LoginSuccess),
                     InfoBarSeverity.Success
                     );
-                DbHelper.UpdateUserLoginTime(user.Name);
+                DbHelper.UpdateUserLoginTime(user.Id);
                 CurrentData.CurrentUser = DbHelper.GetUser(User.Text);
                 if (Remember.IsChecked.Value)
                 {
                     ConfigHelper.Set(ConfigKey.LastUserName, User.Text);
-                    ConfigHelper.Set(ConfigKey.LastUserPassword, Password.Password);
+                    ConfigHelper.Set(ConfigKey.LastUserPassword, password);
                 }
                 else
                 {

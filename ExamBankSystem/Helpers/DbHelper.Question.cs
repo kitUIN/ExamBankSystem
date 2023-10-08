@@ -15,7 +15,7 @@ namespace ExamBankSystem.Helpers
          private static async void CreateQuestionsTable(SqliteConnection db)
          {
              var tableCommand = "CREATE TABLE IF NOT EXISTS `Questions` (" +
-                                "`id` INT AUTO_INCREMENT  PRIMARY KEY, " +
+                                "`id` INTEGER PRIMARY KEY AUTOINCREMENT , " +
                                 "`subjectId` INT NOT NULL, " +
                                 "`type` INT NOT NULL, " +
                                 "`question` NTEXT NOT NULL, " +
