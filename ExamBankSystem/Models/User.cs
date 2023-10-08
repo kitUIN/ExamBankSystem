@@ -7,28 +7,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace ExamBankSystem.Models
 {
     /// <summary>
     /// 用户
     /// </summary>
-    public class User
+    public partial class User : ObservableObject
     {
-        public string Name { get; set; }
-        public string Password { get; set; }
-        public UserRole Role { get; set; }
-        public DateTime CreateTime { get; set; }
-        public DateTime LastLoginTime { get; set; }
+        /// <summary>
+        /// ID
+        /// </summary>
+        [ObservableProperty]
+        private int id;
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [ObservableProperty]
+        private string name ;
+        /// <summary>
+        /// 密码
+        /// </summary>
+        [ObservableProperty]
+        private string password ;
+        /// <summary>
+        /// 权限
+        /// </summary>
+        [ObservableProperty]
+        private UserRole role ;
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        [ObservableProperty]
+        private DateTime createTime ;
+        /// <summary>
+        /// 最后更新时间
+        /// </summary>
+        [ObservableProperty]
+        private DateTime lastLoginTime ;
+        /// <summary>
+        /// 从数据库导入
+        /// </summary>
         public static User FromDb(SqliteDataReader query)
         {
             return new User
             {
-                Name = query.GetString(0),
-                Password = query.GetString(1),
-                Role = EnumHelper.GetEnum<UserRole>(query.GetString(2)),
-                CreateTime = DateTimeHelper.ToDateTime(query.GetInt64(3)),
-                LastLoginTime = DateTimeHelper.ToDateTime(query.GetInt64(4)),
+                Id = query.GetInt32(0),
+                Name = query.GetString(1),
+                Password = query.GetString(2),
+                Role = EnumHelper.GetEnum<UserRole>(query.GetString(3)),
+                CreateTime = DateTimeHelper.ToDateTime(query.GetInt64(4)),
+                LastLoginTime = DateTimeHelper.ToDateTime(query.GetInt64(5)),
             };
         }
     }

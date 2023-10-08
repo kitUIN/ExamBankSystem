@@ -18,7 +18,7 @@ namespace ExamBankSystem.ViewModels
     public partial class QuestionsViewModel : ObservableObject
     {
         /// <summary>
-        /// 操作事件
+        /// 
         /// </summary>
         public event EventHandler<ActionEventArg> ActionEvent;
         [ObservableProperty]
@@ -26,11 +26,11 @@ namespace ExamBankSystem.ViewModels
         [ObservableProperty]
         private bool canDelete = false;
         /// <summary>
-        /// 问题列表
+        /// 
         /// </summary>
         public ObservableCollection<Question> Questions { get; set; } = new ObservableCollection<Question>();
         /// <summary>
-        /// 列表选择变化响应
+        /// 
         /// </summary>
         public void SelectionChanged(int count)
         {

@@ -30,7 +30,7 @@ namespace ExamBankSystem.Models
         [ObservableProperty]
         private int point;
         /// <summary>
-        /// 是否考试
+        /// 是否审查
         /// </summary>
         [ObservableProperty]
         private bool isExamine;
@@ -49,6 +49,9 @@ namespace ExamBankSystem.Models
         /// </summary>
         [ObservableProperty]
         private DateTime updateTime;
+        /// <summary>
+        /// 从数据库导入
+        /// </summary>
         public static TestPaper FromDb(SqliteDataReader query)
         {
             return new TestPaper

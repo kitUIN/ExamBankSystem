@@ -45,6 +45,7 @@ namespace ExamBankSystem.Controls
         public void Show(ActionMode mode, object obj = null)
         {
             oldName = "";
+            ExamSubject.Text = "";
             Mode = mode;
             switch (mode)
             {

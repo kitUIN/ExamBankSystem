@@ -143,12 +143,17 @@
     <Compile Include="Enums\UserRole.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Helpers\DateTimeHelper.cs" />
+    <Compile Include="Helpers\DbHelper.ExamSubject.cs" />
+    <Compile Include="Helpers\DbHelper.KnowledgePoint.cs" />
+    <Compile Include="Helpers\DbHelper.Question.cs" />
+    <Compile Include="Helpers\DbHelper.User.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\EventHelper.cs" />
     <Compile Include="Enums\ResourceKey.cs" />
     <Compile Include="Enums\TopGridMode.cs" />
     <Compile Include="Extensions\LocaleExtension.cs" />
     <Compile Include="Helpers\DbHelper.cs" />
+    <Compile Include="Helpers\HashHelper.cs" />
     <Compile Include="Helpers\ResourcesHelper.cs" />
     <Compile Include="Helpers\XamlHelper.cs" />
     <Compile Include="MainPage.xaml.cs">
