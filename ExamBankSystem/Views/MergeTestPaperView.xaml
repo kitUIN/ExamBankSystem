@@ -32,7 +32,7 @@
                         <TextBlock
                             Grid.Column="0"
                             VerticalAlignment="Center"
-                            Text="试卷难易度" />
+                            Text="{ex:Locale Key=PaperRank}" />
                         <TextBox x:Name="PaperRank" Grid.Column="1" />
                     </Grid>
                     <TextBlock Margin="0,10,0,0" Text="{ex:Locale Key=ProblemDistribution}" />

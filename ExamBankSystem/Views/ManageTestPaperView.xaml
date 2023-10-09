@@ -11,7 +11,7 @@
     mc:Ignorable="d">
 
     <Grid Padding="10">
-        <Pivot> 
+        <Pivot>
             <PivotItem Header="{ex:Locale Key=Manage}">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -44,7 +44,7 @@
                                 Label="{ex:Locale Key=Edit}" />
                             <AppBarButton
                                 Command="{x:Bind ViewModel.DeleteCommand}"
-                                CommandParameter="{x:Bind MainList.SelectedItems, Mode=OneWay}"
+                                CommandParameter="{x:Bind MainList.SelectedItem, Mode=OneWay}"
                                 Icon="Delete"
                                 IsEnabled="{x:Bind ViewModel.CanDelete, Mode=OneWay}"
                                 Label="{ex:Locale Key=Delete}" />
@@ -136,9 +136,7 @@
                     <controls:TestPaperTip x:Name="CommandTip" />
                 </Grid>
             </PivotItem>
-            <PivotItem Header="{ex:Locale Key=Manage}">
-                
-            </PivotItem>
+            <PivotItem Header="{ex:Locale Key=CheckWord}" />
         </Pivot>
     </Grid>
 </Page>

@@ -95,6 +95,7 @@
         ProblemDistribution,
         Examine,
         ExportPaper,
-        ExportAnswer
+        ExportAnswer,
+        PaperRank,
     }
 }

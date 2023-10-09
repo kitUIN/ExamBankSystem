@@ -26,13 +26,13 @@ namespace ExamBankSystem.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ViewModel.ActionEvent += ViewModel_ActionEvent;
-            //CommandTip.RefreshEvent += CommandTip_RefreshEvent;
+            CommandTip.RefreshEvent += CommandTip_RefreshEvent;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             ViewModel.ActionEvent -= ViewModel_ActionEvent;
-            //CommandTip.RefreshEvent -= CommandTip_RefreshEvent;
+            CommandTip.RefreshEvent -= CommandTip_RefreshEvent;
         }
 
         private void CommandTip_RefreshEvent(object sender, EventArgs e)
@@ -48,7 +48,7 @@ namespace ExamBankSystem.Views
                     CommandTip.Show(e.ActionMode, e.Source);
                     break;
                 case TipMode.Hide:
-                    //CommandTip.Hide();
+                    CommandTip.Hide();
                     break;
                 default:
                     break;

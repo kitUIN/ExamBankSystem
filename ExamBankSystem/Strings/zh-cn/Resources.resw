@@ -390,4 +390,7 @@
   <data name="ExportPaper" xml:space="preserve">
     <value>导出试卷</value>
   </data>
+  <data name="PaperRank" xml:space="preserve">
+    <value>试卷难易度</value>
+  </data>
 </root>
