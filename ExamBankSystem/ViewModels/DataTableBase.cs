@@ -7,6 +7,7 @@ using ExamBankSystem.Args;
 using ExamBankSystem.Enums;
 using ExamBankSystem.Helpers;
 using ExamBankSystem.Models;
+using System.Diagnostics;
 
 namespace ExamBankSystem.ViewModels
 {
@@ -136,7 +137,7 @@ namespace ExamBankSystem.ViewModels
         /// <summary>
         /// 搜索响应
         /// </summary>
-        public virtual void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)
+        public void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             if (sender is TextBox box)
             {
@@ -164,7 +165,6 @@ namespace ExamBankSystem.ViewModels
                 ActionMode = ActionMode.Add,
             });
         }
-        
         /// <summary>
         /// 添加多个按钮响应
         /// </summary> 

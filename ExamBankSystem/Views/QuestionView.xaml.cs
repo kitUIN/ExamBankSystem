@@ -5,6 +5,7 @@ using ExamBankSystem.ViewModels;
 using System;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using System.Diagnostics;
 
 namespace ExamBankSystem.Views
 {
@@ -67,12 +68,55 @@ namespace ExamBankSystem.Views
 
         private void SearchBar3_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SearchBar1.Text = SearchBar3.SelectedIndex.ToString();
+            ViewModel.SearchText = SearchBar3.SelectedIndex.ToString();
+            ViewModel.SearchBar_OnTextChanged(SearchBar1, null);
         }
 
         private void SearchBar2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SearchBar1.Text = (SearchBar2.SelectedItem as ComboBoxItem).Tag.ToString();
+            ViewModel.SearchBar_OnTextChanged(SearchBar1, null);
+        }
+
+        private void SearchBar1_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ViewModel.SearchBar_OnTextChanged(SearchBar1, null);
+        }
+        private void SearchType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ComboBox searcher)
+            {
+                if (searcher.SelectedIndex == 0)
+                {
+                    ViewModel.SearchCol = "subjectId";
+                    ViewModel.SearchText = "";
+                    ViewModel.Search1 = true;
+                    ViewModel.Search2 = ViewModel.Search3 = false;
+                    ViewModel.SearchBar_OnTextChanged(SearchBar1, null);
+                }
+                else if (searcher.SelectedIndex == 1)
+                {
+                    ViewModel.SearchCol = "rank";
+                    ViewModel.Search2 = true;
+                    ViewModel.SearchBar_OnTextChanged(SearchBar1, null);
+                    ViewModel.Search1 = ViewModel.Search3 = false;
+                }
+                else if (searcher.SelectedIndex == 2)
+                {
+                    ViewModel.SearchCol = "type";
+                    ViewModel.Search3 = true;
+                    ViewModel.SearchBar_OnTextChanged(SearchBar1, null);
+                    ViewModel.Search1 = ViewModel.Search2 = false;
+                }
+                else if (searcher.SelectedIndex == 3)
+                {
+                    ViewModel.SearchCol = "knowledgeId";
+                    ViewModel.SearchText = "";
+                    ViewModel.Search1 = true;
+                    ViewModel.Search2 = ViewModel.Search3 = false;
+                    ViewModel.SearchBar_OnTextChanged(SearchBar1, null);
+                }
+            }
         }
     }
 }
