@@ -97,5 +97,6 @@
         ExportPaper,
         ExportAnswer,
         PaperRank,
+        Replace,
     }
 }

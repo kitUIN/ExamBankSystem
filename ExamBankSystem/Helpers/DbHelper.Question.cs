@@ -123,6 +123,28 @@ namespace ExamBankSystem.Helpers
                 return res;
             });
         }
+        
+        public static async Task<List<string>> SearchQuestionWithType(int t, string keyword) 
+        { 
+            if (keyword.Contains("%") && !keyword.Contains("_")) keyword = "%" + keyword + "%";
+            return await ExecuteReaderAsync(selectCommand =>
+            {
+                selectCommand.CommandText =
+                    $"SELECT * FROM Questions WHERE type = @Ty AND question LIKE @Keyword;";
+                selectCommand.Parameters.AddWithValue("@Ty", t);
+                selectCommand.Parameters.AddWithValue("@Keyword", keyword);
+                return selectCommand;
+            }, query =>
+            {
+                var res = new List<string>();
+                while (query.Read())
+                {
+                    var item = new Question(query);
+                    res.Add(item.Name);
+                }
+                return res;
+            });
+        }
         public static async Task<List<Question>> GetQuestionAsync(string col, object keyword, long page ,
             int limit = 15) 
         {

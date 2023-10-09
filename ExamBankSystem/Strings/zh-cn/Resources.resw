@@ -393,4 +393,7 @@
   <data name="PaperRank" xml:space="preserve">
     <value>试卷难易度</value>
   </data>
+  <data name="Replace" xml:space="preserve">
+    <value>替换</value>
+  </data>
 </root>

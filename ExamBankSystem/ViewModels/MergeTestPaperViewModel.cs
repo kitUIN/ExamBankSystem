@@ -14,35 +14,6 @@ namespace ExamBankSystem.ViewModels
 {
     public partial class MergeTestPaperViewModel: ObservableObject
     {
-        [ObservableProperty]
-        private string wordA;
-        [ObservableProperty]
-        private string wordB;
-        private StorageFile wordAFile;
-        private StorageFile wordBFile;
-        [RelayCommand]
-        public async Task SelectWordA()
-        {
-            wordAFile = await FileHelper.GetDocxAsync();
-            if(wordAFile != null)
-            {
-                WordA = wordAFile.DisplayName;
-            }
-        }
-        [RelayCommand]
-        public async Task SelectWordB()
-        {
-            wordBFile = await FileHelper.GetDocxAsync();
-            if (wordBFile != null)
-            {
-                WordB = wordBFile.DisplayName;
-            }
-        }
-        [RelayCommand]
-        public void Merge()
-        {
-            wordBFile = null;
-            wordAFile = null;
-        }
+        
     }
 }
