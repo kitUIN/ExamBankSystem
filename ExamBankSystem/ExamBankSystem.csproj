@@ -168,6 +168,7 @@
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\HashHelper.cs" />
     <Compile Include="Helpers\ResourcesHelper.cs" />
+    <Compile Include="Helpers\TextHelper.cs" />
     <Compile Include="Helpers\XamlHelper.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ExamBankSystem.Enums;
 using ExamBankSystem.Models;
+using ExamBankSystem.Utils;
 using Microsoft.Data.Sqlite;
 
 namespace ExamBankSystem.Helpers
@@ -159,6 +160,18 @@ namespace ExamBankSystem.Helpers
                 selectCommand.Parameters.AddWithValue("@ID", questionId);
                 return selectCommand;
             })) > 0;
+        }
+
+        public static async Task<bool> CheckQuestionPercent(string s1, int t)
+        {
+            foreach (var question in await GetQuestionAsync("type", t))
+            {
+                if (TextHelper.CheckText(s1, question.Name) > CurrentData.CheckedPercent)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

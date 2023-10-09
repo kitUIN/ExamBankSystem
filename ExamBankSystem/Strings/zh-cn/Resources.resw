@@ -375,4 +375,7 @@
   <data name="SelectLastYearsWords" xml:space="preserve">
     <value>选择往年试卷</value>
   </data>
+  <data name="QuestionPercentError" xml:space="preserve">
+    <value>题目重叠度过高</value>
+  </data>
 </root>

@@ -91,5 +91,6 @@
         SiglePaper,
         ABPaper,
         SelectLastYearsWords,
+        QuestionPercentError,
     }
 }

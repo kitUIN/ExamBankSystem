@@ -32,6 +32,7 @@ namespace ExamBankSystem.Controls
         public event EventHandler RefreshEvent;
 
         private int id;
+
         public QuestionTip()
         {
             this.InitializeComponent();
@@ -43,6 +44,7 @@ namespace ExamBankSystem.Controls
         private Question _question;
 
         private ActionMode Mode { get; set; }
+
         /// <summary>
         /// 显示
         /// </summary>
@@ -71,19 +73,22 @@ namespace ExamBankSystem.Controls
                         MainTeachingTip.IsOpen = true;
                         if (await DbHelper.QuestionHasAnyTestPaperAsync(question.Id))
                         {
-                            EventHelper.InvokeTipPopup(this, ResourcesHelper.GetString(ResourceKey.Delete)+
-                                    ResourcesHelper.GetString(ResourceKey.QuestionFail),
-                                    InfoBarSeverity.Error
-                                );
+                            EventHelper.InvokeTipPopup(this, ResourcesHelper.GetString(ResourceKey.Delete) +
+                                                             ResourcesHelper.GetString(ResourceKey.QuestionFail),
+                                InfoBarSeverity.Error
+                            );
                         }
+
                         _question = question;
                     }
+
                     break;
                 case ActionMode.Delete:
                     Delete(obj);
                     break;
             }
         }
+
         /// <summary>
         /// 删除
         /// </summary>
@@ -95,44 +100,45 @@ namespace ExamBankSystem.Controls
                 EventHelper.InvokeTopGridEvent(this,
                     new TopGridEventArg(
                         XamlHelper.CreateDeleteDialog(async (sender, args) =>
-                        {
-                            var success = 0;
-                            var fail = 0;
-                            foreach (var item in items.Cast<Question>())
                             {
-                                if (await DbHelper.QuestionHasAnyTestPaperAsync(item.Id))
+                                var success = 0;
+                                var fail = 0;
+                                foreach (var item in items.Cast<Question>())
                                 {
-                                    fail++;
+                                    if (await DbHelper.QuestionHasAnyTestPaperAsync(item.Id))
+                                    {
+                                        fail++;
+                                    }
+                                    else
+                                    {
+                                        success++;
+                                        DbHelper.DeleteById<Question>(item.Id);
+                                    }
                                 }
-                                else
-                                {
-                                    success++;
-                                    DbHelper.DeleteById<Question>(item.Id);
-                                }
-                            }
 
-                            if (success > 0)
-                            {
-                                EventHelper.InvokeTipPopup(this,
-                                    ResourcesHelper.GetString(ResourceKey.DeleteSuccess) + ": " + success,
-                                    InfoBarSeverity.Success
-                                );
+                                if (success > 0)
+                                {
+                                    EventHelper.InvokeTipPopup(this,
+                                        ResourcesHelper.GetString(ResourceKey.DeleteSuccess) + ": " + success,
+                                        InfoBarSeverity.Success
+                                    );
+                                }
+
+                                if (fail > 0)
+                                {
+                                    EventHelper.InvokeTipPopup(this,
+                                        ResourcesHelper.GetString(ResourceKey.Delete) +
+                                        ResourcesHelper.GetString(ResourceKey.QuestionFail) + ": " +
+                                        fail,
+                                        InfoBarSeverity.Error
+                                    );
+                                }
+
+                                RefreshEvent?.Invoke(this, EventArgs.Empty);
                             }
-                            if (fail > 0)
-                            {
-                                EventHelper.InvokeTipPopup(this,
-                                    ResourcesHelper.GetString(ResourceKey.Delete) +
-                                    ResourcesHelper.GetString(ResourceKey.QuestionFail) + ": " +
-                                    fail,
-                                    InfoBarSeverity.Error
-                                );
-                            }
-                            RefreshEvent?.Invoke(this, EventArgs.Empty);
-                        }
                         ),
                         TopGridMode.ContentDialog));
             }
-
         }
 
         /// <summary>
@@ -149,7 +155,9 @@ namespace ExamBankSystem.Controls
         private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
             // 检测是否为空
+
             #region NotNull
+
             var subjectId = -1;
             if (await DbHelper.GetExamSubjectAsync(Subject.Text) is ExamSubject subject)
             {
@@ -158,20 +166,22 @@ namespace ExamBankSystem.Controls
             else
             {
                 EventHelper.InvokeTipPopup(this,
-                ResourcesHelper.GetString(ResourceKey.ExamSubjects) +
-                ResourcesHelper.GetString(ResourceKey.NotExist),
-                InfoBarSeverity.Error
+                    ResourcesHelper.GetString(ResourceKey.ExamSubjects) +
+                    ResourcesHelper.GetString(ResourceKey.NotExist),
+                    InfoBarSeverity.Error
                 );
                 return;
             }
+
             if (string.IsNullOrEmpty(Subject.Text))
             {
                 EventHelper.InvokeTipPopup(this,
                     ResourcesHelper.GetString(ResourceKey.ExamSubjectNull),
                     InfoBarSeverity.Error
                 );
-                return ;
+                return;
             }
+
             if (string.IsNullOrEmpty(Question.Text))
             {
                 EventHelper.InvokeTipPopup(this,
@@ -179,8 +189,9 @@ namespace ExamBankSystem.Controls
                     ResourcesHelper.GetString(ResourceKey.NotNull),
                     InfoBarSeverity.Error
                 );
-                return ;
+                return;
             }
+
             var answer = "";
             Answer.Document.GetText(TextGetOptions.FormatRtf, out answer);
             if (string.IsNullOrEmpty(answer))
@@ -190,13 +201,15 @@ namespace ExamBankSystem.Controls
                     ResourcesHelper.GetString(ResourceKey.NotNull),
                     InfoBarSeverity.Error
                 );
-                return ;
+                return;
             }
+
             double point = 0;
             try
             {
                 point = Convert.ToDouble(Choices.Text);
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 EventHelper.InvokeTipPopup(this,
                     ResourcesHelper.GetString(ResourceKey.Point) +
@@ -205,6 +218,7 @@ namespace ExamBankSystem.Controls
                 );
                 return;
             }
+
             if (string.IsNullOrEmpty(answer))
             {
                 EventHelper.InvokeTipPopup(this,
@@ -212,8 +226,9 @@ namespace ExamBankSystem.Controls
                     ResourcesHelper.GetString(ResourceKey.NotNull),
                     InfoBarSeverity.Error
                 );
-                return ;
+                return;
             }
+
             var knowledgeId = -1;
             if (await DbHelper.GetKnowledgePointAsync(KnowledgePoint.Text) is KnowledgePoint kpoint)
             {
@@ -228,34 +243,48 @@ namespace ExamBankSystem.Controls
                 );
                 return;
             }
+
             #endregion
+
             switch (Mode)
             {
                 case ActionMode.Add:
-                    DbHelper.InsertQuestion(
-                        subjectId,QuestionType.SelectedIndex,Question.Text,
-                        point, answer,Rank.SelectedIndex + 1,knowledgeId,CurrentData.CurrentUser.Id
+                    if (await DbHelper.CheckQuestionPercent(Question.Text, QuestionType.SelectedIndex))
+                    {
+                        EventHelper.InvokeTipPopup(this,
+                            ResourcesHelper.GetString(ResourceKey.QuestionPercentError),
+                            InfoBarSeverity.Error
                         );
-                    EventHelper.InvokeTipPopup(this,
-                       ResourcesHelper.GetString(ResourceKey.AddSuccess),
-                       InfoBarSeverity.Success
-                   );
+                    }
+                    else
+                    {
+                        DbHelper.InsertQuestion(
+                            subjectId, QuestionType.SelectedIndex, Question.Text,
+                            point, answer, Rank.SelectedIndex + 1, knowledgeId, CurrentData.CurrentUser.Id
+                        );
+                        EventHelper.InvokeTipPopup(this,
+                            ResourcesHelper.GetString(ResourceKey.AddSuccess),
+                            InfoBarSeverity.Success
+                        );
+                    }
                     break;
                 case ActionMode.AddMul:
                     break;
                 case ActionMode.Edit:
-                    DbHelper.UpdateQuestion(_question.Id,subjectId, QuestionType.SelectedIndex, Question.Text,
+                    DbHelper.UpdateQuestion(_question.Id, subjectId, QuestionType.SelectedIndex, Question.Text,
                         point, answer, Rank.SelectedIndex + 1, knowledgeId, CurrentData.CurrentUser.Id
-                        );
+                    );
                     EventHelper.InvokeTipPopup(this,
                         ResourcesHelper.GetString(ResourceKey.EditSuccess),
                         InfoBarSeverity.Success
                     );
                     break;
             }
+
             Hide();
             RefreshEvent?.Invoke(this, EventArgs.Empty);
         }
+
         /// <summary>
         /// 回车响应
         /// </summary>
