@@ -103,7 +103,7 @@ namespace ExamBankSystem
                         ContentFrame.Navigate(typeof(FindTestPaperView));
                         break;
                     case CategoryTag.ManageTestPaper:
-                        ContentFrame.Navigate(typeof(ManageTestPaper));
+                        ContentFrame.Navigate(typeof(ManageTestPaperView));
                         break;
                     case CategoryTag.MergeTestPaper:
                         ContentFrame.Navigate(typeof(MergeTestPaperView));

@@ -239,7 +239,7 @@ namespace ExamBankSystem.Helpers
             {
                 var table = GetTable<T>();
                 selectCommand.CommandText =
-                    $"SELECT * FROM {table} WHERE {col} LIKE @Keyword LIMIT @Limit OFFSET @Offset;";
+                    $"SELECT * FROM {table} WHERE {col} LIKE @Keyword;";
                 selectCommand.Parameters.AddWithValue("@Keyword", keyword);
                 return selectCommand;
             }, query =>
@@ -258,67 +258,5 @@ namespace ExamBankSystem.Helpers
         }
         #endregion
 
-        /*#region TestPaper
-        /// <summary>
-        /// 从数据库中获取试卷
-        /// </summary>
-        public static List<TestPaper> GetTestPapers()
-        {
-            var res = new List<TestPaper>();
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
-            {
-                db.Open();
-                var selectCommand = db.CreateCommand();
-                selectCommand.CommandText = $"SELECT * FROM {DbTableName.TestPapers} ;";
-                var query = selectCommand.ExecuteReader();
-                while (query.Read())
-                {
-                    res.Add(TestPaper.FromDb(query));
-                }
-            }
-            return res;
-        }
-        /// <summary>
-        /// 从数据库中获取试卷
-        /// </summary>
-        public static TestPaper GetTestPaper(int id)
-        {
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
-            {
-                db.Open();
-                var selectCommand = db.CreateCommand();
-                selectCommand.CommandText = $"SELECT * FROM {DbTableName.TestPapers} WHERE id = @Name;";
-
-                selectCommand.Parameters.AddWithValue("@Name", id);
-
-                var query = selectCommand.ExecuteReader();
-
-                while (query.Read())
-                {
-                    return TestPaper.FromDb(query);
-                }
-            }
-            return null;
-        }
-        public static void InsertTestPaper(TestPaper instance)
-        {
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
-            {
-                db.Open();
-
-                var insertCommand = db.CreateCommand();
-                insertCommand.CommandText = $"INSERT INTO {DbTableName.TestPapers} (name, point, isExamine, uploadUser, createTime, updateTime) VALUES (@Name, @Point, @IsExamine, @UploadUser, @CreateTime, @UpdateTime);";
-                insertCommand.Parameters.AddWithValue("@Name", instance.Name);
-                insertCommand.Parameters.AddWithValue("@Point", instance.Point);
-                insertCommand.Parameters.AddWithValue("@IsExamine", instance.IsExamine);
-                insertCommand.Parameters.AddWithValue("@UploadUser", instance.UploadUser);
-                var t = DateTimeHelper.GetTimeStamp();
-                insertCommand.Parameters.AddWithValue("@CreateTime", t);
-                insertCommand.Parameters.AddWithValue("@UpdateTime", t);
-                insertCommand.ExecuteReader();
-            }
-        }
-
-        #endregion*/
     }
 }

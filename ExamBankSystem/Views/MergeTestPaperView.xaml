@@ -24,7 +24,7 @@
                             Text="{ex:Locale Key=KnowledgePoints}" />
                         <TextBox x:Name="KnowledgePoints" Grid.Column="1" />
                     </Grid>
-                    <TextBlock Margin="0,10,0,0" Text="题目分布:" />
+                    <TextBlock Margin="0,10,0,0" Text="{ex:Locale Key=ProblemDistribution}" />
                     <Grid ColumnSpacing="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="50" />
@@ -153,23 +153,32 @@
                         Grid.Row="0"
                         Orientation="Horizontal"
                         Spacing="20">
-                        <Button x:Name="SelectWordA" Content="{ex:Locale Key=SelectWord}" />
+                        <Button
+                            x:Name="SelectWordA"
+                            Command="{x:Bind ViewModel.SelectWordACommand}"
+                            Content="{ex:Locale Key=SelectWord}" />
                         <TextBlock x:Name="WordA" VerticalAlignment="Center">
                             <Run Text="WordA:" />
+                            <Run Text="{x:Bind ViewModel.WordA, Mode=OneWay}" />
                         </TextBlock>
                     </StackPanel>
                     <StackPanel
                         Grid.Row="1"
                         Orientation="Horizontal"
                         Spacing="20">
-                        <Button x:Name="SelectWordB" Content="{ex:Locale Key=SelectWord}" />
+                        <Button
+                            x:Name="SelectWordB"
+                            Command="{x:Bind ViewModel.SelectWordBCommand}"
+                            Content="{ex:Locale Key=SelectWord}" />
                         <TextBlock x:Name="WordB" VerticalAlignment="Center">
                             <Run Text="WordB:" />
+                            <Run Text="{x:Bind ViewModel.WordB, Mode=OneWay}" />
                         </TextBlock>
                     </StackPanel>
                     <Button
                         x:Name="MergeButton"
                         Grid.Row="2"
+                        Command="{x:Bind ViewModel.MergeCommand}"
                         Content="{ex:Locale Key=Merge}" />
                 </Grid>
             </PivotItem>

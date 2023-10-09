@@ -17,6 +17,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="32" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="48" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Padding="10,0">
                 <Grid.ColumnDefinitions>
@@ -109,11 +110,13 @@
                     </AppBarButton>
                     <AppBarButton
                         Command="{x:Bind ViewModel.EditCommand}"
+                        CommandParameter="{x:Bind MainList.SelectedItem, Mode=OneWay}"
                         Icon="Edit"
                         IsEnabled="{x:Bind ViewModel.CanEdit, Mode=OneWay}"
                         Label="{ex:Locale Key=Edit}" />
                     <AppBarButton
                         Command="{x:Bind ViewModel.DeleteCommand}"
+                        CommandParameter="{x:Bind MainList.SelectedItems, Mode=OneWay}"
                         Icon="Delete"
                         IsEnabled="{x:Bind ViewModel.CanDelete, Mode=OneWay}"
                         Label="{ex:Locale Key=Delete}" />
@@ -190,7 +193,41 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <Grid Grid.Row="3" Padding="15,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1" ColumnSpacing="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" VerticalAlignment="Center">
+                        <Run Text="{x:Bind ViewModel.CurrentPage, Mode=OneWay}" />
+                        <Run Text="/" />
+                        <Run Text="{x:Bind ViewModel.TotalPage, Mode=OneWay}" />
+                    </TextBlock>
+                    <CommandBar
+                        Grid.Column="1"
+                        Background="Transparent"
+                        DefaultLabelPosition="Right"
+                        IsOpen="False">
+                        <AppBarButton
+                            Command="{x:Bind ViewModel.PrePageCommand}"
+                            Icon="Back"
+                            IsEnabled="{x:Bind ViewModel.PrePageEnable, Mode=OneWay}"
+                            Label="{ex:Locale Key=PrePage}" />
+                        <AppBarButton
+                            Command="{x:Bind ViewModel.NextPageCommand}"
+                            Icon="Forward"
+                            IsEnabled="{x:Bind ViewModel.NextPageEnable, Mode=OneWay}"
+                            Label="{ex:Locale Key=NextPage}" />
+                    </CommandBar>
+                </Grid>
+            </Grid>
         </Grid>
+
         <controls:QuestionTip x:Name="CommandTip" />
         <controls:QuestionMulTip x:Name="QuestionMulTip" />
     </Grid>

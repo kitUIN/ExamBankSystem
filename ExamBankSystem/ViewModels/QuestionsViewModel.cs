@@ -30,8 +30,9 @@ namespace ExamBankSystem.ViewModels
         /// 搜索刷新
         /// </summary>
         /// <param name="text"></param>
-        public new async void SearchRefresh(string text)
+        public override async void SearchRefresh(string text)
         {
+            Debug.WriteLine(111111);
             List<Question> items = new List<Question>();
             if (SearchCol == "type" || SearchCol == "rank")
             {
@@ -55,6 +56,11 @@ namespace ExamBankSystem.ViewModels
                     items.AddRange(await DbHelper.GetQuestionAsync(SearchCol, subject.Id));
                 }
                 TotalPage = 1;
+            }
+            else
+            {
+                items = await DbHelper.GetAsync<Question>(CurrentPage);
+                TotalPage = (DbHelper.GetCount<Question>() + 14) / 15;
             }
             Items.Clear();
             foreach (var item in items)

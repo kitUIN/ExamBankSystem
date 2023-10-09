@@ -101,12 +101,12 @@ namespace ExamBankSystem.ViewModels
         /// <summary>
         /// 刷新列表
         /// </summary>
-        public async void Refresh()
+        public virtual async void Refresh()
         {
             if (string.IsNullOrEmpty(SearchText))
             {
                 var items = await DbHelper.GetAsync<T>(CurrentPage);
-                TotalPage = (items.Count + 14) / 15;
+                TotalPage = (DbHelper.GetCount<T>() + 14) / 15;
                 Items.Clear();
                 foreach (var item in items)
                 {
@@ -123,7 +123,7 @@ namespace ExamBankSystem.ViewModels
         /// 搜索刷新
         /// </summary>
         /// <param name="text"></param>
-        public async void SearchRefresh(string text)
+        public virtual async void SearchRefresh(string text)
         {
             var items = await DbHelper.SearchAsync<T>(SearchCol, text, CurrentPage);
             TotalPage = (DbHelper.GetCount<T>() + 14) / 15; 
@@ -137,7 +137,7 @@ namespace ExamBankSystem.ViewModels
         /// <summary>
         /// 搜索响应
         /// </summary>
-        public void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)
+        public virtual void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             if (sender is TextBox box)
             {

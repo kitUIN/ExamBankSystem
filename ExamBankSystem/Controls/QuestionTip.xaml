@@ -76,7 +76,10 @@
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Text="{ex:Locale Key=Questions}" />
-                            <TextBox x:Name="Question" Grid.Column="1" />
+                            <TextBox
+                                x:Name="Question"
+                                Grid.Column="1"
+                                TextWrapping="Wrap" />
                         </Grid>
                         <Grid Grid.Row="3" ColumnSpacing="10">
                             <Grid.ColumnDefinitions>

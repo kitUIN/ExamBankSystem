@@ -108,7 +108,7 @@ namespace ExamBankSystem.Helpers
             return await ExecuteReaderAsync(selectCommand =>
             {
                 selectCommand.CommandText =
-                    $"SELECT * FROM Questions WHERE {col} = @Keyword LIMIT @Limit OFFSET @Offset;";
+                    $"SELECT * FROM Questions WHERE {col} = @Keyword;";
                 selectCommand.Parameters.AddWithValue("@Keyword", keyword);
                 return selectCommand;
             }, query =>

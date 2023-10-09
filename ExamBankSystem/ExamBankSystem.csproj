@@ -137,6 +137,9 @@
     <Compile Include="Controls\QuestionTip.xaml.cs">
       <DependentUpon>QuestionTip.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TestPaperTip.xaml.cs">
+      <DependentUpon>TestPaperTip.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TipPopup.xaml.cs">
       <DependentUpon>TipPopup.xaml</DependentUpon>
     </Compile>
@@ -189,6 +192,7 @@
     <Compile Include="ViewModels\FindTestPaperViewModel.cs" />
     <Compile Include="ViewModels\KnowledgePointViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\ManageTestPaperViewModel.cs" />
     <Compile Include="ViewModels\MergeTestPaperViewModel.cs" />
     <Compile Include="ViewModels\QuestionsViewModel.cs" />
     <Compile Include="ViewModels\TestPaperViewModel.cs" />
@@ -203,8 +207,8 @@
     <Compile Include="Views\KnowledgePointView.xaml.cs">
       <DependentUpon>KnowledgePointView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ManageTestPaper.xaml.cs">
-      <DependentUpon>ManageTestPaper.xaml</DependentUpon>
+    <Compile Include="Views\ManageTestPaperView.xaml.cs">
+      <DependentUpon>ManageTestPaperView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MergeTestPaperView.xaml.cs">
       <DependentUpon>MergeTestPaperView.xaml</DependentUpon>
@@ -269,6 +273,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\TestPaperTip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\TipPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -293,7 +301,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ManageTestPaper.xaml">
+    <Page Include="Views\ManageTestPaperView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

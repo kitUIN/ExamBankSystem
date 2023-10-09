@@ -378,4 +378,10 @@
   <data name="QuestionPercentError" xml:space="preserve">
     <value>题目重叠度过高</value>
   </data>
+  <data name="ProblemDistribution" xml:space="preserve">
+    <value>题目分布</value>
+  </data>
+  <data name="Examine" xml:space="preserve">
+    <value>审核</value>
+  </data>
 </root>

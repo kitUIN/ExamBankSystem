@@ -60,7 +60,7 @@ namespace ExamBankSystem.Helpers
                 db.Open();
 
                 var insertCommand = db.CreateCommand();
-                insertCommand.CommandText = $"INSERT INTO `TestPapers` VALUES (name, point, isExamine, uploadUser, createTime, updateTime) VALUES (@Name, @Point, @IsExamine, @UploadUser, @CreateTime, @UpdateTime);";
+                insertCommand.CommandText = $"INSERT INTO `TestPapers` VALUES VALUES (@Name, @Point, @IsExamine, @UploadUser, @CreateTime, @UpdateTime);";
                 insertCommand.Parameters.AddWithValue("@Name", name);
                 insertCommand.Parameters.AddWithValue("@Point", point);
                 insertCommand.Parameters.AddWithValue("@IsExamine", isExamine);
@@ -70,6 +70,26 @@ namespace ExamBankSystem.Helpers
                 insertCommand.Parameters.AddWithValue("@UpdateTime", t);
                 insertCommand.ExecuteReader();
             }
+        }
+        /// <summary>
+        /// 获取是否需要审核的试卷
+        /// </summary>
+        public static List<TestPaper> GetIsExaminePaper(bool isExamine = false)
+        {
+            return ExecuteReader(selectCommand =>
+            {
+                selectCommand.CommandText = "SELECT * FROM `TestPapers` WHERE `isExamine` = @IsExamine;";
+                selectCommand.Parameters.AddWithValue("@IsExamine", isExamine);
+                return selectCommand;
+            }, query =>
+            {
+                var res = new List<TestPaper>();
+                while (query.Read())
+                {
+                    res.Add(new TestPaper(query));
+                }
+                return res;
+            });
         }
     }
 }

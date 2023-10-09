@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExamBankSystem.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,11 +16,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace ExamBankSystem.Views
 {
-    /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
-    /// </summary>
     public sealed partial class MergeTestPaperView : Page
     {
+        private MergeTestPaperViewModel ViewModel { get; set; } = new MergeTestPaperViewModel();
         public MergeTestPaperView()
         {
             this.InitializeComponent();
