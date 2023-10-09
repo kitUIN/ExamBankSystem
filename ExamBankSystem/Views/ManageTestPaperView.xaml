@@ -11,16 +11,7 @@
     mc:Ignorable="d">
 
     <Grid Padding="10">
-        <Pivot>
-            <PivotItem Header="All">
-                <TextBlock Text="all emails go here." />
-            </PivotItem>
-            <PivotItem Header="Unread">
-                <TextBlock Text="unread emails go here." />
-            </PivotItem>
-            <PivotItem Header="Flagged">
-                <TextBlock Text="flagged emails go here." />
-            </PivotItem>
+        <Pivot> 
             <PivotItem Header="{ex:Locale Key=Manage}">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -40,8 +31,10 @@
                             DefaultLabelPosition="Right"
                             IsOpen="False">
                             <AppBarButton
-                                Command="{x:Bind ViewModel.AddCommand}"
-                                Icon="Add"
+                                Command="{x:Bind ViewModel.ExamineCommand}"
+                                CommandParameter="{x:Bind MainList.SelectedItem, Mode=OneWay}"
+                                Icon="Accept"
+                                IsEnabled="{x:Bind ViewModel.CanExamine, Mode=OneWay}"
                                 Label="{ex:Locale Key=Examine}" />
                             <AppBarButton
                                 Command="{x:Bind ViewModel.EditCommand}"
@@ -55,6 +48,18 @@
                                 Icon="Delete"
                                 IsEnabled="{x:Bind ViewModel.CanDelete, Mode=OneWay}"
                                 Label="{ex:Locale Key=Delete}" />
+                            <AppBarButton
+                                Command="{x:Bind ViewModel.ExportPaperCommand}"
+                                CommandParameter="{x:Bind MainList.SelectedItems, Mode=OneWay}"
+                                Icon="Share"
+                                IsEnabled="{x:Bind ViewModel.CanDelete, Mode=OneWay}"
+                                Label="{ex:Locale Key=ExportPaper}" />
+                            <AppBarButton
+                                Command="{x:Bind ViewModel.ExportAnswerCommand}"
+                                CommandParameter="{x:Bind MainList.SelectedItems, Mode=OneWay}"
+                                Icon="Share"
+                                IsEnabled="{x:Bind ViewModel.CanDelete, Mode=OneWay}"
+                                Label="{ex:Locale Key=ExportAnswer}" />
                         </CommandBar>
                     </Grid>
                     <Grid
@@ -76,6 +81,7 @@
                         x:Name="MainList"
                         Grid.Row="2"
                         ItemsSource="{x:Bind ViewModel.Items}"
+                        SelectionChanged="MainList_SelectionChanged"
                         SelectionMode="Extended">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:TestPaper">
@@ -129,6 +135,9 @@
                     </Grid>
                     <controls:TestPaperTip x:Name="CommandTip" />
                 </Grid>
+            </PivotItem>
+            <PivotItem Header="{ex:Locale Key=Manage}">
+                
             </PivotItem>
         </Pivot>
     </Grid>

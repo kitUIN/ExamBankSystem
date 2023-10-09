@@ -94,5 +94,7 @@
         QuestionPercentError,
         ProblemDistribution,
         Examine,
+        ExportPaper,
+        ExportAnswer
     }
 }

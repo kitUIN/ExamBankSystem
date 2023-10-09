@@ -11,37 +11,58 @@
 
     <Grid Padding="10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ListView
-            x:Name="LeftList"
-            Grid.Column="0"
-            ItemClick="LeftList_ItemClick"
-            ItemsSource="{x:Bind ViewModel.LeftItems}"
-            SelectionMode="Single">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:TestPaper">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="40" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{x:Bind Name, Mode=OneWay}" />
-                        <TextBlock Grid.Column="1" Text="{x:Bind CreateTime, Mode=OneWay}" />
-                        <TextBlock Grid.Column="2" Text="{x:Bind Point, Mode=OneWay}" />
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid
+                Grid.Row="0"
+                Padding="15,0,15,0"
+                VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="50" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{ex:Locale Key=TestPapers}" />
+                <TextBlock Grid.Column="1" Text="{ex:Locale Key=CreateTime}" />
+                <TextBlock Grid.Column="2" Text="{ex:Locale Key=Point}" />
+            </Grid>
+            <ListView
+                x:Name="LeftList"
+                Grid.Row="1"
+                ItemClick="LeftList_ItemClick"
+                ItemsSource="{x:Bind ViewModel.LeftItems}"
+                SelectionMode="Single">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:TestPaper">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="50" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{x:Bind Name, Mode=OneWay}" />
+                            <TextBlock Grid.Column="1" Text="{x:Bind CreateTime, Mode=OneWay}" />
+                            <TextBlock Grid.Column="2" Text="{x:Bind Point, Mode=OneWay}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <ListView
                 x:Name="RightList"
+                Grid.Row="1"
                 ItemsSource="{x:Bind ViewModel.RightItems}"
                 SelectionMode="None">
                 <ListView.ItemTemplate>
@@ -79,7 +100,10 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button x:Name="StatisticsButton" Content="{ex:Locale Key=Statistics}">
+            <Button
+                x:Name="StatisticsButton"
+                Grid.Row="2"
+                Content="{ex:Locale Key=Statistics}">
                 <Button.Flyout>
                     <Flyout />
                 </Button.Flyout>

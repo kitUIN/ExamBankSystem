@@ -12,8 +12,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-//https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
+using ExamBankSystem.Enums;
+using ExamBankSystem.Helpers;
+using ExamBankSystem.Models;
 
 namespace ExamBankSystem.Controls
 {
@@ -22,6 +23,27 @@ namespace ExamBankSystem.Controls
         public TestPaperTip()
         {
             this.InitializeComponent();
+        }
+
+        public void Show(ActionMode mode, object obj = null)
+        {
+            switch (mode)
+            {
+                
+                case ActionMode.Edit:
+                    if (obj is KnowledgePoint point)
+                    {
+                        MainTeachingTip.Title = ResourcesHelper.GetString(ResourceKey.Edit) +
+                                                ResourcesHelper.GetString(ResourceKey.KnowledgePoints);
+                        MainTeachingTip.IsOpen = true;
+                         
+                    }
+
+                    break;
+                case ActionMode.Delete:
+
+                    break;
+            }
         }
     }
 }

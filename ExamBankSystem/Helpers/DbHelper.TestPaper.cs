@@ -91,5 +91,16 @@ namespace ExamBankSystem.Helpers
                 return res;
             });
         }
+
+        public static void UpdateTestPaper(int id, string col, object value)
+        { 
+            ExecuteReader(selectCommand =>
+            {
+                selectCommand.CommandText = $"UPDATE `TestPapers` SET {col} = @V WHERE `id` = @ID;";
+                selectCommand.Parameters.AddWithValue("@V", value);
+                selectCommand.Parameters.AddWithValue("@ID", id);
+                return selectCommand;
+            });
+        }
     }
 }

@@ -384,4 +384,10 @@
   <data name="Examine" xml:space="preserve">
     <value>审核</value>
   </data>
+  <data name="ExportAnswer" xml:space="preserve">
+    <value>导出答案</value>
+  </data>
+  <data name="ExportPaper" xml:space="preserve">
+    <value>导出试卷</value>
+  </data>
 </root>
