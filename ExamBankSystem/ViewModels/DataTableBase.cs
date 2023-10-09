@@ -126,8 +126,7 @@ namespace ExamBankSystem.ViewModels
         public async void SearchRefresh(string text)
         {
             var items = await DbHelper.SearchAsync<T>(SearchCol, text, CurrentPage);
-            TotalPage = (items.Count + 14) / 15;
-            Debug.WriteLine(items.Count);
+            TotalPage = (DbHelper.GetCount<T>() + 14) / 15; 
             Items.Clear();
             foreach (var item in items)
             {
@@ -164,6 +163,19 @@ namespace ExamBankSystem.ViewModels
             {
                 TipMode = TipMode.Show,
                 ActionMode = ActionMode.Add,
+            });
+        }
+        
+        /// <summary>
+        /// 添加多个按钮响应
+        /// </summary> 
+        [RelayCommand]
+        private void AddMul()
+        {
+            ActionEvent?.Invoke(this, new ActionEventArg()
+            {
+                TipMode = TipMode.Show,
+                ActionMode = ActionMode.AddMul,
             });
         }
 

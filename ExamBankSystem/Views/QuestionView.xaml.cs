@@ -20,12 +20,14 @@ namespace ExamBankSystem.Views
         {
             ViewModel.ActionEvent += ViewModel_ActionEvent;
             CommandTip.RefreshEvent += CommmandTip_RefreshEvent;
+            QuestionMulTip.RefreshEvent += CommmandTip_RefreshEvent;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             ViewModel.ActionEvent -= ViewModel_ActionEvent;
             CommandTip.RefreshEvent -= CommmandTip_RefreshEvent;
+            QuestionMulTip.RefreshEvent -= CommmandTip_RefreshEvent;
         }
 
         private void CommmandTip_RefreshEvent(object sender, EventArgs e)
@@ -38,10 +40,18 @@ namespace ExamBankSystem.Views
             switch (e.TipMode)
             {
                 case TipMode.Show:
-                    CommandTip.Show(e.ActionMode, e.Source);
+                    if(e.ActionMode == ActionMode.AddMul)
+                    {
+                        QuestionMulTip.Show();
+                    }
+                    else
+                    {
+                        CommandTip.Show(e.ActionMode, e.Source);
+                    }
                     break;
                 case TipMode.Hide:
                     CommandTip.Hide();
+                    QuestionMulTip.Hide();
                     break;
                 default:
                     break;

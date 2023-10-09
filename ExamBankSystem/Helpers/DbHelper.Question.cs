@@ -75,9 +75,9 @@ namespace ExamBankSystem.Helpers
                 var insertCommand = db.CreateCommand();
                 insertCommand.CommandText = $"UPDATE `Questions` SET question = @Question, " +
                     "answer = @Answer, updateTime = @UpdateTime, " +
-                    "subject = @Subject, type = @Type, " +
+                    "subjectId = @Subject, type = @Type, " +
                     "rank = @Rank, " +
-                    "knowledgeName = @KnowledgeName " +
+                    "knowledgeId = @KnowledgeName " +
                     "WHERE id = @ID;";
                 insertCommand.Parameters.AddWithValue("@Subject", subjectId);
                 insertCommand.Parameters.AddWithValue("@Type", mode);
@@ -91,6 +91,62 @@ namespace ExamBankSystem.Helpers
                 insertCommand.Parameters.AddWithValue("@ID", id);
                 insertCommand.ExecuteReader();
             }
+        }
+        public static long GetQuestionCountAsync(string col, object keyword) 
+        {
+            return (long)ExecuteScalar(selectCommand =>
+            {
+                selectCommand.CommandText =
+                    $"SELECT COUNT(*) FROM Questions WHERE {col} = @Keyword";
+                selectCommand.Parameters.AddWithValue("@Keyword", keyword);
+                return selectCommand;
+            });
+        }
+        public static async Task<List<Question>> GetQuestionAsync(string col, object keyword) 
+        { 
+            return await ExecuteReaderAsync(selectCommand =>
+            {
+                selectCommand.CommandText =
+                    $"SELECT * FROM Questions WHERE {col} = @Keyword LIMIT @Limit OFFSET @Offset;";
+                selectCommand.Parameters.AddWithValue("@Keyword", keyword);
+                return selectCommand;
+            }, query =>
+            {
+                var res = new List<Question>();
+                while (query.Read())
+                {
+                    var item = new Question( query);
+                    
+                    res.Add(item);
+                }
+                return res;
+            });
+        }
+        public static async Task<List<Question>> GetQuestionAsync(string col, object keyword, long page ,
+            int limit = 15) 
+        {
+            page--;
+            return await ExecuteReaderAsync(selectCommand =>
+            {
+                selectCommand.CommandText =
+                    $"SELECT * FROM Questions WHERE {col} = @Keyword LIMIT @Limit OFFSET @Offset;";
+                selectCommand.Parameters.AddWithValue("@Keyword", keyword);
+                selectCommand.Parameters.AddWithValue("@Limit", limit);
+                selectCommand.Parameters.AddWithValue("@Offset", page * limit);
+                return selectCommand;
+            }, query =>
+            {
+                var order = page * limit;
+                var res = new List<Question>();
+                while (query.Read())
+                {
+                    var item = new Question( query);
+                    item.Order = ++order;
+                    res.Add(item);
+                }
+
+                return res;
+            });
         }
         /// <summary>
         /// 题目是否被任何试卷采用
