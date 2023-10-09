@@ -61,5 +61,10 @@ namespace ExamBankSystem.Models
             CreateTime = DateTimeHelper.ToDateTime(query.GetInt64(5));
             UpdateTime = DateTimeHelper.ToDateTime(query.GetInt64(6));
         }
+        partial void OnQuestionIdChanged(int oldValue, int newValue)
+        {
+            if (oldValue == newValue) return;
+            Question = DbHelper.GetById<Question>(newValue);
+        }
     }
 }

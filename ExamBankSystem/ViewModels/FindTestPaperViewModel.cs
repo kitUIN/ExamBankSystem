@@ -2,6 +2,7 @@
 using ExamBankSystem.Models;
 using ExamBankSystem.Utils;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace ExamBankSystem.ViewModels
 {
@@ -27,6 +28,7 @@ namespace ExamBankSystem.ViewModels
         /// </summary>
         public void LeftClick(TestPaper paper)
         {
+            Debug.WriteLine(paper.Id);
             RightItems.Clear();
             foreach (var item in DbHelper.GetQuestionsPapersByTestPaper(paper.Id))
             {

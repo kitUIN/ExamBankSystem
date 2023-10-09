@@ -18,5 +18,13 @@ namespace ExamBankSystem.Views
         {
             ViewModel.LeftClick(e.ClickedItem as TestPaper);
         }
+
+        private void RightList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (e.ClickedItem is QuestionPaper paper)
+            {
+                Answer.Document.SetText(Microsoft.UI.Text.TextSetOptions.FormatRtf, paper.Question.Answer);
+            }
+        }
     }
 }
