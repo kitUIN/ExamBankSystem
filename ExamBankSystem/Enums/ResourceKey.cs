@@ -98,6 +98,8 @@
         ExportAnswer,
         PaperRank,
         Replace,
-        SinglePaperGen
+        SinglePaperGen,
+        TestPaperName,
+        GeneratePaperSuccess,
     }
 }

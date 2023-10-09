@@ -154,16 +154,19 @@
                     SpinButtonPlacementMode="Compact"
                     Value="0" />
             </Grid>
-            <Button
-                x:Name="SelectWords"
-                Margin="0,10,0,0"
-                Content="{ex:Locale Key=SelectLastYearsWords}" />
-            <StackPanel
-                Margin="0,10,0,0"
-                Orientation="Horizontal"
-                Spacing="20">
-                <Button x:Name="SingleCButton" Content="{ex:Locale Key=SinglePaperGen}" />
-                <Button x:Name="ABButton" Content="{ex:Locale Key=ABPaper}" />
+            <StackPanel Margin="0,10,0,0" Spacing="10">
+                <TextBox x:Name="TestPaperName" PlaceholderText="{ex:Locale Key=TestPaperName}" />
+                <Button x:Name="SelectWords" Content="{ex:Locale Key=SelectLastYearsWords}" />
+                <StackPanel Orientation="Horizontal" Spacing="20">
+                    <Button
+                        x:Name="SingleCButton"
+                        Click="SingleCButton_Click"
+                        Content="{ex:Locale Key=SinglePaperGen}" />
+                    <Button
+                        x:Name="ABButton"
+                        Click="ABButton_Click"
+                        Content="{ex:Locale Key=ABPaper}" />
+                </StackPanel>
             </StackPanel>
         </StackPanel>
     </Grid>

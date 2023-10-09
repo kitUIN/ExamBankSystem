@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ExamBankSystem.Controls;
 using ExamBankSystem.Models;
 using ExamBankSystem.Utils;
 using Microsoft.Data.Sqlite;
+using Microsoft.UI.Xaml.Controls;
 
 namespace ExamBankSystem.Helpers
 {
@@ -193,6 +195,51 @@ namespace ExamBankSystem.Helpers
                 }
             }
             return false;
+        }
+        public static List<Question> GetQuestionsToTest(int type, int knowledge, int rank, int count)
+        {
+            return ExecuteReader(selectCommand =>
+            {
+                selectCommand.CommandText =
+                    "SELECT * FROM Questions WHERE type = @Ty AND knowledgeId = @Knowledge AND rank = @Rank  ORDER BY RANDOM() LIMIT @Count;";
+                selectCommand.Parameters.AddWithValue("@Ty", type);
+                selectCommand.Parameters.AddWithValue("@Knowledge", knowledge);
+                selectCommand.Parameters.AddWithValue("@Count", count);
+                selectCommand.Parameters.AddWithValue("@Rank", rank);
+                return selectCommand;
+            }, query =>
+            { 
+                var res = new List<Question>();
+                while (query.Read())
+                {
+                    var item = new Question(query); 
+                    res.Add(item);
+                }
+                return res;
+            });
+        }
+
+        public static List<Question> GetQuestionsToTest(int type, int rank, int count)
+        {
+            return ExecuteReader(selectCommand =>
+            {
+                selectCommand.CommandText =
+                    "SELECT * FROM Questions WHERE type = @Ty AND rank = @Rank ORDER BY RANDOM() LIMIT @Count;";
+                selectCommand.Parameters.AddWithValue("@Ty", type);
+                selectCommand.Parameters.AddWithValue("@Count", count);
+                selectCommand.Parameters.AddWithValue("@Rank", rank);
+                return selectCommand;
+            }, query =>
+            {
+                var res = new List<Question>();
+                while (query.Read())
+                {
+                    var item = new Question(query);
+                    res.Add(item);
+                }
+
+                return res;
+            });
         }
     }
 }

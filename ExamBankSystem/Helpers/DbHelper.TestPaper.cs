@@ -1,6 +1,7 @@
 ﻿using ExamBankSystem.Models;
 using Microsoft.Data.Sqlite;
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace ExamBankSystem.Helpers
 {
@@ -45,6 +46,22 @@ namespace ExamBankSystem.Helpers
                 }
 
                 return res;
+            });
+        }
+        public static TestPaper GetTestPapersByName(string name)
+        {
+            return ExecuteReader(selectCommand =>
+            {
+                selectCommand.CommandText = $"SELECT * FROM `TestPapers` WHERE `name` = @ID;";
+                selectCommand.Parameters.AddWithValue("@ID", name);
+                return selectCommand;
+            }, query =>
+            {
+                while (query.Read())
+                {
+                    return new TestPaper(query);
+                }
+                return null;
             });
         }
         public static void InsertTestPaper(string name, double point, bool isExamine, int uploadUserId)
