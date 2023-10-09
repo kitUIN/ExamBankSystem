@@ -101,5 +101,6 @@
         SinglePaperGen,
         TestPaperName,
         GeneratePaperSuccess,
+        ExpoertSuccess,
     }
 }

@@ -4,6 +4,8 @@ using Windows.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ExamBankSystem.Helpers;
+using ExamBankSystem.Enums;
+using Microsoft.UI.Xaml.Controls;
 
 namespace ExamBankSystem.ViewModels
 {
@@ -45,6 +47,14 @@ namespace ExamBankSystem.ViewModels
         [RelayCommand]
         public void ExportPaper(object obj)
         {
+            if(obj is TestPaper paper)
+            {
+                WordHelper.ExportPaper(paper.Id);
+                EventHelper.InvokeTipPopup(this,
+                                        ResourcesHelper.GetString(ResourceKey.ExpoertSuccess),
+                                        InfoBarSeverity.Success
+                                    );
+            }
         }
 
         [RelayCommand]
@@ -61,7 +71,7 @@ namespace ExamBankSystem.ViewModels
         [RelayCommand]
         public async Task SelectWordA()
         {
-            wordAFile = await FileHelper.GetDocxAsync();
+            wordAFile = await FileHelper.GetSingleDocxAsync();
             if(wordAFile != null)
             {
                 WordA = wordAFile.DisplayName;
@@ -70,7 +80,7 @@ namespace ExamBankSystem.ViewModels
         [RelayCommand]
         public async Task SelectWordB()
         {
-            wordBFile = await FileHelper.GetDocxAsync();
+            wordBFile = await FileHelper.GetSingleDocxAsync();
             if (wordBFile != null)
             {
                 WordB = wordBFile.DisplayName;

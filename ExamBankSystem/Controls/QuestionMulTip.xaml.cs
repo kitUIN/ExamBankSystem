@@ -69,7 +69,7 @@ namespace ExamBankSystem.Controls
 
         private async void Answer_Click(object sender, RoutedEventArgs e)
         {
-            answerFile = await FileHelper.GetDocxAsync();
+            answerFile = await FileHelper.GetSingleDocxAsync();
             if (answerFile != null)
             {
 
@@ -80,7 +80,7 @@ namespace ExamBankSystem.Controls
 
         private async void TestPapers_Click(object sender, RoutedEventArgs e)
         {
-            paperFile = await FileHelper.GetDocxAsync();
+            paperFile = await FileHelper.GetSingleDocxAsync();
             if (paperFile != null)
             {
                 TestPapers.Content = paperFile.DisplayName;

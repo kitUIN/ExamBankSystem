@@ -51,13 +51,13 @@
                                     Label="{ex:Locale Key=Delete}" />
                                 <AppBarButton
                                     Command="{x:Bind ViewModel.ExportPaperCommand}"
-                                    CommandParameter="{x:Bind MainList.SelectedItems, Mode=OneWay}"
+                                    CommandParameter="{x:Bind MainList.SelectedItem, Mode=OneWay}"
                                     Icon="Share"
                                     IsEnabled="{x:Bind ViewModel.CanDelete, Mode=OneWay}"
                                     Label="{ex:Locale Key=ExportPaper}" />
                                 <AppBarButton
                                     Command="{x:Bind ViewModel.ExportAnswerCommand}"
-                                    CommandParameter="{x:Bind MainList.SelectedItems, Mode=OneWay}"
+                                    CommandParameter="{x:Bind MainList.SelectedItem, Mode=OneWay}"
                                     Icon="Share"
                                     IsEnabled="{x:Bind ViewModel.CanDelete, Mode=OneWay}"
                                     Label="{ex:Locale Key=ExportAnswer}" />

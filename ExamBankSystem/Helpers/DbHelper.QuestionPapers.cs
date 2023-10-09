@@ -43,8 +43,8 @@ namespace ExamBankSystem.Helpers
 
                 return res;
             });
-        } 
-        
+        }
+         
         public static void InsertQuestionPaper(int testPaperId, int index, int questionId, int uploadUserId)
         {
             using (var db = new SqliteConnection($"Filename={_dbpath}"))
