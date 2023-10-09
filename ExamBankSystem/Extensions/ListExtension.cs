@@ -68,6 +68,34 @@ namespace ExamBankSystem.Extensions
         }
 
         /// <summary>
+        /// 乱序排序数组
+        /// </summary>
+        public static T[] SortRandom<T>(this T[] array)
+        {
+            int randomIndex;
+            for (int i = array.Length - 1; i > 0; i--)
+            {
+                var rr = new Random();
+                randomIndex =  rr.Next(i);
+                array.Swap(randomIndex, i);
+            }
+            return array;
+        }
+        /// <summary>
+        /// 乱序排序列表
+        /// </summary>
+        public static List<T> SortRandom<T>(this List<T> list)
+        {
+            int randomIndex;
+            for (int i = list.Count - 1; i > 0; i--)
+            {
+                var rr = new Random();
+                randomIndex = rr.Next(i);
+                list.Swap(randomIndex, i);
+            }
+            return list;
+        }
+        /// <summary>
         /// 使用hashset去重
         /// </summary>
         /// <param name="lst"></param>
@@ -81,6 +109,5 @@ namespace ExamBankSystem.Extensions
             lst.Clear();
             lst.AddRange(set);
         }
-
     }
 }

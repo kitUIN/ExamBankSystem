@@ -47,5 +47,23 @@ namespace ExamBankSystem.Views
         {
 
         }
+
+        private void StackPanel_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            SingleChoice.Maximum = DbHelper.GetQuestionCountAsync("type", 0) ;
+            SingleChoice.IsEnabled = SingleChoice.Maximum > 0;
+            MultipleChoice.Maximum = DbHelper.GetQuestionCountAsync("type", 1) ;
+            MultipleChoice.IsEnabled = MultipleChoice.Maximum > 0;
+            FillBlank.Maximum = DbHelper.GetQuestionCountAsync("type", 2) ;
+            FillBlank.IsEnabled = FillBlank.Maximum > 0;
+            Judgment.Maximum = DbHelper.GetQuestionCountAsync("type", 3) ;
+            Judgment.IsEnabled = Judgment.Maximum > 0;
+            ShortAnswer.Maximum = DbHelper.GetQuestionCountAsync("type", 4) ;
+            ShortAnswer.IsEnabled = ShortAnswer.Maximum > 0;
+            Design.Maximum = DbHelper.GetQuestionCountAsync("type", 5);
+            Design.IsEnabled = Design.Maximum > 0;
+            Program.Maximum = DbHelper.GetQuestionCountAsync("type", 6) ;
+            Program.IsEnabled = Program.Maximum > 0;
+        }
     }
 }

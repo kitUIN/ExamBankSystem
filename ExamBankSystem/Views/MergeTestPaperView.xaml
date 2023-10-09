@@ -9,7 +9,7 @@
     mc:Ignorable="d">
 
     <Grid Padding="10">
-        <StackPanel>
+        <StackPanel Loaded="StackPanel_Loaded">
             <Grid ColumnSpacing="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50" />

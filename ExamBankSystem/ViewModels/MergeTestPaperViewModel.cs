@@ -3,5 +3,7 @@
 namespace ExamBankSystem.ViewModels
 {
     public partial class MergeTestPaperViewModel: ObservableObject
-    {    }
+    {
+    
+    }
 }

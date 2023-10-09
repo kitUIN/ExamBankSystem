@@ -11,7 +11,7 @@ namespace ExamBankSystem.Helpers
     {
         public static int[,] rankList = new int[5, 5] {
             { 60, 20, 10, 10, 0 },
-            { 50, 20, 20, 10, 0 },
+            { 50, 20, 20, 5, 5 },
             { 40, 20, 20, 15, 5 },
             { 30, 20, 20, 20, 10 },
             { 20, 20, 20, 20, 20 }
@@ -50,11 +50,11 @@ namespace ExamBankSystem.Helpers
             int total = ints.Sum();
             int[] counts = new int[5]
             {
-                total * rankList[rank,0] / 100,
-                total * rankList[rank,1] / 100,
-                total * rankList[rank,2] / 100,
-                total * rankList[rank,3] / 100,
-                total * rankList[rank,4] / 100,
+                total * rankList[rank-1,0] / 100,
+                total * rankList[rank-1,1] / 100,
+                total * rankList[rank-1,2] / 100,
+                total * rankList[rank-1,3] / 100,
+                total * rankList[rank-1,4] / 100,
             };
             var knowledgePoints = new List<KnowledgePoint>();
             if (string.IsNullOrEmpty(knowledge))
@@ -121,7 +121,7 @@ namespace ExamBankSystem.Helpers
             {
                 foreach (var item in questions[j])
                 {
-                    DbHelper.InsertQuestionPaper(paper.Id, order, item.Id, useId);
+                    DbHelper.InsertQuestionPaper(paper.Id, order++, item.Id, useId);
                 }
             }
         }

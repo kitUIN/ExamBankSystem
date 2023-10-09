@@ -53,7 +53,7 @@ namespace ExamBankSystem.Controls
                                 XamlHelper.CreateDeleteDialog((sender, args) =>
                                     {
                                         DbHelper.DeleteById<TestPaper>(paper.Id);
-
+                                        DbHelper.DeleteQuestionPaperByTestPaperId(paper.Id);
                                         EventHelper.InvokeTipPopup(this,
                                             ResourcesHelper.GetString(ResourceKey.DeleteSuccess),
                                             InfoBarSeverity.Success

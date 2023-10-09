@@ -71,7 +71,7 @@ namespace ExamBankSystem.Helpers
                 db.Open();
 
                 var insertCommand = db.CreateCommand();
-                insertCommand.CommandText = $"INSERT INTO `TestPapers` VALUES VALUES (@Name, @Point, @IsExamine, @UploadUser, @CreateTime, @UpdateTime);";
+                insertCommand.CommandText = $"INSERT INTO `TestPapers` VALUES (NULL, @Name, @Point, @IsExamine, @UploadUser, @CreateTime, @UpdateTime);";
                 insertCommand.Parameters.AddWithValue("@Name", name);
                 insertCommand.Parameters.AddWithValue("@Point", point);
                 insertCommand.Parameters.AddWithValue("@IsExamine", isExamine);

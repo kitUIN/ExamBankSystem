@@ -52,7 +52,7 @@ namespace ExamBankSystem.Helpers
                 db.Open();
 
                 var insertCommand = db.CreateCommand();
-                insertCommand.CommandText = $"INSERT INTO `QuestionPapers` VALUES (testPaperId, questionIndex, questionId, uploadUser, createTime, updateTime) VALUES (@TestPaperId, @QuestionIndex, @QuestionId, @UploadUser, @CreateTime, @UpdateTime);";
+                insertCommand.CommandText = $"INSERT INTO `QuestionPapers`  VALUES (NULL, @TestPaperId, @QuestionIndex, @QuestionId, @UploadUser, @CreateTime, @UpdateTime);";
                 insertCommand.Parameters.AddWithValue("@TestPaperId", testPaperId);
                 insertCommand.Parameters.AddWithValue("@QuestionIndex", index);
                 insertCommand.Parameters.AddWithValue("@QuestionId", questionId);
@@ -62,6 +62,15 @@ namespace ExamBankSystem.Helpers
                 insertCommand.Parameters.AddWithValue("@UpdateTime", t);
                 insertCommand.ExecuteReader();
             }
+        }
+        public static void DeleteQuestionPaperByTestPaperId(int testPaperId)
+        {
+            ExecuteReader(selectCommand =>
+            { 
+                selectCommand.CommandText = $"DELETE FROM `QuestionPapers` WHERE `testPaperId` = @Name;";
+                selectCommand.Parameters.AddWithValue("@Name", testPaperId);
+                return selectCommand;
+            });
         }
     }
 }
