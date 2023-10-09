@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ExamBankSystem.Enums;
 using ExamBankSystem.Models;
 using Microsoft.Data.Sqlite;
@@ -8,7 +9,6 @@ namespace ExamBankSystem.Helpers
 {
     public partial class DbHelper
     {
-         #region Question
          /// <summary>
          /// 创建题目表
          /// </summary>
@@ -31,49 +31,33 @@ namespace ExamBankSystem.Helpers
              var createTable = new SqliteCommand(tableCommand, db);
              await createTable.ExecuteReaderAsync();
          }
-        /// <summary>
-        /// 从数据库中获取题目
-        /// </summary>
-        public static List<Question> GetQuestions()
-        {
-            var res = new List<Question>();
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
-            {
-                db.Open();
-                var selectCommand = db.CreateCommand();
-                selectCommand.CommandText = $"SELECT * FROM {DbTableName.Questions} ;";
-                var query = selectCommand.ExecuteReader();
-                while (query.Read())
-                {
-                    res.Add(Question.FromDb(query));
-                }
-            }
-            return res;
-        }
-        /// <summary>
-        /// 从数据库中获取知识点
-        /// </summary>
-        public static Question GetQuestion(int id)
-        {
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
-            {
-                db.Open();
-                var selectCommand = db.CreateCommand();
-                selectCommand.CommandText = $"SELECT * FROM {DbTableName.Questions} WHERE id = @Name;";
+         /// <summary>
+         /// 从数据库中获取题目
+         /// </summary>
+         public static async Task<List<Question>> GetQuestionsAsync(long page = 1, int limit = 15)
+         {
+             return await GetAsync<Question>(page, limit);
+         }
 
-                selectCommand.Parameters.AddWithValue("@Name", id);
+         /// <summary>
+         /// 从数据库中获取题目
+         /// </summary>
+         public static async Task<Question> GetQuestionAsync(int id)
+         {
+             return await GetByIdAsync<Question>(id);
+         }
 
-                var query = selectCommand.ExecuteReader();
-
-                while (query.Read())
-                {
-                    return Question.FromDb(query);
-                }
-            }
-            return null;
-        }
+         /// <summary>
+         /// 从数据库中获取题目
+         /// </summary>
+         public static Question GetQuestion(int id)
+         {
+             return GetById<Question>(id);
+         }
+        
+        
         /// <summary>
-        /// 插入考试科目到数据库中
+        /// 插入题目到数据库中
         /// </summary>
         public static void InsertQuestion(Question instance)
         {
@@ -83,10 +67,10 @@ namespace ExamBankSystem.Helpers
 
                 var insertCommand = db.CreateCommand();
                 insertCommand.CommandText = $"INSERT INTO {DbTableName.Questions} (" +
-                    "subject, type, question, answer, point, rank, knowledgeName, " +
-                    "uploadUser, createTime, updateTime) " +
-                    "VALUES (@Subject, @Type, @Question, @Answer, " +
-                    "@Point, @Rank, @KnowledgeName, @UploadUser, @CreateTime, @UpdateTime);";
+                                            "subject, type, question, answer, point, rank, knowledgeName, " +
+                                            "uploadUser, createTime, updateTime) " +
+                                            "VALUES (@Subject, @Type, @Question, @Answer, " +
+                                            "@Point, @Rank, @KnowledgeName, @UploadUser, @CreateTime, @UpdateTime);";
                 insertCommand.Parameters.AddWithValue("@Subject", instance.SubjectId);
                 insertCommand.Parameters.AddWithValue("@Type", instance.Type);
                 insertCommand.Parameters.AddWithValue("@Question", instance.Name);
@@ -101,24 +85,8 @@ namespace ExamBankSystem.Helpers
                 insertCommand.ExecuteReader();
             }
         }
-
         /// <summary>
-        /// 从数据库中删除知识点
-        /// </summary>
-        public static void DeleteQuestion(int key)
-        {
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
-            {
-                db.Open();
-
-                var command = db.CreateCommand();
-                command.CommandText = $"DELETE FROM {DbTableName.Questions} WHERE id = @Name;";
-                command.Parameters.AddWithValue("@Name", key);
-                command.ExecuteReader();
-            }
-        }
-        /// <summary>
-        /// 更新科目
+        /// 更新题目
         /// </summary>
         public static void UpdateQuestion(Question obj, int key)
         {
@@ -146,8 +114,14 @@ namespace ExamBankSystem.Helpers
                 insertCommand.ExecuteReader();
             }
         }
-
-        #endregion
+        /// <summary>
+        /// 搜索题目
+        /// </summary>
+        public static async Task<List<Question>> SearchQuestionAsync(string keyword, long page = 1,
+            int limit = 15)
+        {
+            return await SearchAsync<Question>("title", keyword, page, limit);
+        }
 
     }
 }

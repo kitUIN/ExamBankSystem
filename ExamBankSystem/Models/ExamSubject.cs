@@ -5,6 +5,7 @@ using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,40 +16,37 @@ namespace ExamBankSystem.Models
     /// <summary>
     /// 考试科目
     /// </summary>
-    public partial class ExamSubject: ObservableObject
+    public partial class ExamSubject : OrderModel
     {
         /// <summary>
         /// ID
         /// </summary>
-        [ObservableProperty]
-        private int id;
+        [ObservableProperty] private int id;
+
         /// <summary>
         /// 名称
         /// </summary>
-        [ObservableProperty]
-        private string name;
+        [ObservableProperty] private string name;
+
         /// <summary>
         /// 创建时间
         /// </summary>
-        [ObservableProperty]
-        private DateTime createTime;
+        [ObservableProperty] private DateTime createTime;
+
         /// <summary>
         /// 更新时间
         /// </summary>
-        [ObservableProperty]
-        private DateTime updateTime;
+        [ObservableProperty] private DateTime updateTime;
+
         /// <summary>
         /// 从数据库导入
         /// </summary>
-        public static ExamSubject FromDb(SqliteDataReader query)
+        public ExamSubject(IDataRecord query): base(query)
         {
-            return new ExamSubject
-            {
-                Id = query.GetInt32(0),
-                Name = query.GetString(1),
-                CreateTime = DateTimeHelper.ToDateTime(query.GetInt64(2)),
-                UpdateTime = DateTimeHelper.ToDateTime(query.GetInt64(3)),
-            };
+            Id = query.GetInt32(0);
+            Name = query.GetString(1);
+            CreateTime = DateTimeHelper.ToDateTime(query.GetInt64(2));
+            UpdateTime = DateTimeHelper.ToDateTime(query.GetInt64(3));
         }
     }
 }

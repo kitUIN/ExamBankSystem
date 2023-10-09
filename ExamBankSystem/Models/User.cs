@@ -14,7 +14,7 @@ namespace ExamBankSystem.Models
     /// <summary>
     /// 用户
     /// </summary>
-    public partial class User : ObservableObject
+    public partial class User : OrderModel
     {
         /// <summary>
         /// ID
@@ -46,20 +46,16 @@ namespace ExamBankSystem.Models
         /// </summary>
         [ObservableProperty]
         private DateTime lastLoginTime ;
-        /// <summary>
-        /// 从数据库导入
-        /// </summary>
-        public static User FromDb(SqliteDataReader query)
+        public User() { }
+        public User(SqliteDataReader query):base(query)
         {
-            return new User
-            {
-                Id = query.GetInt32(0),
-                Name = query.GetString(1),
-                Password = query.GetString(2),
-                Role = EnumHelper.GetEnum<UserRole>(query.GetString(3)),
-                CreateTime = DateTimeHelper.ToDateTime(query.GetInt64(4)),
-                LastLoginTime = DateTimeHelper.ToDateTime(query.GetInt64(5)),
-            };
+            Id = query.GetInt32(0);
+            Name = query.GetString(1);
+            Password = query.GetString(2);
+            Role = EnumHelper.GetEnum<UserRole>(query.GetString(3));
+            CreateTime = DateTimeHelper.ToDateTime(query.GetInt64(4));
+            LastLoginTime = DateTimeHelper.ToDateTime(query.GetInt64(5));
+
         }
     }
 }

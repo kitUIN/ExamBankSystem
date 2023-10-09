@@ -1,11 +1,11 @@
 ﻿<Page
     x:Class="ExamBankSystem.Views.UserView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ex="using:ExamBankSystem.Extensions"
     xmlns:local="using:ExamBankSystem.Views"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Grid Padding="10">
         <Grid.RowDefinitions>
@@ -27,54 +27,55 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock
                     Grid.Column="0"
-                    VerticalAlignment="Center"
-                    Text="{ex:Locale Key=OldPassword}" />
+                    Text="{ex:Locale Key=OldPassword}"
+                    VerticalAlignment="Center" />
                 <TextBox
                     Grid.Column="1"
-                    MinWidth="200"
                     MaxLength="16"
+                    MinWidth="200"
                     Text="{x:Bind ViewModel.OldPassword, Mode=TwoWay}"
                     TextChanged="{x:Bind ViewModel.OldPassword_OnTextChanged}" />
             </Grid>
             <TextBlock
-                Grid.Row="1"
                 FontSize="12"
                 Foreground="Red"
+                Grid.Row="1"
                 Text="{x:Bind ViewModel.OldPasswordError, Mode=OneWay}"
                 Visibility="{x:Bind ViewModel.OldPasswordErrorVisible, Mode=OneWay}" />
-            <Grid Grid.Row="2" ColumnSpacing="10">
+            <Grid ColumnSpacing="10" Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock
                     Grid.Column="0"
-                    VerticalAlignment="Center"
-                    Text="{ex:Locale Key=NewPassword}" />
+                    Text="{ex:Locale Key=NewPassword}"
+                    VerticalAlignment="Center" />
                 <TextBox
                     Grid.Column="1"
-                    MinWidth="200"
                     MaxLength="16"
+                    MinWidth="200"
                     Text="{x:Bind ViewModel.NewPassword, Mode=TwoWay}"
                     TextChanged="{x:Bind ViewModel.NewPassword_OnTextChanged}" />
 
             </Grid>
             <TextBlock
-                Grid.Row="3"
                 FontSize="12"
                 Foreground="Red"
+                Grid.Row="3"
                 Text="{x:Bind ViewModel.NewPasswordError, Mode=OneWay}"
                 Visibility="{x:Bind ViewModel.NewPasswordErrorVisible, Mode=OneWay}" />
             <Button
-                Grid.Row="4"
                 Command="{x:Bind ViewModel.ChangePasswordCommand}"
-                Content="{ex:Locale Key=ChangePassword}" />
+                Content="{ex:Locale Key=ChangePassword}"
+                Grid.Row="4"
+                IsEnabled="{x:Bind ViewModel.ChangePasswordEnable, Mode=OneWay}" />
         </Grid>
 
         <Button
-            Grid.Row="1"
-            VerticalAlignment="Center"
             Command="{x:Bind ViewModel.LogoutCommand}"
-            Content="{ex:Locale Key=Logout}" />
+            Content="{ex:Locale Key=Logout}"
+            Grid.Row="1"
+            VerticalAlignment="Center" />
     </Grid>
 </Page>

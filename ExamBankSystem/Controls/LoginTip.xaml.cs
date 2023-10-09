@@ -34,9 +34,9 @@ namespace ExamBankSystem.Controls
         /// <summary>
         /// 显示
         /// </summary>
-        public void Open()
+        public void Show()
         {
-            LoginTeachingTip.IsOpen = true;
+            MainTeachingTip.IsOpen = true;
             var name = ConfigHelper.GetString(ConfigKey.LastUserName);
             var pwd = ConfigHelper.GetString(ConfigKey.LastUserPassword);
             if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(pwd))
@@ -45,7 +45,7 @@ namespace ExamBankSystem.Controls
                 Remember.IsChecked = true;
                 User.Text = name;
                 Password.Password = pwd;
-                Button_Click(this,null);
+                LoginButton_Click(this,null);
             }
             else
             {
@@ -59,12 +59,12 @@ namespace ExamBankSystem.Controls
         /// </summary>
         public void Hide()
         {
-            LoginTeachingTip.IsOpen = false;
+            MainTeachingTip.IsOpen = false;
         }
         /// <summary>
         /// 点击登录
         /// </summary>
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(User.Text))
             {
@@ -83,7 +83,7 @@ namespace ExamBankSystem.Controls
                     );
                 return;
             }
-            var user = DbHelper.GetUser(User.Text);
+            var user = await DbHelper.GetUserAsync(User.Text);
             if (user == null)
             {
                 EventHelper.InvokeTipPopup(this,
@@ -108,7 +108,7 @@ namespace ExamBankSystem.Controls
                     InfoBarSeverity.Success
                     );
                 DbHelper.UpdateUserLoginTime(user.Id);
-                CurrentData.CurrentUser = DbHelper.GetUser(User.Text);
+                CurrentData.CurrentUser = await DbHelper.GetUserAsync(User.Text);
                 if (Remember.IsChecked.Value)
                 {
                     ConfigHelper.Set(ConfigKey.LastUserName, User.Text);
@@ -129,9 +129,9 @@ namespace ExamBankSystem.Controls
         /// </summary>
         private void Password_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-            if(e.Key == Windows.System.VirtualKey.Enter)
+            if( e.Key == Windows.System.VirtualKey.Enter)
             {
-                Button_Click(sender, e);
+                LoginButton_Click(sender, e);
             }
         }
     }

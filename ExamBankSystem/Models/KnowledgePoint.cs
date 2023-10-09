@@ -3,19 +3,30 @@ using ExamBankSystem.Helpers;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ExamBankSystem.Models
 {
-    public partial class KnowledgePoint: ObservableObject
+    public partial class KnowledgePoint: OrderModel
     {
         /// <summary>
         /// ID
         /// </summary>
         [ObservableProperty]
         private int id;
+        /// <summary>
+        /// 考试科目ID
+        /// </summary>
+        [ObservableProperty]
+        private int subjectId;
+        /// <summary>
+        /// 考试科目
+        /// </summary>
+        [ObservableProperty]
+        private string subject;
         /// <summary>
         /// 名称
         /// </summary>
@@ -36,19 +47,24 @@ namespace ExamBankSystem.Models
         /// </summary>
         [ObservableProperty]
         private DateTime updateTime;
-        /// <summary>
-        /// 从数据库导入
-        /// </summary>
-        public static KnowledgePoint FromDb(SqliteDataReader query)
+        public KnowledgePoint(){ }
+        public KnowledgePoint(IDataRecord query):base(query)
         {
-            return new KnowledgePoint
+            Id = query.GetInt32(0);
+            SubjectId = query.GetInt32(1);
+            Name = query.GetString(2);
+            Knowledge = query.GetString(3);
+            CreateTime = DateTimeHelper.ToDateTime(query.GetInt64(4));
+            UpdateTime = DateTimeHelper.ToDateTime(query.GetInt64(5));
+        }
+        
+        partial void OnSubjectIdChanged(int oldValue, int newValue)
+        {
+            if (oldValue == newValue) return;
+            if (DbHelper.GetExamSubject(newValue) is { } examSubject)
             {
-                Id = query.GetInt32(0),
-                Name = query.GetString(1),
-                Knowledge = query.GetString(2),
-                CreateTime = DateTimeHelper.ToDateTime(query.GetInt64(3)),
-                UpdateTime = DateTimeHelper.ToDateTime(query.GetInt64(4)),
-            };
+                Subject = examSubject.Name;
+            }
         }
     }
 }

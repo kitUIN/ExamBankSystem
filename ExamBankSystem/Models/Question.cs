@@ -4,6 +4,7 @@ using ExamBankSystem.Helpers;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace ExamBankSystem.Models
     /// <summary>
     /// 问题
     /// </summary>
-    public partial class Question : ObservableObject
+    public partial class Question : OrderModel
     {
         /// <summary>
         /// ID
@@ -24,13 +25,11 @@ namespace ExamBankSystem.Models
         /// 科目Id
         /// </summary>
         [ObservableProperty] private int subjectId;
-
-        private string subject;
-
         /// <summary>
         /// 科目
         /// </summary>
-        public string Subject => subject;
+        [ObservableProperty]
+        private string subject;
 
         /// <summary>
         /// 类型
@@ -81,27 +80,22 @@ namespace ExamBankSystem.Models
         /// 更新时间
         /// </summary>
         [ObservableProperty] private DateTime updateTime;
-
-        /// <summary>
-        /// 从数据库导入
-        /// </summary>
-        public static Question FromDb(SqliteDataReader query)
+        public Question(){ }
+        public Question(IDataRecord query):base(query)
         {
-            return new Question
-            {
-                Id = query.GetInt32(0),
-                SubjectId = query.GetInt32(1),
-                Type = (QuestionType)query.GetInt32(2),
-                Name = query.GetString(3),
-                Answer = query.GetString(4),
-                Point = query.GetDouble(5),
-                Rank = query.GetInt32(6),
-                KnowledgeId = query.GetInt32(7),
-                UploadUserId = query.GetInt32(8),
-                CreateTime = DateTimeHelper.ToDateTime(query.GetInt64(9)),
-                UpdateTime = DateTimeHelper.ToDateTime(query.GetInt64(10)),
-            };
+            Id = query.GetInt32(0);
+            SubjectId = query.GetInt32(1);
+            Type = (QuestionType)query.GetInt32(2);
+            Name = query.GetString(3);
+            Answer = query.GetString(4);
+            Point = query.GetDouble(5);
+            Rank = query.GetInt32(6);
+            KnowledgeId = query.GetInt32(7);
+            UploadUserId = query.GetInt32(8);
+            CreateTime = DateTimeHelper.ToDateTime(query.GetInt64(9));
+            UpdateTime = DateTimeHelper.ToDateTime(query.GetInt64(10));
         }
+
 
         public string TypeToString(QuestionType ty)
         {
@@ -113,7 +107,7 @@ namespace ExamBankSystem.Models
             if (oldValue == newValue) return;
             if (DbHelper.GetExamSubject(newValue) is { } examSubject)
             {
-                SetProperty(ref subject, examSubject.Name);
+                Subject = examSubject.Name;
             }
         }
         partial void OnKnowledgeIdChanged(int oldValue, int newValue)

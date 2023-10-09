@@ -39,6 +39,7 @@
                             VerticalAlignment="Center" />
                         <TextBox
                             Grid.Column="1"
+                            KeyDown="User_KeyDown"
                             MaxLength="10"
                             TextChanged="User_OnTextChanged"
                             x:Name="User" />
@@ -60,6 +61,8 @@
                             VerticalAlignment="Center" />
                         <TextBox
                             Grid.Column="1"
+                            KeyDown="Password_KeyDown"
+                            MaxLength="16"
                             TextChanged="Password_OnTextChanged"
                             x:Name="Password" />
                     </Grid>

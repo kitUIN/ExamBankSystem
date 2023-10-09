@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using ExamBankSystem.Args;
 using ExamBankSystem.Enums;
 using ExamBankSystem.Extensions;
 using ExamBankSystem.Helpers;
 using ExamBankSystem.Models;
+using ExamBankSystem.Utils;
 using Microsoft.UI.Xaml.Controls;
 
 namespace ExamBankSystem.Controls
@@ -46,7 +48,7 @@ namespace ExamBankSystem.Controls
                     MainTeachingTip.Title = ResourcesHelper.GetString(ResourceKey.Add) + 
                                             ResourcesHelper.GetString(ResourceKey.User);
                     User.Text = "";
-                    Password.Text = "qust123";
+                    Password.Text = "";
                     break;
                 case ActionMode.Reset:
                     if (obj is IList<object> resets)
@@ -58,7 +60,12 @@ namespace ExamBankSystem.Controls
                                     {
                                         foreach (var item in resets.Cast<User>())
                                         {
-                                            DbHelper.ResetUserPassword(item.Id);
+                                            DbHelper.ResetUserPassword(item.Id,item.Name);
+                                            // 如果是自己的话清除本地记住我的密码
+                                            if (item.Id == CurrentData.CurrentUser.Id)
+                                            {
+                                                ConfigHelper.Set(ConfigKey.LastUserPassword, "");
+                                            }
                                         }
 
                                         EventHelper.InvokeTipPopup(this,
@@ -121,11 +128,24 @@ namespace ExamBankSystem.Controls
             RefreshEvent?.Invoke(this, EventArgs.Empty);
         }
 
+        
+
+        /// <summary>
+        /// 取消按钮
+        /// </summary>
+        private void Cancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            Hide();
+        }
         /// <summary>
         /// 检测用户名是否合规
         /// </summary>
-        private void User_OnTextChanged(object sender, TextChangedEventArgs e)
+        private async void User_OnTextChanged(object sender, TextChangedEventArgs e)
         {
+            if (User.Text.Length >= 3)
+            {
+                Password.Text = User.Text.Substring(User.Text.Length - 3);
+            }
             // 不能为空
             if (string.IsNullOrEmpty(User.Text))
             {
@@ -134,17 +154,17 @@ namespace ExamBankSystem.Controls
                 _userOk = false;
             }
             // 不能重复
-            else if (DbHelper.GetUser(User.Text) != null)
+            else if (await DbHelper.GetUserAsync(User.Text) != null)
             {
                 UserError.Text = ResourcesHelper.GetString(ResourceKey.User) +
                                  ResourcesHelper.GetString(ResourceKey.Exist);
                 UserError.Visibility = Visibility.Visible;
                 _userOk = false;
             }
-            // 不能有空格
-            else if (User.Text.Contains(" "))
+            // 不能合规
+            else if (User.Text.IsNotUserName())
             {
-                UserError.Text = ResourcesHelper.GetString(ResourceKey.UserNotSpace);
+                UserError.Text = ResourcesHelper.GetString(ResourceKey.UserNot);
                 UserError.Visibility = Visibility.Visible;
                 _userOk = false;
             }
@@ -155,15 +175,6 @@ namespace ExamBankSystem.Controls
             }
             AddButton.IsEnabled = _userOk && _passwordOk;
         }
-
-        /// <summary>
-        /// 取消按钮
-        /// </summary>
-        private void Cancel_OnClick(object sender, RoutedEventArgs e)
-        {
-            Hide();
-        }
-
         /// <summary>
         /// 检测密码是否合理
         /// </summary>
@@ -172,12 +183,20 @@ namespace ExamBankSystem.Controls
             // 不能为空
             if (string.IsNullOrEmpty(Password.Text))
             {
-                PasswordError.Text = ResourcesHelper.GetString(ResourceKey.PasswordNull);
-                PasswordError.Visibility = Visibility.Visible;
-                _passwordOk = false;
+                if (User.Text.Length >= 3)
+                {
+                    Password.Text = User.Text.Substring(User.Text.Length - 3);
+                }
+                else
+                {
+                    PasswordError.Text = ResourcesHelper.GetString(ResourceKey.PasswordNull);
+                    PasswordError.Visibility = Visibility.Visible;
+                    _passwordOk = false;
+                    return;
+                }
             }
             // 不符合密码规则
-            else if (Password.Text.IsNotPassword())
+            if (Password.Text.IsNotPassword())
             {
                 PasswordError.Text = ResourcesHelper.GetString(ResourceKey.PasswordNot);
                 PasswordError.Visibility = Visibility.Visible;
@@ -191,5 +210,26 @@ namespace ExamBankSystem.Controls
 
             AddButton.IsEnabled = _userOk && _passwordOk;
         }
+        /// <summary>
+        /// 回车添加
+        /// </summary>
+        private void User_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if(AddButton.IsEnabled && e.Key == Windows.System.VirtualKey.Enter)
+            {
+                AddButton_Click(sender, e);
+            }
+        }
+        /// <summary>
+        /// 回车添加
+        /// </summary>
+        private void Password_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if(AddButton.IsEnabled && e.Key == Windows.System.VirtualKey.Enter)
+            {
+                AddButton_Click(sender, e);
+            }
+        }
     }
+    
 }

@@ -9,23 +9,30 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
+using ExamBankSystem.Enums;
 
 namespace ExamBankSystem.ViewModels
 {
-    public partial class KnowledgePointViewModel: ObservableObject
+    public partial class KnowledgePointViewModel : DataTableBase<KnowledgePoint>
     {
+
         /// <summary>
-        /// 操作事件
+        /// 是否允许按下修改按钮
         /// </summary>
-        public event EventHandler<ActionEventArg> ActionEvent;
-        [ObservableProperty]
-        private bool canEdit = false;
-        [ObservableProperty]
-        private bool canDelete = false;
+        [ObservableProperty] private bool canEdit;
+
+        /// <summary>
+        /// 是否允许按下删除按钮
+        /// </summary>
+        [ObservableProperty] private bool canDelete;
+
         /// <summary>
         /// 知识点列表
         /// </summary>
-        public ObservableCollection<KnowledgePoint> KnowledgePoints { get; set; } = new ObservableCollection<KnowledgePoint>();
+        public ObservableCollection<KnowledgePoint> KnowledgePoints { get; } =
+            new ObservableCollection<KnowledgePoint>();
+
         /// <summary>
         /// 列表选择变化响应
         /// </summary>
@@ -34,27 +41,48 @@ namespace ExamBankSystem.ViewModels
             CanEdit = count == 1;
             CanDelete = count > 0;
         }
-        public KnowledgePointViewModel()
-        {
-            foreach (var item in DbHelper.GetKnowledgePoints())
-            {
-                KnowledgePoints.Add(item);
-            }
-        }
-        [RelayCommand]
-        private void Edit()
-        {
-
-        }
+        
+        /// <summary>
+        /// 添加按钮响应
+        /// </summary> 
         [RelayCommand]
         private void Add()
         {
-
+            ActionEvent?.Invoke(this, new ActionEventArg()
+            {
+                TipMode = TipMode.Show,
+                ActionMode = ActionMode.Add,
+            });
         }
-        [RelayCommand]
-        private void Delete()
-        {
 
+        /// <summary>
+        /// 修改按钮响应
+        /// </summary>
+        /// <param name="obj">选中的列</param>
+        [RelayCommand]
+        private void Edit(object obj)
+        {
+            ActionEvent?.Invoke(this, new ActionEventArg()
+            {
+                TipMode = TipMode.Show,
+                ActionMode = ActionMode.Edit,
+                Source = obj
+            });
+        }
+
+        /// <summary>
+        /// 删除按钮响应
+        /// </summary>
+        /// <param name="obj">选中的列</param>
+        [RelayCommand]
+        private void Delete(object obj)
+        {
+            ActionEvent?.Invoke(this, new ActionEventArg()
+            {
+                TipMode = TipMode.Show,
+                ActionMode = ActionMode.Delete,
+                Source = obj
+            });
         }
     }
 }

@@ -69,7 +69,14 @@
         Teacher,
         ResetPasswordMessage,
         ResetSuccess,
-        UserNotSpace,
+        PasswordSame,
         UserNotNull,
+        UserNot,
+        Order,
+        Goto,
+        Current,
+        PrePage,
+        NextPage,
+        ExamSubjectsDeleteFail,
     }
 }

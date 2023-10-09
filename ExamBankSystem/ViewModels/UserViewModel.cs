@@ -22,12 +22,14 @@ namespace ExamBankSystem.ViewModels
         /// 旧密码错误提示
         /// </summary>
         [ObservableProperty]
-        private bool oldPasswordErrorVisible;
+        [NotifyPropertyChangedFor(nameof(ChangePasswordEnable))]
+        private bool oldPasswordErrorVisible = true;
         /// <summary>
         /// 新密码错误提示
         /// </summary>
         [ObservableProperty]
-        private bool newPasswordErrorVisible;
+        [NotifyPropertyChangedFor(nameof(ChangePasswordEnable))]
+        private bool newPasswordErrorVisible = true;
         /// <summary>
         /// 旧密码错误提示内容
         /// </summary>
@@ -49,6 +51,10 @@ namespace ExamBankSystem.ViewModels
         [ObservableProperty]
         private string newPassword;
         /// <summary>
+        /// 修改密码按钮的启用
+        /// </summary>
+        public bool ChangePasswordEnable => !NewPasswordErrorVisible && !OldPasswordErrorVisible;
+        /// <summary>
         /// 登出
         /// </summary>
         [RelayCommand]
@@ -60,27 +66,25 @@ namespace ExamBankSystem.ViewModels
         /// 修改密码
         /// </summary>
         [RelayCommand]
-        private void ChangePassword()
+        private async Task ChangePasswordAsync()
         {
-            if (NewPasswordErrorVisible || OldPasswordErrorVisible) return;
-            if (DbHelper.GetUser(CurrentData.CurrentUser.Id) is { } user)
+            var user = await DbHelper.GetUserAsync(CurrentData.CurrentUser.Id);
+            if (user == null) return;
+            if (user.Password == HashHelper.Hash_MD5_32(OldPassword))
             {
-                if (user.Password == HashHelper.Hash_MD5_32(OldPassword))
-                {
-                    DbHelper.UpdateUserPassword(user.Id,HashHelper.Hash_MD5_32(NewPassword));
-                    EventHelper.InvokeTipPopup(this,
-                        ResourcesHelper.GetString(ResourceKey.ChangePasswordSuccess),
-                        InfoBarSeverity.Success
-                    );
-                    EventHelper.InvokeLogoutEvent(this);
-                }
-                else
-                {
-                    EventHelper.InvokeTipPopup(this,
-                        ResourcesHelper.GetString(ResourceKey.OldPasswordError),
-                        InfoBarSeverity.Error
-                    );
-                }
+                DbHelper.UpdateUserPassword(user.Id,HashHelper.Hash_MD5_32(NewPassword));
+                EventHelper.InvokeTipPopup(this,
+                    ResourcesHelper.GetString(ResourceKey.ChangePasswordSuccess),
+                    InfoBarSeverity.Success
+                );
+                EventHelper.InvokeLogoutEvent(this);
+            }
+            else
+            {
+                EventHelper.InvokeTipPopup(this,
+                    ResourcesHelper.GetString(ResourceKey.OldPasswordError),
+                    InfoBarSeverity.Error
+                );
             }
         }
         /// <summary>
@@ -101,6 +105,11 @@ namespace ExamBankSystem.ViewModels
                 NewPasswordError = ResourcesHelper.GetString(ResourceKey.PasswordNot);
                 NewPasswordErrorVisible = true;
             }
+            else if(box.Text == OldPassword)
+            {
+                NewPasswordError = ResourcesHelper.GetString(ResourceKey.PasswordDifferent);
+                NewPasswordErrorVisible = true;
+            }
             else
             {
                 NewPasswordErrorVisible = false;
@@ -113,7 +122,7 @@ namespace ExamBankSystem.ViewModels
         {
             if (!(sender is TextBox box)) return;
             // 空
-            if (box.Text == "")
+            if (string.IsNullOrEmpty(box.Text))
             {
                 OldPasswordError= ResourcesHelper.GetString(ResourceKey.PasswordNull);
                 OldPasswordErrorVisible = true;

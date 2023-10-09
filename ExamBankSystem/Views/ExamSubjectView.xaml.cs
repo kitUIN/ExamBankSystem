@@ -1,20 +1,8 @@
 ﻿using ExamBankSystem.Args;
 using ExamBankSystem.Enums;
-using ExamBankSystem.Helpers;
 using ExamBankSystem.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace ExamBankSystem.Views
@@ -25,10 +13,12 @@ namespace ExamBankSystem.Views
     public sealed partial class ExamSubjectView : Page
     {
         private ExamSubjectViewModel ViewModel { get; } = new ExamSubjectViewModel();
+
         public ExamSubjectView()
         {
-            this.InitializeComponent(); 
+            this.InitializeComponent();
         }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ViewModel.ActionEvent += ViewModel_ActionEvent;
@@ -51,7 +41,7 @@ namespace ExamBankSystem.Views
             switch (e.TipMode)
             {
                 case TipMode.Show:
-                    CommandTip.Show(e.ActionMode,e.Source);
+                    CommandTip.Show(e.ActionMode, e.Source);
                     break;
                 case TipMode.Hide:
                     CommandTip.Hide();

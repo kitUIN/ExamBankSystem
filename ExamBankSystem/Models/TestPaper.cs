@@ -3,6 +3,7 @@ using ExamBankSystem.Helpers;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace ExamBankSystem.Models
     /// <summary>
     /// 试卷
     /// </summary>
-    public partial class TestPaper : ObservableObject
+    public partial class TestPaper : OrderModel
     {
         /// <summary>
         /// ID
@@ -49,21 +50,17 @@ namespace ExamBankSystem.Models
         /// </summary>
         [ObservableProperty]
         private DateTime updateTime;
-        /// <summary>
-        /// 从数据库导入
-        /// </summary>
-        public static TestPaper FromDb(SqliteDataReader query)
+
+        public TestPaper(){ }
+        public TestPaper(IDataRecord query):base(query)
         {
-            return new TestPaper
-            {
-                Id = query.GetInt32(0),
-                Name = query.GetString(1),
-                Point = query.GetInt32(2),
-                IsExamine = query.GetBoolean(3),
-                UploadUser = query.GetString(4),
-                CreateTime = DateTimeHelper.ToDateTime(query.GetInt64(5)),
-                UpdateTime = DateTimeHelper.ToDateTime(query.GetInt64(6)),
-            };
+            Id = query.GetInt32(0);
+            Name = query.GetString(1);
+            Point = query.GetInt32(2);
+            IsExamine = query.GetBoolean(3);
+            UploadUser = query.GetString(4);
+            CreateTime = DateTimeHelper.ToDateTime(query.GetInt64(5));
+            UpdateTime = DateTimeHelper.ToDateTime(query.GetInt64(6));
         }
     }
 

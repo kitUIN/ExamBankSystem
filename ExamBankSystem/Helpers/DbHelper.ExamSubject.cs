@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ExamBankSystem.Enums;
 using ExamBankSystem.Models;
 using Microsoft.Data.Sqlite;
@@ -7,143 +8,138 @@ namespace ExamBankSystem.Helpers
 {
     public partial class DbHelper
     {
-        #region ExamSubject
-
-        
-        
         /// <summary>
         /// 创建考试科目表
         /// </summary>
-        private static async void CreateExamSubjectsTable(SqliteConnection db)
+        private static void CreateExamSubjectsTable()
         {
-            var tableCommand = "CREATE TABLE IF NOT EXISTS `ExamSubjects` (" +
-                               "`id` INTEGER PRIMARY KEY AUTOINCREMENT , " +
-                               "`subject` NVARCHAR(30) , " +
-                               "`createTime` TIMESTAMP NOT NULL, " +
-                               "`updateTime` TIMESTAMP NULL " +
-                               ")";
-            var createTable = new SqliteCommand(tableCommand, db);
-            await createTable.ExecuteReaderAsync();
+            ExecuteReaderAsync(command =>
+                {
+                    command.CommandText = "CREATE TABLE IF NOT EXISTS `ExamSubjects` (" +
+                                          "`id` INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                                          "`subject` NVARCHAR(30) , " +
+                                          "`createTime` TIMESTAMP NOT NULL, " +
+                                          "`updateTime` TIMESTAMP NULL " +
+                                          ")";
+                    return command;
+                }
+            );
         }
+
         /// <summary>
         /// 从数据库中获取考试科目
         /// </summary>
-        public static List<ExamSubject> GetExamSubjects()
+        public static async Task<List<ExamSubject>> GetExamSubjectsAsync(long page = 1, int limit = 15)
         {
-            return Execute(selectCommand =>
+            return await GetAsync<ExamSubject>(page, limit);
+        }
+
+        /// <summary>
+        /// 从数据库中获取考试科目
+        /// </summary>
+        public static async Task<ExamSubject> GetExamSubjectAsync(string name)
+        {
+            return await ExecuteReaderAsync(selectCommand =>
             {
-                selectCommand.CommandText = $"SELECT * FROM {DbTableName.ExamSubjects} ;";
+                selectCommand.CommandText = $"SELECT * FROM `ExamSubjects` WHERE `subject` = @Name;";
+                selectCommand.Parameters.AddWithValue("@Name", name);
                 return selectCommand;
             }, query =>
             {
-                var res = new List<ExamSubject>();
                 while (query.Read())
                 {
-                    res.Add(ExamSubject.FromDb(query));
+                    return new ExamSubject(query);
                 }
-                return res;
+
+                return null;
             });
         }
+
         /// <summary>
         /// 从数据库中获取考试科目
         /// </summary>
-        public static ExamSubject GetExamSubject(string name)
+        public static async Task<ExamSubject> GetExamSubjectAsync(int id)
         {
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
-            {
-                db.Open();
-                var selectCommand = db.CreateCommand();
-                selectCommand.CommandText = $"SELECT * FROM {DbTableName.ExamSubjects} WHERE subject = @Name;";
-
-                selectCommand.Parameters.AddWithValue("@Name", name);
-
-                var query = selectCommand.ExecuteReader();
-
-                while (query.Read())
-                {
-                    return ExamSubject.FromDb(query);
-                }
-            }
-            return null;
+            return await GetByIdAsync<ExamSubject>(id);
         }
+
         /// <summary>
         /// 从数据库中获取考试科目
         /// </summary>
         public static ExamSubject GetExamSubject(int id)
         {
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
-            {
-                db.Open();
-                var selectCommand = db.CreateCommand();
-                selectCommand.CommandText = $"SELECT * FROM {DbTableName.ExamSubjects} WHERE `id` = @Name;";
-
-                selectCommand.Parameters.AddWithValue("@Name", id);
-
-                var query = selectCommand.ExecuteReader();
-
-                while (query.Read())
-                {
-                    return ExamSubject.FromDb(query);
-                }
-            }
-            return null;
+            return GetById<ExamSubject>(id);
         }
+
         /// <summary>
         /// 插入考试科目到数据库中
         /// </summary>
         public static void InsertExamSubject(string name)
         {
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            ExecuteReaderAsync(selectCommand =>
             {
-                db.Open();
-                var insertCommand = db.CreateCommand();
-                insertCommand.CommandText = $"INSERT INTO {DbTableName.ExamSubjects} VALUES (null, @Name, @CreateTime, @UpdateTime);";
-                insertCommand.Parameters.AddWithValue("@Name", name);
+                selectCommand.CommandText =
+                    $"INSERT INTO `ExamSubjects` VALUES (NULL, @Name, @CreateTime, @UpdateTime);";
+                selectCommand.Parameters.AddWithValue("@Name", name);
                 var t = DateTimeHelper.GetTimeStamp();
-                insertCommand.Parameters.AddWithValue("@CreateTime", t);
-                insertCommand.Parameters.AddWithValue("@UpdateTime",t);
-                insertCommand.ExecuteReader();
-            }
+                selectCommand.Parameters.AddWithValue("@CreateTime", t);
+                selectCommand.Parameters.AddWithValue("@UpdateTime", t);
+                return selectCommand;
+            });
         }
+
         /// <summary>
         /// 从数据库中删除考试科目
         /// </summary>
-        public static void DeleteExamSubject(string key)
+        public static void DeleteExamSubject(int id)
         {
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
-            {
-                db.Open();
-
-                var command = db.CreateCommand();
-                command.CommandText = $"DELETE FROM {DbTableName.ExamSubjects} WHERE subject = @Name;";
-                command.Parameters.AddWithValue("@Name", key);
-                command.ExecuteReader();
-            }
+            DeleteById<ExamSubject>(id);
         }
+
         /// <summary>
         /// 更新科目名称
         /// </summary>
-        public static void UpdateExamSubjectName(string newName,string oldName)
+        public static void UpdateExamSubjectName(int id, string newName)
         {
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            ExecuteReaderAsync(selectCommand =>
             {
-                db.Open();
-
-                var insertCommand = db.CreateCommand();
-                insertCommand.CommandText = $"UPDATE {DbTableName.ExamSubjects} SET subject = @Name, updateTime = @UpdateTime WHERE subject = @oldName;";
-                insertCommand.Parameters.AddWithValue("@Name", newName);
-                insertCommand.Parameters.AddWithValue("@UpdateTime", DateTimeHelper.GetTimeStamp());
-                insertCommand.Parameters.AddWithValue("@oldName", oldName);
-                insertCommand.ExecuteReader();
-            }
+                selectCommand.CommandText =
+                    $"UPDATE `ExamSubjects` SET `subject` = @Name, `updateTime` = @UpdateTime WHERE `id` = @ID;";
+                selectCommand.Parameters.AddWithValue("@Name", newName);
+                selectCommand.Parameters.AddWithValue("@UpdateTime", DateTimeHelper.GetTimeStamp());
+                selectCommand.Parameters.AddWithValue("@ID", id);
+                return selectCommand;
+            });
         }
+
+        /// <summary>
+        /// 获取科目总数
+        /// </summary>
+        public static async Task<long> GetExamSubjectCountAsync()
+        {
+            return await CountAsync<ExamSubject>();
+        }
+
         /// <summary>
         /// 考试科目下是否有问题
         /// </summary>
-        public static void HasAnyQuestion(int id)
+        public static async Task<bool> ExamSubjectHasAnyQuestionAsync(int id)
         {
-            
+            return (bool)await ExecuteScalarAsync(selectCommand =>
+            {
+                selectCommand.CommandText = "SELECT EXISTS(SELECT 1 FROM Questions WHERE subjectId = @ID);";
+                selectCommand.Parameters.AddWithValue("@ID", id);
+                return selectCommand;
+            });
         }
-        #endregion
+
+        /// <summary>
+        /// 搜索考试科目
+        /// </summary>
+        public static async Task<List<ExamSubject>> SearchExamSubjectAsync(string keyword, long page = 1,
+            int limit = 15)
+        {
+            return await SearchAsync<ExamSubject>("subject", keyword, page, limit);
+        }
     }
 }

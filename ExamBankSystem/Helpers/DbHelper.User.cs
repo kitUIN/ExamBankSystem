@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using ExamBankSystem.Enums;
 using ExamBankSystem.Models;
 using Microsoft.Data.Sqlite;
@@ -11,47 +13,37 @@ namespace ExamBankSystem.Helpers
         /// <summary>
         /// 创建用户表
         /// </summary>
-        private static async void CreateUsersTable(SqliteConnection db)
+        private static void CreateUsersTable()
         {
-            var tableCommand = "CREATE TABLE IF NOT EXISTS `Users` (" +
-                               "`id` INTEGER PRIMARY KEY AUTOINCREMENT , " +
-                               "`user` NVARCHAR(10) NOT NULL, " +
-                               "`password` NVARCHAR(32) NOT NULL, " +
-                               "`role` NVARCHAR(20) NOT NULL, " +
-                               "`createTime` TIMESTAMP NOT NULL, " +
-                               "`lastLoginTime` TIMESTAMP NULL " +
-                               ")";
-            var createTable = new SqliteCommand(tableCommand, db);
-            await createTable.ExecuteReaderAsync();
+            ExecuteReaderAsync(command =>
+            {
+                command.CommandText = "CREATE TABLE IF NOT EXISTS `Users` (" +
+                                      "`id` INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                                      "`user` NVARCHAR(10) NOT NULL, " +
+                                      "`password` NVARCHAR(32) NOT NULL, " +
+                                      "`role` NVARCHAR(20) NOT NULL, " +
+                                      "`createTime` TIMESTAMP NOT NULL, " +
+                                      "`lastLoginTime` TIMESTAMP NULL " +
+                                      ")";
+                return command;
+            });
         }
+
         /// <summary>
         /// 从数据库中获取用户
         /// </summary>
-        public static List<User> GetUsers(int page = 0,int limit = 20)
+        public static async Task<List<User>> GetUsersAsync(long page = 1, int limit = 15)
         {
-            return Execute(selectCommand =>
-            {
-                selectCommand.CommandText = "SELECT * FROM `Users` LIMIT @Offset OFFSET @Page ;";
-                selectCommand.Parameters.AddWithValue("@Offset", limit);
-                selectCommand.Parameters.AddWithValue("@Page", page);
-                return selectCommand;
-            }, query =>
-            {
-                var res = new List<User>();
-                while (query.Read())
-                {
-                    res.Add(User.FromDb(query));
-                }
-                return res;
-            });
+            return await GetAsync<User>(page, limit);
         }
+
         /// <summary>
         /// 从数据库中获取用户
         /// </summary>
         /// <param name="user">用户名</param>
-        public static User GetUser(string user)
+        public static async Task<User> GetUserAsync(string user)
         {
-            return Execute(selectCommand =>
+            return await ExecuteReaderAsync(selectCommand =>
             {
                 selectCommand.CommandText = "SELECT * FROM `Users` WHERE `user` = @user;";
                 selectCommand.Parameters.AddWithValue("@user", user);
@@ -60,55 +52,47 @@ namespace ExamBankSystem.Helpers
             {
                 while (query.Read())
                 {
-                    return User.FromDb(query);
+                    return new User(query);
                 }
+
                 return null;
             });
         }
-        
+
         /// <summary>
         /// 从数据库中获取用户
         /// </summary>
         /// <param name="id">用户id</param>
-        public static User GetUser(int id)
+        public static async Task<User> GetUserAsync(int id)
         {
-            return Execute(selectCommand =>
-            {
-                selectCommand.CommandText = "SELECT * FROM `Users` WHERE `id` = @ID;";
-                selectCommand.Parameters.AddWithValue("@ID", id);
-                return selectCommand;
-            }, query =>
-            {
-                while (query.Read())
-                {
-                    return User.FromDb(query);
-                }
-                return null;
-            });
+            return await GetByIdAsync<User>(id);
         }
+
         /// <summary>
         /// 插入用户到数据库中
         /// </summary>
-        public static void InsertUser(string name,string password,string role)
+        public static void InsertUser(string name, string password, string role)
         {
-            Execute(selectCommand =>
+            ExecuteReaderAsync(selectCommand =>
             {
-                selectCommand.CommandText = "INSERT INTO `Users` VALUES (NULL, @User, @Password, @Role, @CreateTime, @UpdateTime);";
+                selectCommand.CommandText =
+                    "INSERT INTO `Users` VALUES (NULL, @User, @Password, @Role, @CreateTime, @UpdateTime);";
                 selectCommand.Parameters.AddWithValue("@User", name);
                 selectCommand.Parameters.AddWithValue("@Password", password);
                 selectCommand.Parameters.AddWithValue("@Role", role);
                 var t = DateTimeHelper.GetTimeStamp();
                 selectCommand.Parameters.AddWithValue("@CreateTime", t);
-                selectCommand.Parameters.AddWithValue("@UpdateTime",t);
+                selectCommand.Parameters.AddWithValue("@UpdateTime", t);
                 return selectCommand;
             });
         }
+
         /// <summary>
         /// 更新用户登录时间
         /// </summary>
         public static void UpdateUserLoginTime(int id)
         {
-            Execute(selectCommand =>
+            ExecuteReaderAsync(selectCommand =>
             {
                 selectCommand.CommandText = "UPDATE `Users` SET `lastLoginTime` = @loginTime WHERE `id` = @ID;";
                 selectCommand.Parameters.AddWithValue("@loginTime", DateTimeHelper.GetTimeStamp());
@@ -116,12 +100,13 @@ namespace ExamBankSystem.Helpers
                 return selectCommand;
             });
         }
+
         /// <summary>
         /// 从数据库中修改用户密码
         /// </summary>
         public static void UpdateUserPassword(int id, string newPassword)
         {
-            Execute(selectCommand =>
+            ExecuteReaderAsync(selectCommand =>
             {
                 selectCommand.CommandText = "UPDATE `Users` SET `password` = @Password WHERE `id` = @ID;";
                 selectCommand.Parameters.AddWithValue("@Password", newPassword);
@@ -129,25 +114,29 @@ namespace ExamBankSystem.Helpers
                 return selectCommand;
             });
         }
+
         /// <summary>
         /// 从数据库中重置用户密码
         /// </summary>
-        public static void ResetUserPassword(int id)
+        public static void ResetUserPassword(int id, string name)
         {
-            UpdateUserPassword(id,"9b58b783a23eb7dd11f26e0a46e11ea8"); // qust123
+            UpdateUserPassword(id, HashHelper.Hash_MD5_32(name.Substring(name.Length - 3)));
         }
-        
+
         /// <summary>
         /// 从数据库中删除用户
         /// </summary>
         public static void DeleteUser(int id)
         {
-            Execute(selectCommand =>
-            {
-                selectCommand.CommandText = "DELETE FROM `Users` WHERE `id` = @ID;";
-                selectCommand.Parameters.AddWithValue("@ID", id);
-                return selectCommand;
-            });
+            DeleteById<User>(id);
         }
+        /// <summary>
+        /// 搜索考试科目
+        /// </summary>
+        public static async Task<List<User>> SearchUserAsync(string keyword, long page = 1,
+            int limit = 15)
+        {
+            return await SearchAsync<User>("user", keyword, page, limit);
+        } 
     }
 }

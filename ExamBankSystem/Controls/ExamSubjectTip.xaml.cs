@@ -26,7 +26,11 @@ namespace ExamBankSystem.Controls
 {
     public sealed partial class ExamSubjectTip : UserControl
     {
-        private string _oldName;
+        /// <summary>
+        /// 待修改的考试科目
+        /// </summary>
+        private ExamSubject _subject;
+
         private ActionMode Mode { get; set; }
 
         /// <summary>
@@ -52,16 +56,15 @@ namespace ExamBankSystem.Controls
                     MainTeachingTip.Title = ResourcesHelper.GetString(ResourceKey.Add) +
                                             ResourcesHelper.GetString(ResourceKey.ExamSubjects);
                     ExamSubject.Text = "";
-                    _oldName = "";
                     break;
                 case ActionMode.Edit:
-                    if (obj is string name)
+                    if (obj is ExamSubject subject)
                     {
                         MainTeachingTip.Title = ResourcesHelper.GetString(ResourceKey.Edit) +
                                                 ResourcesHelper.GetString(ResourceKey.ExamSubjects);
                         MainTeachingTip.IsOpen = true;
-                        _oldName = name;
-                        ExamSubject.Text = name;
+                        _subject = subject;
+                        ExamSubject.Text = subject.Name;
                     }
 
                     break;
@@ -70,18 +73,38 @@ namespace ExamBankSystem.Controls
                     {
                         EventHelper.InvokeTopGridEvent(this,
                             new TopGridEventArg(
-                                XamlHelper.CreateDeleteDialog(
-                                    (sender, args) =>
+                                XamlHelper.CreateDeleteDialog(async (sender, args) =>
                                     {
+                                        var success = 0;
+                                        var fail = 0;
                                         foreach (var item in items.Cast<ExamSubject>())
                                         {
-                                            DbHelper.DeleteExamSubject(item.Name);
+                                            if (await DbHelper.ExamSubjectHasAnyQuestionAsync(item.Id))
+                                            {
+                                                fail++;
+                                            }
+                                            else
+                                            {
+                                                success++;
+                                                DbHelper.DeleteExamSubject(item.Id);
+                                            }
                                         }
 
-                                        EventHelper.InvokeTipPopup(this,
-                                            ResourcesHelper.GetString(ResourceKey.DeleteSuccess),
-                                            InfoBarSeverity.Success
-                                        );
+                                        if (success > 0)
+                                        {
+                                            EventHelper.InvokeTipPopup(this,
+                                                ResourcesHelper.GetString(ResourceKey.DeleteSuccess) + ": " + success,
+                                                InfoBarSeverity.Success
+                                            );
+                                        }
+                                        if (fail > 0)
+                                        {
+                                            EventHelper.InvokeTipPopup(this,
+                                                ResourcesHelper.GetString(ResourceKey.ExamSubjectsDeleteFail) + ": " +
+                                                fail,
+                                                InfoBarSeverity.Success
+                                            );
+                                        }
                                         RefreshEvent?.Invoke(this, EventArgs.Empty);
                                     }
                                 ),
@@ -101,9 +124,9 @@ namespace ExamBankSystem.Controls
         }
 
         /// <summary>
-        /// 添加
+        /// 添加或修改按钮响应
         /// </summary>
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(ExamSubject.Text))
             {
@@ -116,24 +139,27 @@ namespace ExamBankSystem.Controls
             switch (Mode)
             {
                 case ActionMode.Add:
-
-                    if (DbHelper.GetExamSubject(ExamSubject.Text) is { } subject)
+                    if (await DbHelper.GetExamSubjectAsync(ExamSubject.Text) == null)
+                    {
+                        DbHelper.InsertExamSubject(ExamSubject.Text);
+                        EventHelper.InvokeTipPopup(this,
+                            ResourcesHelper.GetString(ResourceKey.AddSuccess),
+                            InfoBarSeverity.Success
+                        );
+                    }
+                    else
                     {
                         EventHelper.InvokeTipPopup(this,
-                            subject.Name + ResourcesHelper.GetString(ResourceKey.Exist),
+                            ResourcesHelper.GetString(ResourceKey.ExamSubjects) +
+                            ResourcesHelper.GetString(ResourceKey.Exist),
                             InfoBarSeverity.Error
                         );
                         return;
                     }
-                    DbHelper.InsertExamSubject(ExamSubject.Text);
-                    EventHelper.InvokeTipPopup(this,
-                        ResourcesHelper.GetString(ResourceKey.AddSuccess),
-                        InfoBarSeverity.Success
-                    );
+
                     break;
                 case ActionMode.Edit:
-                    DbHelper.UpdateExamSubjectName(ExamSubject.Text, _oldName);
-
+                    DbHelper.UpdateExamSubjectName(_subject.Id, ExamSubject.Text);
                     EventHelper.InvokeTipPopup(this,
                         ResourcesHelper.GetString(ResourceKey.EditSuccess),
                         InfoBarSeverity.Success
@@ -143,6 +169,16 @@ namespace ExamBankSystem.Controls
 
             Hide();
             RefreshEvent?.Invoke(this, EventArgs.Empty);
+        }
+        /// <summary>
+        /// 回车响应
+        /// </summary>
+        private void Button_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if(e.Key == Windows.System.VirtualKey.Enter)
+            {
+                AddButton_Click(sender, e);
+            }
         }
     }
 }

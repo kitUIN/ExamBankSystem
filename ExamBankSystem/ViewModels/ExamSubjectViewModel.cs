@@ -5,51 +5,31 @@ using ExamBankSystem.Enums;
 using ExamBankSystem.Helpers;
 using ExamBankSystem.Models;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 using Windows.UI.Xaml.Controls;
 
 namespace ExamBankSystem.ViewModels
 {
-    public partial class ExamSubjectViewModel: ObservableObject
+    public partial class ExamSubjectViewModel : DataTableBase<ExamSubject>
     {
+        
         /// <summary>
         /// 操作事件
         /// </summary>
         public event EventHandler<ActionEventArg> ActionEvent;
+
+        protected new string SearchCol = "subject";
+
         /// <summary>
         /// 是否允许按下修改按钮
         /// </summary>
-        [ObservableProperty]
-        private bool canEdit = false;
+        [ObservableProperty] private bool canEdit;
+
         /// <summary>
         /// 是否允许按下删除按钮
         /// </summary>
-        [ObservableProperty]
-        private bool canDelete = false;
-        /// <summary>
-        /// 考试科目列表
-        /// </summary>
-        public ObservableCollection<ExamSubject> ExamSubjects { get; set; } = new ObservableCollection<ExamSubject>();
-        public ExamSubjectViewModel()
-        {
-            Refresh();
-        }
-        /// <summary>
-        /// 刷新列表
-        /// </summary>
-        public void Refresh()
-        {
-            ExamSubjects.Clear();
-            foreach (var item in DbHelper.GetExamSubjects())
-            {
-                ExamSubjects.Add(item);
-            }
-        }
+        [ObservableProperty] private bool canDelete;
+        
         /// <summary>
         /// 列表选择变化响应
         /// </summary>
@@ -58,19 +38,10 @@ namespace ExamBankSystem.ViewModels
             CanEdit = count == 1;
             CanDelete = count > 0;
         }
-        [RelayCommand]
-        private void Edit(object obj)
-        {
-            if(obj is ExamSubject subject)
-            {
-                ActionEvent?.Invoke(this, new ActionEventArg()
-                {
-                    TipMode = TipMode.Show,
-                    ActionMode = ActionMode.Edit,
-                    Source = subject.Name
-                });
-            }
-        }
+
+        /// <summary>
+        /// 添加按钮响应
+        /// </summary> 
         [RelayCommand]
         private void Add()
         {
@@ -80,6 +51,26 @@ namespace ExamBankSystem.ViewModels
                 ActionMode = ActionMode.Add,
             });
         }
+
+        /// <summary>
+        /// 修改按钮响应
+        /// </summary>
+        /// <param name="obj">选中的列</param>
+        [RelayCommand]
+        private void Edit(object obj)
+        {
+            ActionEvent?.Invoke(this, new ActionEventArg()
+            {
+                TipMode = TipMode.Show,
+                ActionMode = ActionMode.Edit,
+                Source = obj
+            });
+        }
+
+        /// <summary>
+        /// 删除按钮响应
+        /// </summary>
+        /// <param name="obj">选中的列</param>
         [RelayCommand]
         private void Delete(object obj)
         {
@@ -90,5 +81,6 @@ namespace ExamBankSystem.ViewModels
                 Source = obj
             });
         }
+        
     }
 }

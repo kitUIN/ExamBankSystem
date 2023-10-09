@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ExamBankSystem.Enums;
 using ExamBankSystem.Models;
 using Microsoft.Data.Sqlite;
@@ -14,7 +15,8 @@ namespace ExamBankSystem.Helpers
         {
             var tableCommand = "CREATE TABLE IF NOT EXISTS `KnowledgePoints` (" +
                                "`id` INTEGER PRIMARY KEY AUTOINCREMENT , " +
-                               "`name` NVARCHAR(100), " +
+                               "`subjectId` INTEGER NOT NULL, " +
+                               "`name` NVARCHAR(100) NOT NULL, " +
                                "`knowledge` NTEXT NOT NULL, " +
                                "`createTime` TIMESTAMP NOT NULL, " +
                                "`updateTime` TIMESTAMP NULL " +
@@ -22,124 +24,115 @@ namespace ExamBankSystem.Helpers
             var createTable = new SqliteCommand(tableCommand, db);
             await createTable.ExecuteReaderAsync();
         }
-         #region KnowledgePoint
         /// <summary>
         /// 从数据库中获取知识点
         /// </summary>
-        public static List<KnowledgePoint> GetKnowledgePoints()
+        public static async Task<List<KnowledgePoint>> GetKnowledgePointsAsync(long page = 1, int limit = 15)
         {
-            var res = new List<KnowledgePoint>();
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
-            {
-                db.Open();
-                var selectCommand = db.CreateCommand();
-                selectCommand.CommandText = $"SELECT * FROM {DbTableName.KnowledgePoints} ;";
-                var query = selectCommand.ExecuteReader();
-                while (query.Read())
-                {
-                    res.Add(KnowledgePoint.FromDb(query));
-                }
-            }
-            return res;
+            return await GetAsync<KnowledgePoint>(page, limit);
         }
+
         /// <summary>
         /// 从数据库中获取知识点
         /// </summary>
-        public static KnowledgePoint GetKnowledgePoint(string name)
+        public static async Task<KnowledgePoint> GetKnowledgePointAsync(string name)
         {
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            return await ExecuteReaderAsync(selectCommand =>
             {
-                db.Open();
-                var selectCommand = db.CreateCommand();
-                selectCommand.CommandText = $"SELECT * FROM {DbTableName.KnowledgePoints} WHERE name = @Name;";
-
+                selectCommand.CommandText = $"SELECT * FROM `KnowledgePoints` WHERE `name` = @Name;";
                 selectCommand.Parameters.AddWithValue("@Name", name);
-
-                var query = selectCommand.ExecuteReader();
-
+                return selectCommand;
+            }, query =>
+            {
                 while (query.Read())
                 {
-                    return KnowledgePoint.FromDb(query);
+                    return new KnowledgePoint(query);
                 }
-            }
-            return null;
+
+                return null;
+            });
         }
+
+        /// <summary>
+        /// 从数据库中获取知识点
+        /// </summary>
+        public static async Task<KnowledgePoint> GetKnowledgePointAsync(int id)
+        {
+            return await GetByIdAsync<KnowledgePoint>(id);
+        }
+
         /// <summary>
         /// 从数据库中获取知识点
         /// </summary>
         public static KnowledgePoint GetKnowledgePoint(int id)
         {
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
-            {
-                db.Open();
-                var selectCommand = db.CreateCommand();
-                selectCommand.CommandText = $"SELECT * FROM {DbTableName.KnowledgePoints} WHERE `id` = @Name;";
-
-                selectCommand.Parameters.AddWithValue("@Name", id);
-
-                var query = selectCommand.ExecuteReader();
-
-                while (query.Read())
-                {
-                    return KnowledgePoint.FromDb(query);
-                }
-            }
-            return null;
+            return GetById<KnowledgePoint>(id);
         }
+
         /// <summary>
         /// 插入知识点到数据库中
         /// </summary>
-        public static void InsertKnowledgePoint(KnowledgePoint instance)
+        public static void InsertKnowledgePoint(string name,string knowledge,int subject)
         {
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            ExecuteReaderAsync(selectCommand =>
             {
-                db.Open();
-
-                var insertCommand = db.CreateCommand();
-                insertCommand.CommandText = $"INSERT INTO {DbTableName.KnowledgePoints} VALUES (@Name, @Content, @CreateTime, @UpdateTime);";
-                insertCommand.Parameters.AddWithValue("@Name", instance.Name);
+                selectCommand.CommandText =
+                    $"INSERT INTO `KnowledgePoints` VALUES (NULL, @Subject, @Name, @Knowledge, @CreateTime, @UpdateTime);";
+                selectCommand.Parameters.AddWithValue("@Name", name);
+                selectCommand.Parameters.AddWithValue("@Subject", subject);
+                selectCommand.Parameters.AddWithValue("@Knowledge", knowledge);
                 var t = DateTimeHelper.GetTimeStamp();
-                insertCommand.Parameters.AddWithValue("@Content", instance.Knowledge);
-                insertCommand.Parameters.AddWithValue("@CreateTime", t);
-                insertCommand.Parameters.AddWithValue("@UpdateTime", t);
-                insertCommand.ExecuteReader();
-            }
+                selectCommand.Parameters.AddWithValue("@CreateTime", t);
+                selectCommand.Parameters.AddWithValue("@UpdateTime", t);
+                return selectCommand;
+            });
         }
+
         /// <summary>
         /// 从数据库中删除知识点
         /// </summary>
-        public static void DeleteKnowledgePoint(string key)
+        public static void DeleteKnowledgePoint(int id)
         {
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
-            {
-                db.Open();
-
-                var command = db.CreateCommand();
-                command.CommandText = $"DELETE FROM {DbTableName.KnowledgePoints} WHERE name = @Name;";
-                command.Parameters.AddWithValue("@Name", key);
-                command.ExecuteReader();
-            }
+            DeleteById<KnowledgePoint>(id);
         }
+
         /// <summary>
-        /// 更新科目
+        /// 更新知识点名称
         /// </summary>
-        public static void UpdateKnowledgePoint(KnowledgePoint obj, string key)
+        public static void UpdateKnowledgePointName(int id, string newName)
         {
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            ExecuteReaderAsync(selectCommand =>
             {
-                db.Open();
-
-                var insertCommand = db.CreateCommand();
-                insertCommand.CommandText = $"UPDATE {DbTableName.KnowledgePoints} SET name = @Name, knowledge = @Knowledge, updateTime = @UpdateTime WHERE name = @OldName;";
-                insertCommand.Parameters.AddWithValue("@Name", obj.Name);
-                insertCommand.Parameters.AddWithValue("@Knowledge", obj.Knowledge);
-                insertCommand.Parameters.AddWithValue("@UpdateTime", DateTimeHelper.GetTimeStamp());
-                insertCommand.Parameters.AddWithValue("@OldName", key);
-                insertCommand.ExecuteReader();
-            }
+                selectCommand.CommandText =
+                    $"UPDATE `KnowledgePoints` SET `name` = @Name, `updateTime` = @UpdateTime WHERE `id` = @ID;";
+                selectCommand.Parameters.AddWithValue("@Name", newName);
+                selectCommand.Parameters.AddWithValue("@UpdateTime", DateTimeHelper.GetTimeStamp());
+                selectCommand.Parameters.AddWithValue("@ID", id);
+                return selectCommand;
+            });
         }
 
-        #endregion
+        /// <summary>
+        /// 知识点下是否有问题
+        /// </summary>
+        public static async Task<bool> KnowledgePointHasAnyQuestionAsync(int id)
+        {
+            return (bool)await ExecuteScalarAsync(selectCommand =>
+            {
+                selectCommand.CommandText = "SELECT EXISTS(SELECT 1 FROM Questions WHERE subjectId = @ID);";
+                selectCommand.Parameters.AddWithValue("@ID", id);
+                return selectCommand;
+            });
+        }
+
+        /// <summary>
+        /// 搜索知识点
+        /// </summary>
+        public static async Task<List<KnowledgePoint>> SearchKnowledgePointAsync(string keyword, long page = 1,
+            int limit = 15)
+        {
+            return await SearchAsync<KnowledgePoint>("subject", keyword, page, limit);
+        }
 
     }
 }

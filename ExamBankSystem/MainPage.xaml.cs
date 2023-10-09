@@ -61,11 +61,11 @@ namespace ExamBankSystem
             ConfigHelper.Set(ConfigKey.LastUserName, "");
             ConfigHelper.Set(ConfigKey.LastUserPassword, "");
             ContentFrame.Content = null;
-            LoginTip.Open();
+            LoginTip.Show();
         }
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)
         {
-            LoginTip.Open();
+            LoginTip.Show();
         }
         /// <summary>
         /// 点击左侧的导航项
@@ -78,12 +78,12 @@ namespace ExamBankSystem
                 return;
             }
 
-            if(args.InvokedItemContainer is NavigationViewItem  item && item.Tag is CategoryTag tag)
+            if(args.InvokedItemContainer is NavigationViewItem { Tag: CategoryTag tag })
             {
                 switch (tag)
                 {
                     case CategoryTag.Login:
-                        LoginTip.Open();
+                        LoginTip.Show();
                         break;
                     case CategoryTag.ExamSubject:
                         ContentFrame.Navigate(typeof(ExamSubjectView));

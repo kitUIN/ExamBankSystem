@@ -38,7 +38,7 @@
                     <AppBarButton Icon="Add" Label="{ex:Locale Key=Add}">
                         <AppBarButton.Flyout>
                             <MenuFlyout>
-                                <MenuFlyoutItem Command="{x:Bind ViewModel.AddOneCommand}" Text="{ex:Locale Key=AddOne}" />
+                                <MenuFlyoutItem Command="{x:Bind ViewModel.AddCommand}" Text="{ex:Locale Key=AddOne}" />
                                 <MenuFlyoutItem Text="{ex:Locale Key=AddMulti}" />
                             </MenuFlyout>
                         </AppBarButton.Flyout>
