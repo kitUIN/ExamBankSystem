@@ -73,7 +73,7 @@
             </Grid>
             <ListView
                 Grid.Row="2"
-                ItemsSource="{x:Bind ViewModel.ExamSubjects}"
+                ItemsSource="{x:Bind ViewModel.Items}"
                 SelectionChanged="MainList_SelectionChanged"
                 SelectionMode="Extended"
                 x:Name="MainList">

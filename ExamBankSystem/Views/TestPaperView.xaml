@@ -68,7 +68,7 @@
             <ListView
                 x:Name="MainList"
                 Grid.Row="2"
-                ItemsSource="{x:Bind ViewModel.TestPapers}"
+                ItemsSource="{x:Bind ViewModel.Items}"
                 SelectionMode="Extended">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:TestPaper">

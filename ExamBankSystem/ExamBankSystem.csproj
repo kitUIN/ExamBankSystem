@@ -125,6 +125,9 @@
     <Compile Include="Controls\ExamSubjectTip.xaml.cs">
       <DependentUpon>ExamSubjectTip.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\KnowledgeTip.xaml.cs">
+      <DependentUpon>KnowledgeTip.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LoginTip.xaml.cs">
       <DependentUpon>LoginTip.xaml</DependentUpon>
     </Compile>
@@ -228,6 +231,10 @@
     <Page Include="Controls\ExamSubjectTip.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\KnowledgeTip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LoginTip.xaml">
       <SubType>Designer</SubType>

@@ -77,7 +77,7 @@
             </Grid>
             <ListView
                 Grid.Row="2"
-                ItemsSource="{x:Bind ViewModel.Users}"
+                ItemsSource="{x:Bind ViewModel.Items}"
                 SelectionChanged="MainList_OnSelectionChanged"
                 SelectionMode="Extended"
                 x:Name="MainList">
