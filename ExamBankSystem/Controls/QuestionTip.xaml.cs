@@ -6,21 +6,10 @@ using ExamBankSystem.Utils;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.IO.Pipes;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Text;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using Microsoft.UI.Text;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Input;
 
 namespace ExamBankSystem.Controls
 {
@@ -30,9 +19,6 @@ namespace ExamBankSystem.Controls
         /// 请求刷新事件
         /// </summary>
         public event EventHandler RefreshEvent;
-
-        private int id;
-
         public QuestionTip()
         {
             this.InitializeComponent();
@@ -209,7 +195,7 @@ namespace ExamBankSystem.Controls
             {
                 point = Convert.ToDouble(Choices.Text);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 EventHelper.InvokeTipPopup(this,
                     ResourcesHelper.GetString(ResourceKey.Point) +

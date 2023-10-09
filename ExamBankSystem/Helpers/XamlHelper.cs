@@ -1,14 +1,13 @@
 ﻿
 using ExamBankSystem.Enums;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace ExamBankSystem.Helpers
 {
     public static class XamlHelper
     {
-        
         /// <summary>
         /// 创建一个基础的ContentDialog
         /// </summary>
@@ -72,7 +71,6 @@ namespace ExamBankSystem.Helpers
             };
             return dialog;
         }
-        
-        
+
     }
 }

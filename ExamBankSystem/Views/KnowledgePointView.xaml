@@ -7,9 +7,7 @@
     xmlns:ex="using:ExamBankSystem.Extensions"
     xmlns:local="using:ExamBankSystem.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:ExamBankSystem.Models"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls">
-
+    xmlns:models="using:ExamBankSystem.Models">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -60,7 +58,7 @@
             Padding="15,0,15,0"
             VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="150" />
                 <ColumnDefinition Width="150" />
@@ -80,15 +78,27 @@
                 <DataTemplate x:DataType="models:KnowledgePoint">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="150" />
                             <ColumnDefinition Width="150" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{x:Bind Name, Mode=OneWay}" />
-                        <TextBlock Grid.Column="1" Text="{x:Bind Knowledge, Mode=OneWay}" />
-                        <TextBlock Grid.Column="2" Text="{x:Bind CreateTime, Mode=OneWay}" />
-                        <TextBlock Grid.Column="3" Text="{x:Bind UpdateTime, Mode=OneWay}" />
+                        <TextBlock
+                            Grid.Column="0"
+                            Text="{x:Bind Name, Mode=OneWay}"
+                            ToolTipService.ToolTip="{x:Bind Name, Mode=OneWay}" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Text="{x:Bind Knowledge, Mode=OneWay}"
+                            ToolTipService.ToolTip="{x:Bind Knowledge, Mode=OneWay}" />
+                        <TextBlock
+                            Grid.Column="2"
+                            Text="{x:Bind CreateTime, Mode=OneWay}"
+                            ToolTipService.ToolTip="{x:Bind CreateTime, Mode=OneWay}" />
+                        <TextBlock
+                            Grid.Column="3"
+                            Text="{x:Bind UpdateTime, Mode=OneWay}"
+                            ToolTipService.ToolTip="{x:Bind UpdateTime, Mode=OneWay}" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

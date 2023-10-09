@@ -8,7 +8,6 @@ using Windows.Storage;
 using Microsoft.Data.Sqlite;
 using ExamBankSystem.Models;
 using ExamBankSystem.Enums;
-using Windows.UI.Xaml.Shapes;
 using Path = System.IO.Path;
 
 namespace ExamBankSystem.Helpers

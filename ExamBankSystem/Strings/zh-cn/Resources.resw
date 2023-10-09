@@ -366,7 +366,7 @@
   <data name="Point" xml:space="preserve">
     <value>分数</value>
   </data>
-  <data name="SiglePaper" xml:space="preserve">
+  <data name="SinglePaper" xml:space="preserve">
     <value>单卷</value>
   </data>
   <data name="ABPaper" xml:space="preserve">
@@ -395,5 +395,8 @@
   </data>
   <data name="Replace" xml:space="preserve">
     <value>替换</value>
+  </data>
+  <data name="SinglePaperGen" xml:space="preserve">
+    <value>单卷生成</value>
   </data>
 </root>

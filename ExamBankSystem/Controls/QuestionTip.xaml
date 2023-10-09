@@ -6,17 +6,16 @@
     xmlns:ex="using:ExamBankSystem.Extensions"
     xmlns:local="using:ExamBankSystem.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     d:DesignHeight="300"
     d:DesignWidth="400"
     mc:Ignorable="d">
 
     <Grid>
-        <muxc:TeachingTip
+        <TeachingTip
             x:Name="MainTeachingTip"
             Title="{ex:Locale Key=Add}"
             PreferredPlacement="Center">
-            <muxc:TeachingTip.Content>
+            <TeachingTip.Content>
                 <ScrollViewer>
                     <Grid
                         Width="250"
@@ -144,7 +143,7 @@
                             Style="{ThemeResource AccentButtonStyle}" />
                     </Grid>
                 </ScrollViewer>
-            </muxc:TeachingTip.Content>
-        </muxc:TeachingTip>
+            </TeachingTip.Content>
+        </TeachingTip>
     </Grid>
 </UserControl>

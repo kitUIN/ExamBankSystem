@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExamBankSystem.Helpers
 {
@@ -10,7 +6,6 @@ namespace ExamBankSystem.Helpers
     {
         public static double CheckText(string s1,string s2)
         {
-            
             int n1 = s1.Length;
             int n2 = s2.Length;
             int[,] dp = new int[n1 + 1, n2 + 1];

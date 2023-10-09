@@ -1,43 +1,24 @@
-Ôªøusing ExamBankSystem.Args;
+using ExamBankSystem.Args;
 using ExamBankSystem.Controls;
 using ExamBankSystem.Enums;
 using ExamBankSystem.Helpers;
-using ExamBankSystem.Models;
 using ExamBankSystem.Utils;
 using ExamBankSystem.ViewModels;
-using ExamBankSystem.Views;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using NavigationViewItem = Microsoft.UI.Xaml.Controls.NavigationViewItem;
 
-namespace ExamBankSystem
+namespace ExamBankSystem.Views
 {
-    /// <summary>
-    /// ‰∏ªÈ°µÈù¢
-    /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainView : Page
     {
         private MainViewModel ViewModel { get; set; } = new MainViewModel();
-        public MainPage()
+        public MainView()
         {
             this.InitializeComponent();
-            Window.Current.SetTitleBar(AppTitleBar);
+            App.m_window.SetTitleBar(AppTitleBar);
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -67,17 +48,17 @@ namespace ExamBankSystem
             LoginTip.Show();
         }
         /// <summary>
-        /// ÁÇπÂáªÂ∑¶‰æßÁöÑÂØºËà™È°π
+        /// µ„ª˜◊Û≤‡µƒµº∫ΩœÓ
         /// </summary>
         private void NavigationView_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
         {
-            if(args.IsSettingsInvoked)
+            if (args.IsSettingsInvoked)
             {
                 ContentFrame.Navigate(typeof(SettingsView));
                 return;
             }
 
-            if(args.InvokedItemContainer is NavigationViewItem { Tag: CategoryTag tag })
+            if (args.InvokedItemContainer is NavigationViewItem { Tag: CategoryTag tag })
             {
                 switch (tag)
                 {
@@ -113,7 +94,7 @@ namespace ExamBankSystem
         }
 
         /// <summary>
-        /// È°∂ÈÉ®Á™ó‰Ωì‰∫ã‰ª∂
+        /// ∂•≤ø¥∞ÃÂ ¬º˛
         /// </summary>
         private async void Caller_TopGridEvent(object sender, TopGridEventArg e)
         {
@@ -129,7 +110,7 @@ namespace ExamBankSystem
                         }
                         break;
                     case TopGridMode.Dialog:
-                        
+
                         break;
                     case TopGridMode.Tip:
                         if (e.Element is TipPopup popup)
@@ -151,15 +132,15 @@ namespace ExamBankSystem
             }
             catch (Exception)
             {
-                 
+
             }
         }
         /// <summary>
-        /// ÁôªÂΩïÈÄöÁü•
+        /// µ«¬ºÕ®÷™
         /// </summary>
         private void EventHelper_LoginEvent(object sender, EventArgs e)
         {
             ViewModel.Init();
-        }
-    }
+        
+    } }
 }

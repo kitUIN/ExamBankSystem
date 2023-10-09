@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using ExamBankSystem.Enums;
 using ExamBankSystem.Models;
-using Microsoft.Data.Sqlite;
 
 namespace ExamBankSystem.Helpers
 {

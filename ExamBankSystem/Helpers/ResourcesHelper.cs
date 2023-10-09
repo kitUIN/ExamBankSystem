@@ -1,5 +1,5 @@
-﻿using Windows.ApplicationModel.Resources;
-using ExamBankSystem.Enums;
+﻿using ExamBankSystem.Enums;
+using Microsoft.Windows.ApplicationModel.Resources;
 
 namespace ExamBankSystem.Helpers
 {
@@ -8,7 +8,7 @@ namespace ExamBankSystem.Helpers
     /// </summary>
     public static class ResourcesHelper
     {
-        private static readonly ResourceLoader _resourceLoader = ResourceLoader.GetForCurrentView();
+        private static readonly ResourceLoader _resourceLoader = new ResourceLoader();
         public static string GetString(string key)
         {
             return _resourceLoader.GetString(key);

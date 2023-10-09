@@ -1,23 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using ExamBankSystem.Enums;
 using ExamBankSystem.Helpers;
 using ExamBankSystem.Models;
 using ExamBankSystem.Args;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
 
 namespace ExamBankSystem.Controls
 {
@@ -62,7 +50,7 @@ namespace ExamBankSystem.Controls
                     {
                         EventHelper.InvokeTopGridEvent(this,
                             new TopGridEventArg(
-                                XamlHelper.CreateDeleteDialog(async (sender, args) =>
+                                XamlHelper.CreateDeleteDialog((sender, args) =>
                                     {
                                         DbHelper.DeleteById<TestPaper>(paper.Id);
 

@@ -1,9 +1,4 @@
 ﻿using ExamBankSystem.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExamBankSystem.Utils
 {
@@ -17,6 +12,6 @@ namespace ExamBankSystem.Utils
         /// </summary>
         public static User CurrentUser { get; set; }
 
-        public static double CheckedPercent { get; } = 0.9;
+        public static double CheckedPercent { get; } = 0.95;
     }
 }

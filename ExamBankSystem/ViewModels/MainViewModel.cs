@@ -2,13 +2,8 @@
 using ExamBankSystem.Helpers;
 using ExamBankSystem.Models;
 using ExamBankSystem.Utils;
-using System;
-using System.Collections.Generic;
+using Microsoft.UI.Xaml.Controls;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
 
 namespace ExamBankSystem.ViewModels
 {

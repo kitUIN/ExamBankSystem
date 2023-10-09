@@ -1,5 +1,4 @@
-﻿using ExamBankSystem.Helpers;
-using Microsoft.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 
 namespace ExamBankSystem.Models
 {

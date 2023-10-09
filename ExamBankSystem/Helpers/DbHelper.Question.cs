@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ExamBankSystem.Enums;
 using ExamBankSystem.Models;
 using ExamBankSystem.Utils;
 using Microsoft.Data.Sqlite;

@@ -6,12 +6,12 @@
     xmlns:ex="using:ExamBankSystem.Extensions"
     xmlns:local="using:ExamBankSystem.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    
     mc:Ignorable="d">
 
     <Grid>
-        <muxc:TeachingTip x:Name="MainTeachingTip" PreferredPlacement="Center">
-            <muxc:TeachingTip.Content>
+        <TeachingTip x:Name="MainTeachingTip" PreferredPlacement="Center">
+            <TeachingTip.Content>
                 <Grid
                     Width="250"
                     Padding="10,20"
@@ -72,7 +72,7 @@
                         KeyDown="Button_KeyDown"
                         Style="{ThemeResource AccentButtonStyle}" />
                 </Grid>
-            </muxc:TeachingTip.Content>
-        </muxc:TeachingTip>
+            </TeachingTip.Content>
+        </TeachingTip>
     </Grid>
 </UserControl>

@@ -1,18 +1,14 @@
-﻿<Page
-    x:Class="ExamBankSystem.MainPage"
+<Page
+    x:Class="ExamBankSystem.Views.MainView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:ExamBankSystem.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ex="using:ExamBankSystem.Extensions"
-    xmlns:local="using:ExamBankSystem"
+    xmlns:local="using:ExamBankSystem.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:ExamBankSystem.Models"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
-    <Page.Background>
-        <AcrylicBrush BackgroundSource="HostBackdrop" />
-    </Page.Background>
 
     <Grid>
         <Grid>
@@ -44,7 +40,7 @@
                     FontSize="14"
                     Text="{ex:Locale Key=ExamBankSystem}" />
             </Grid>
-            <muxc:NavigationView
+            <NavigationView
                 Grid.Row="1"
                 FooterMenuItemsSource="{x:Bind ViewModel.FootItems, Mode=OneWay}"
                 IsBackButtonVisible="Collapsed"
@@ -56,19 +52,19 @@
                 MenuItemsSource="{x:Bind ViewModel.MenuItems, Mode=OneWay}"
                 OpenPaneLength="200"
                 PaneDisplayMode="Left">
-                <muxc:NavigationView.MenuItemTemplate>
+                <NavigationView.MenuItemTemplate>
                     <DataTemplate x:DataType="model:Category">
-                        <muxc:NavigationViewItem
+                        <NavigationViewItem
                             Content="{x:Bind Name}"
                             Icon="{x:Bind Icon}"
+                            IsExpanded="True"
                             MenuItemsSource="{x:Bind Children}"
                             Tag="{x:Bind Tag}" />
                     </DataTemplate>
-                </muxc:NavigationView.MenuItemTemplate>
+                </NavigationView.MenuItemTemplate>
                 <Frame x:Name="ContentFrame" />
-            </muxc:NavigationView>
+            </NavigationView>
         </Grid>
-
         <controls:LoginTip x:Name="LoginTip" />
         <StackPanel
             x:Name="TipContainer"

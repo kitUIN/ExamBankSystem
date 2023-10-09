@@ -88,7 +88,7 @@
         CheckWord,
         Statistics,
         Point,
-        SiglePaper,
+        SinglePaper,
         ABPaper,
         SelectLastYearsWords,
         QuestionPercentError,
@@ -98,5 +98,6 @@
         ExportAnswer,
         PaperRank,
         Replace,
+        SinglePaperGen
     }
 }

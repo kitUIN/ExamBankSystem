@@ -8,7 +8,6 @@
     xmlns:local="using:ExamBankSystem.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:ExamBankSystem.Models"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
 
     <Grid>
@@ -132,7 +131,7 @@
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="50" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{ex:Locale Key=Id}" />
@@ -158,7 +157,7 @@
                                 <ColumnDefinition Width="50" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="50" />
-                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="100" />
                                 <ColumnDefinition Width="50" />
                             </Grid.ColumnDefinitions>
                             <TextBlock
@@ -168,27 +167,34 @@
                             <TextBlock
                                 Grid.Column="1"
                                 Text="{x:Bind Subject, Mode=OneWay}"
-                                TextTrimming="CharacterEllipsis" />
+                                TextTrimming="CharacterEllipsis"
+                                ToolTipService.ToolTip="{x:Bind Subject, Mode=OneWay}" />
                             <TextBlock
                                 Grid.Column="2"
                                 Text="{x:Bind TypeToString(Type), Mode=OneWay}"
-                                TextTrimming="CharacterEllipsis" />
+                                TextTrimming="CharacterEllipsis"
+                                ToolTipService.ToolTip="{x:Bind TypeToString(Type), Mode=OneWay}" />
                             <TextBlock
                                 Grid.Column="3"
+                                MaxLines="1"
                                 Text="{x:Bind Name, Mode=OneWay}"
-                                TextTrimming="CharacterEllipsis" />
+                                TextTrimming="CharacterEllipsis"
+                                ToolTipService.ToolTip="{x:Bind Name, Mode=OneWay}" />
                             <TextBlock
                                 Grid.Column="4"
                                 Text="{x:Bind Point, Mode=OneWay}"
-                                TextTrimming="CharacterEllipsis" />
+                                TextTrimming="CharacterEllipsis"
+                                ToolTipService.ToolTip="{x:Bind Point, Mode=OneWay}" />
                             <TextBlock
                                 Grid.Column="5"
                                 Text="{x:Bind Knowledge, Mode=OneWay}"
-                                TextTrimming="CharacterEllipsis" />
+                                TextTrimming="CharacterEllipsis"
+                                ToolTipService.ToolTip="{x:Bind Knowledge, Mode=OneWay}" />
                             <TextBlock
                                 Grid.Column="6"
                                 Text="{x:Bind Rank, Mode=OneWay}"
-                                TextTrimming="CharacterEllipsis" />
+                                TextTrimming="CharacterEllipsis"
+                                ToolTipService.ToolTip="{x:Bind Rank, Mode=OneWay}" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

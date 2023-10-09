@@ -1,6 +1,6 @@
-using Windows.UI.Xaml.Markup;
 using ExamBankSystem.Enums;
 using ExamBankSystem.Helpers;
+using Microsoft.UI.Xaml.Markup;
 
 namespace ExamBankSystem.Extensions
 {
@@ -10,7 +10,6 @@ namespace ExamBankSystem.Extensions
     [MarkupExtensionReturnType(ReturnType = typeof(string))]
     internal sealed class LocaleExtension : MarkupExtension
     {
-        
         /// <summary>
         /// 本地化键
         /// </summary>

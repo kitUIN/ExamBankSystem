@@ -3,8 +3,8 @@ using ExamBankSystem.Enums;
 using ExamBankSystem.Models;
 using ExamBankSystem.ViewModels;
 using System;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 
 namespace ExamBankSystem.Views
 {

@@ -1,14 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using ExamBankSystem.Controls;
-using ExamBankSystem.Enums;
 using ExamBankSystem.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace ExamBankSystem.Models
 {

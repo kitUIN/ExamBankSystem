@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ExamBankSystem (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "ExamBankSystem (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

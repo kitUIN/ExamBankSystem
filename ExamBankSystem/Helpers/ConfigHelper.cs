@@ -1,6 +1,5 @@
 ﻿using ExamBankSystem.Enums;
 using System;
-using System.Configuration;
 using Windows.Storage;
 
 namespace ExamBankSystem.Helpers
