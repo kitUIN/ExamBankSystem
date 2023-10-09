@@ -26,7 +26,7 @@ namespace ExamBankSystem.Controls
 {
     public sealed partial class ExamSubjectTip : UserControl
     {
-        private string oldName;
+        private string _oldName;
         private ActionMode Mode { get; set; }
 
         /// <summary>
@@ -44,23 +44,26 @@ namespace ExamBankSystem.Controls
         /// </summary>
         public void Show(ActionMode mode, object obj = null)
         {
-            oldName = "";
-            ExamSubject.Text = "";
             Mode = mode;
             switch (mode)
             {
                 case ActionMode.Add:
                     MainTeachingTip.IsOpen = true;
-                    MainTeachingTip.Title = ResourcesHelper.GetString(ResourceKey.Add);
+                    MainTeachingTip.Title = ResourcesHelper.GetString(ResourceKey.Add) +
+                                            ResourcesHelper.GetString(ResourceKey.ExamSubjects);
+                    ExamSubject.Text = "";
+                    _oldName = "";
                     break;
                 case ActionMode.Edit:
                     if (obj is string name)
                     {
-                        MainTeachingTip.Title = ResourcesHelper.GetString(ResourceKey.Edit);
+                        MainTeachingTip.Title = ResourcesHelper.GetString(ResourceKey.Edit) +
+                                                ResourcesHelper.GetString(ResourceKey.ExamSubjects);
                         MainTeachingTip.IsOpen = true;
-                        oldName = name;
+                        _oldName = name;
                         ExamSubject.Text = name;
                     }
+
                     break;
                 case ActionMode.Delete:
                     if (obj is IList<object> items)
@@ -110,12 +113,11 @@ namespace ExamBankSystem.Controls
                 );
                 return;
             }
-
             switch (Mode)
             {
                 case ActionMode.Add:
 
-                    if (DbHelper.GetExamSubject(ExamSubject.Text) is ExamSubject subject)
+                    if (DbHelper.GetExamSubject(ExamSubject.Text) is { } subject)
                     {
                         EventHelper.InvokeTipPopup(this,
                             subject.Name + ResourcesHelper.GetString(ResourceKey.Exist),
@@ -123,7 +125,6 @@ namespace ExamBankSystem.Controls
                         );
                         return;
                     }
-
                     DbHelper.InsertExamSubject(ExamSubject.Text);
                     EventHelper.InvokeTipPopup(this,
                         ResourcesHelper.GetString(ResourceKey.AddSuccess),
@@ -131,7 +132,7 @@ namespace ExamBankSystem.Controls
                     );
                     break;
                 case ActionMode.Edit:
-                    DbHelper.UpdateExamSubjectName(ExamSubject.Text, oldName);
+                    DbHelper.UpdateExamSubjectName(ExamSubject.Text, _oldName);
 
                     EventHelper.InvokeTipPopup(this,
                         ResourcesHelper.GetString(ResourceKey.EditSuccess),

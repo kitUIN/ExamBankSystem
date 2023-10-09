@@ -69,5 +69,7 @@
         Teacher,
         ResetPasswordMessage,
         ResetSuccess,
+        UserNotSpace,
+        UserNotNull,
     }
 }

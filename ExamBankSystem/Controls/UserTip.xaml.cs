@@ -14,15 +14,15 @@ namespace ExamBankSystem.Controls
 {
     public sealed partial class UserTip : UserControl
     {
-        private ActionMode Mode { get; set; }
         /// <summary>
         /// 验证用户名是否合理
         /// </summary>
-        private bool userOk = false;
+        private bool _userOk;
+
         /// <summary>
         /// 验证密码是否合理
         /// </summary>
-        private bool passwordOk = true;
+        private bool _passwordOk = true;
 
         /// <summary>
         /// 请求刷新事件
@@ -39,12 +39,12 @@ namespace ExamBankSystem.Controls
         /// </summary>
         public void Show(ActionMode mode, object obj = null)
         {
-            Mode = mode;
             switch (mode)
             {
                 case ActionMode.Add:
                     MainTeachingTip.IsOpen = true;
-                    MainTeachingTip.Title = ResourcesHelper.GetString(ResourceKey.Add);
+                    MainTeachingTip.Title = ResourcesHelper.GetString(ResourceKey.Add) + 
+                                            ResourcesHelper.GetString(ResourceKey.User);
                     User.Text = "";
                     Password.Text = "qust123";
                     break;
@@ -115,26 +115,6 @@ namespace ExamBankSystem.Controls
         /// </summary>
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            // 用户名是否为空
-            if (string.IsNullOrEmpty(User.Text))
-            {
-                EventHelper.InvokeTipPopup(this,
-                    ResourcesHelper.GetString(ResourceKey.UserNull),
-                    InfoBarSeverity.Error
-                );
-                return;
-            }
-
-            // 密码是否为空
-            if (string.IsNullOrEmpty(Password.Text))
-            {
-                EventHelper.InvokeTipPopup(this,
-                    ResourcesHelper.GetString(ResourceKey.PasswordNull),
-                    InfoBarSeverity.Error
-                );
-                return;
-            }
-
             if (!(Role.SelectedItem is FrameworkElement { Tag: string role })) return;
             DbHelper.InsertUser(User.Text, HashHelper.Hash_MD5_32(Password.Text), role);
             Hide();
@@ -142,12 +122,38 @@ namespace ExamBankSystem.Controls
         }
 
         /// <summary>
-        /// 检测用户名是否存在
+        /// 检测用户名是否合规
         /// </summary>
         private void User_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            userOk = DbHelper.GetUser(User.Text) is null;
-            AddButton.IsEnabled = userOk && passwordOk;
+            // 不能为空
+            if (string.IsNullOrEmpty(User.Text))
+            {
+                UserError.Text = ResourcesHelper.GetString(ResourceKey.UserNotNull);
+                UserError.Visibility = Visibility.Visible;
+                _userOk = false;
+            }
+            // 不能重复
+            else if (DbHelper.GetUser(User.Text) != null)
+            {
+                UserError.Text = ResourcesHelper.GetString(ResourceKey.User) +
+                                 ResourcesHelper.GetString(ResourceKey.Exist);
+                UserError.Visibility = Visibility.Visible;
+                _userOk = false;
+            }
+            // 不能有空格
+            else if (User.Text.Contains(" "))
+            {
+                UserError.Text = ResourcesHelper.GetString(ResourceKey.UserNotSpace);
+                UserError.Visibility = Visibility.Visible;
+                _userOk = false;
+            }
+            else
+            {
+                _userOk = true;
+                UserError.Visibility = Visibility.Collapsed;
+            }
+            AddButton.IsEnabled = _userOk && _passwordOk;
         }
 
         /// <summary>
@@ -164,26 +170,26 @@ namespace ExamBankSystem.Controls
         private void Password_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             // 不能为空
-            if (Password.Text == "")
+            if (string.IsNullOrEmpty(Password.Text))
             {
                 PasswordError.Text = ResourcesHelper.GetString(ResourceKey.PasswordNull);
                 PasswordError.Visibility = Visibility.Visible;
-                passwordOk = false;
+                _passwordOk = false;
             }
             // 不符合密码规则
             else if (Password.Text.IsNotPassword())
             {
                 PasswordError.Text = ResourcesHelper.GetString(ResourceKey.PasswordNot);
                 PasswordError.Visibility = Visibility.Visible;
-                passwordOk = false;
+                _passwordOk = false;
             }
             else
             {
                 PasswordError.Visibility = Visibility.Collapsed;
-                passwordOk = true;
+                _passwordOk = true;
             }
 
-            AddButton.IsEnabled = userOk && passwordOk;
+            AddButton.IsEnabled = _userOk && _passwordOk;
         }
     }
 }

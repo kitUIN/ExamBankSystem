@@ -39,6 +39,7 @@
                             VerticalAlignment="Center" />
                         <TextBox
                             Grid.Column="1"
+                            MaxLength="10"
                             TextChanged="User_OnTextChanged"
                             x:Name="User" />
                     </Grid>
