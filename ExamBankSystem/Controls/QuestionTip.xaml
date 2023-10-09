@@ -31,6 +31,8 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0" ColumnSpacing="10">
                             <Grid.ColumnDefinitions>
@@ -52,7 +54,10 @@
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Text="{ex:Locale Key=QuestionType}" />
-                            <ComboBox x:Name="QuestionType" Grid.Column="1">
+                            <ComboBox
+                                x:Name="QuestionType"
+                                Grid.Column="1"
+                                SelectedIndex="0">
                                 <ComboBoxItem Content="{ex:Locale Key=SingleChoice}" Tag="SingleChoice" />
                                 <ComboBoxItem Content="{ex:Locale Key=MultipleChoice}" Tag="MultipleChoice" />
                                 <ComboBoxItem Content="{ex:Locale Key=FillBlank}" Tag="FillBlank" />
@@ -62,7 +67,6 @@
                                 <ComboBoxItem Content="{ex:Locale Key=Program}" Tag="Program" />
                             </ComboBox>
                         </Grid>
-
                         <Grid Grid.Row="2" ColumnSpacing="10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="50" />
@@ -74,7 +78,6 @@
                                 Text="{ex:Locale Key=Questions}" />
                             <TextBox x:Name="Question" Grid.Column="1" />
                         </Grid>
-
                         <Grid Grid.Row="3" ColumnSpacing="10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="50" />
@@ -83,10 +86,21 @@
                             <TextBlock
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
-                                Text="{ex:Locale Key=Answer}" />
-                            <TextBox x:Name="Answer" Grid.Column="1" />
+                                Text="{ex:Locale Key=Point}" />
+                            <TextBox x:Name="Choices" Grid.Column="1" />
                         </Grid>
                         <Grid Grid.Row="4" ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Text="{ex:Locale Key=Answer}" />
+                            <RichEditBox x:Name="Answer" Grid.Column="1" />
+                        </Grid>
+                        <Grid Grid.Row="5" ColumnSpacing="10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="50" />
                                 <ColumnDefinition Width="*" />
@@ -97,7 +111,7 @@
                                 Text="{ex:Locale Key=KnowledgePoints}" />
                             <TextBox x:Name="KnowledgePoint" Grid.Column="1" />
                         </Grid>
-                        <Grid Grid.Row="5" ColumnSpacing="10">
+                        <Grid Grid.Row="6" ColumnSpacing="10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="50" />
                                 <ColumnDefinition Width="*" />
@@ -106,7 +120,10 @@
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Text="{ex:Locale Key=Rank}" />
-                            <ComboBox x:Name="Rank" Grid.Column="1">
+                            <ComboBox
+                                x:Name="Rank"
+                                Grid.Column="1"
+                                SelectedIndex="0">
                                 <ComboBoxItem Content="1" Tag="1" />
                                 <ComboBoxItem Content="2" Tag="2" />
                                 <ComboBoxItem Content="3" Tag="3" />
@@ -114,6 +131,14 @@
                                 <ComboBoxItem Content="5" Tag="5" />
                             </ComboBox>
                         </Grid>
+                        <Button
+                            x:Name="AddButton"
+                            Grid.Row="7"
+                            HorizontalAlignment="Right"
+                            Click="AddButton_Click"
+                            Content="{ex:Locale Key=Submit}"
+                            KeyDown="Button_KeyDown"
+                            Style="{ThemeResource AccentButtonStyle}" />
                     </Grid>
                 </ScrollViewer>
             </muxc:TeachingTip.Content>

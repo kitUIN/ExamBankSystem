@@ -27,9 +27,9 @@ namespace ExamBankSystem.Controls
             this.InitializeComponent();
         }
         /// <summary>
-        /// 待修改的考试科目
+        /// 待修改的知识点
         /// </summary>
-        private ExamSubject _subject;
+        private KnowledgePoint _knowledge;
 
         private ActionMode Mode { get; set; }
 
@@ -49,17 +49,22 @@ namespace ExamBankSystem.Controls
                 case ActionMode.Add:
                     MainTeachingTip.IsOpen = true;
                     MainTeachingTip.Title = ResourcesHelper.GetString(ResourceKey.Add) +
-                                            ResourcesHelper.GetString(ResourceKey.ExamSubjects);
+                                            ResourcesHelper.GetString(ResourceKey.KnowledgePoints);
+                    Subject.Text = "";
+                    Knowledge.Text = "";
+                    KnowledgeName.Text = "";
                     break;
                 case ActionMode.Edit:
-                    if (obj is ExamSubject subject)
+                    if (obj is KnowledgePoint point)
                     {
                         MainTeachingTip.Title = ResourcesHelper.GetString(ResourceKey.Edit) +
-                                                ResourcesHelper.GetString(ResourceKey.ExamSubjects);
+                                                ResourcesHelper.GetString(ResourceKey.KnowledgePoints);
                         MainTeachingTip.IsOpen = true;
-                       
+                        _knowledge = point;
+                        Subject.Text = point.Subject;
+                        Knowledge.Text = point.Knowledge;
+                        KnowledgeName.Text = point.Name;
                     }
-
                     break;
                 case ActionMode.Delete:
                     if (obj is IList<object> items)
@@ -70,16 +75,16 @@ namespace ExamBankSystem.Controls
                                 {
                                     var success = 0;
                                     var fail = 0;
-                                    foreach (var item in items.Cast<ExamSubject>())
+                                    foreach (var item in items.Cast<KnowledgePoint>())
                                     {
-                                        if (await DbHelper.ExamSubjectHasAnyQuestionAsync(item.Id))
+                                        if (await DbHelper.KnowledgeHasAnyQuestionAsync(item.Id))
                                         {
                                             fail++;
                                         }
                                         else
                                         {
                                             success++;
-                                            DbHelper.DeleteExamSubject(item.Id);
+                                            DbHelper.DeleteById<KnowledgePoint>(item.Id);
                                         }
                                     }
 
@@ -93,9 +98,9 @@ namespace ExamBankSystem.Controls
                                     if (fail > 0)
                                     {
                                         EventHelper.InvokeTipPopup(this,
-                                            ResourcesHelper.GetString(ResourceKey.ExamSubjectsDeleteFail) + ": " +
+                                            ResourcesHelper.GetString(ResourceKey.KnowledgePointDeleteFail) + ": " +
                                             fail,
-                                            InfoBarSeverity.Success
+                                            InfoBarSeverity.Error
                                         );
                                     }
                                     RefreshEvent?.Invoke(this, EventArgs.Empty);
@@ -121,7 +126,77 @@ namespace ExamBankSystem.Controls
         /// </summary>
         private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(Subject.Text))
+            {
+                EventHelper.InvokeTipPopup(this,
+                    ResourcesHelper.GetString(ResourceKey.ExamSubjectNull),
+                    InfoBarSeverity.Error
+                );
+                return;
+            }
+            if (string.IsNullOrEmpty(KnowledgeName.Text))
+            {
+                EventHelper.InvokeTipPopup(this,
+                    ResourcesHelper.GetString(ResourceKey.KnowledgePoints) +
+                    ResourcesHelper.GetString(ResourceKey.NotNull),
+                    InfoBarSeverity.Error
+                );
+                return;
+            }
+            if (string.IsNullOrEmpty(Knowledge.Text))
+            {
+                EventHelper.InvokeTipPopup(this,
+                    ResourcesHelper.GetString(ResourceKey.KnowledgePointContent) +
+                    ResourcesHelper.GetString(ResourceKey.NotNull),
+                    InfoBarSeverity.Error
+                );
+                return;
+            }
+            var subjectId = -1;
+            if (await DbHelper.GetExamSubjectAsync(Subject.Text) is ExamSubject subject)
+            {
+                subjectId = subject.Id;
+            }
+            else
+            {
+                EventHelper.InvokeTipPopup(this,
+                ResourcesHelper.GetString(ResourceKey.ExamSubjects) +
+                ResourcesHelper.GetString(ResourceKey.NotNull),
+                InfoBarSeverity.Error
+            );
+                return;
+            }
+            switch (Mode)
+            {
+                case ActionMode.Add:
+                    if (await DbHelper.GetKnowledgePointAsync(KnowledgeName.Text) == null)
+                    {
+                        DbHelper.InsertKnowledgePoint(KnowledgeName.Text,Knowledge.Text,subjectId);
+                        EventHelper.InvokeTipPopup(this,
+                            ResourcesHelper.GetString(ResourceKey.KnowledgePoints)+
+                            ResourcesHelper.GetString(ResourceKey.AddSuccess),
+                            InfoBarSeverity.Success
+                        );
+                    }
+                    else
+                    {
+                        EventHelper.InvokeTipPopup(this,
+                            ResourcesHelper.GetString(ResourceKey.KnowledgePoints) +
+                            ResourcesHelper.GetString(ResourceKey.Exist),
+                            InfoBarSeverity.Error
+                        );
+                        return;
+                    }
 
+                    break;
+                case ActionMode.Edit:
+                    DbHelper.UpdateKnowledgePoint(_knowledge.Id ,KnowledgeName.Text, Knowledge.Text, subjectId);
+                    EventHelper.InvokeTipPopup(this,
+                        ResourcesHelper.GetString(ResourceKey.EditSuccess),
+                        InfoBarSeverity.Success
+                    );
+                    break;
+            }
             Hide();
             RefreshEvent?.Invoke(this, EventArgs.Empty);
         }

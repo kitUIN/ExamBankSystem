@@ -11,7 +11,7 @@ namespace ExamBankSystem.Enums
     /// </summary>
     public enum QuestionType
     {
-        SingleChoice, 
+        SingleChoice = 0, 
         MultipleChoice,
         FillBlank,
         Judgment, 

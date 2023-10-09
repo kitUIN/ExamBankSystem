@@ -4,14 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExamBankSystem.Enums
+namespace ExamBankSystem.ViewModels
 {
-    public enum ActionMode
+    internal class MergeTestPaperViewModel
     {
-        Add,
-        Edit,
-        Delete,
-        Reset,
-        AddMul,
     }
 }

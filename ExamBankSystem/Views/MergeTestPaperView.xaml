@@ -1,0 +1,141 @@
+﻿<Page
+    x:Class="ExamBankSystem.Views.MergeTestPaperView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="using:ExamBankSystem.Extensions"
+    xmlns:local="using:ExamBankSystem.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Padding="10">
+        <Pivot>
+            <PivotItem Header="{ex:Locale Key=SiglePaper}">
+                <StackPanel>
+                    <Grid ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="{ex:Locale Key=KnowledgePoints}" />
+                        <TextBox x:Name="KnowledgePoints" Grid.Column="1" />
+                    </Grid>
+                    <Grid ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="{ex:Locale Key=SingleChoice}" />
+                        <TextBox x:Name="SingleChoice" Grid.Column="1" />
+                    </Grid>
+                    <Grid ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="{ex:Locale Key=MultipleChoice}" />
+                        <TextBox x:Name="MultipleChoice" Grid.Column="1" />
+                    </Grid>
+                    <Grid ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="{ex:Locale Key=FillBlank}" />
+                        <TextBox x:Name="FillBlank" Grid.Column="1" />
+                    </Grid>
+                    <Grid ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="{ex:Locale Key=Judgment}" />
+                        <TextBox x:Name="Judgment" Grid.Column="1" />
+                    </Grid>
+                    <Grid ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="{ex:Locale Key=ShortAnswer}" />
+                        <TextBox x:Name="ShortAnswer" Grid.Column="1" />
+                    </Grid>
+                    <Grid ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="{ex:Locale Key=Design}" />
+                        <TextBox x:Name="Design" Grid.Column="1" />
+                    </Grid>
+                    <Grid ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="{ex:Locale Key=Program}" />
+                        <TextBox x:Name="Program" Grid.Column="1" />
+                    </Grid>
+                    <StackPanel>
+                        <Button
+                            x:Name="SelectWords"
+                            Margin="0,10,0,0"
+                            Content="{ex:Locale Key=SelectLastYearsWords}" />
+                    </StackPanel>
+                    <Button
+                        x:Name="SigleButton"
+                        Margin="0,10,0,0"
+                        Content="{ex:Locale Key=SiglePaper}" />
+                </StackPanel>
+            </PivotItem>
+            <PivotItem Header="{ex:Locale Key=ABPaper}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel
+                        Grid.Row="0"
+                        Orientation="Horizontal"
+                        Spacing="20">
+                        <Button x:Name="SelectWordA" Content="{ex:Locale Key=SelectWord}" />
+                        <TextBlock x:Name="WordA" Text="WordA:" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="1"
+                        Orientation="Horizontal"
+                        Spacing="20">
+                        <Button x:Name="SelectWordB" Content="{ex:Locale Key=SelectWord}" />
+                        <TextBlock x:Name="WordB" Text="WordB:" />
+                    </StackPanel>
+                    <Button x:Name="MergeButton" Content="{ex:Locale Key=Merge}" />
+                </Grid>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+</Page>

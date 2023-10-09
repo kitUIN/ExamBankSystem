@@ -1,13 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using ExamBankSystem.Enums;
 using ExamBankSystem.Helpers;
-using Microsoft.Data.Sqlite;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExamBankSystem.Models
 {
@@ -29,7 +24,7 @@ namespace ExamBankSystem.Models
         /// 科目
         /// </summary>
         [ObservableProperty]
-        private string subject;
+        private string subject = "";
 
         /// <summary>
         /// 类型
@@ -60,12 +55,12 @@ namespace ExamBankSystem.Models
         /// 知识点名称
         /// </summary>
         [ObservableProperty] private int knowledgeId;
-        private string knowledge;
 
         /// <summary>
         /// 知识点名称
         /// </summary>
-        public string Knowledge => knowledge;
+        [ObservableProperty]
+        public string knowledge = "";
         /// <summary>
         /// 上传用户Id
         /// </summary>
@@ -87,15 +82,14 @@ namespace ExamBankSystem.Models
             SubjectId = query.GetInt32(1);
             Type = (QuestionType)query.GetInt32(2);
             Name = query.GetString(3);
-            Answer = query.GetString(4);
-            Point = query.GetDouble(5);
+            Point = query.GetDouble(4);
+            Answer = query.GetString(5);
             Rank = query.GetInt32(6);
             KnowledgeId = query.GetInt32(7);
             UploadUserId = query.GetInt32(8);
             CreateTime = DateTimeHelper.ToDateTime(query.GetInt64(9));
             UpdateTime = DateTimeHelper.ToDateTime(query.GetInt64(10));
         }
-
 
         public string TypeToString(QuestionType ty)
         {
@@ -113,9 +107,9 @@ namespace ExamBankSystem.Models
         partial void OnKnowledgeIdChanged(int oldValue, int newValue)
         {
             if (oldValue == newValue) return;
-            if (DbHelper.GetKnowledgePoint(newValue) is { } knowledgePoint)
+            if (DbHelper.GetById<KnowledgePoint>(newValue)is { } knowledgePoint)
             {
-                SetProperty(ref knowledge, knowledgePoint.Name);
+                Knowledge = knowledgePoint.Name;
             }
         }
     }

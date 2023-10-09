@@ -7,6 +7,7 @@ using ExamBankSystem.Args;
 using ExamBankSystem.Enums;
 using ExamBankSystem.Helpers;
 using ExamBankSystem.Models;
+using System.Diagnostics;
 
 namespace ExamBankSystem.ViewModels
 {
@@ -15,7 +16,7 @@ namespace ExamBankSystem.ViewModels
         /// <summary>
         /// 搜索的列
         /// </summary>
-        protected string SearchCol;
+        private string SearchCol;
 
         /// <summary>
         /// 列表
@@ -26,6 +27,7 @@ namespace ExamBankSystem.ViewModels
         /// 操作事件
         /// </summary>
         public event EventHandler<ActionEventArg> ActionEvent;
+
         /// <summary>
         /// 是否允许按下修改按钮
         /// </summary>
@@ -35,8 +37,9 @@ namespace ExamBankSystem.ViewModels
         /// 是否允许按下删除按钮
         /// </summary>
         [ObservableProperty] private bool canDelete;
-        public DataTableBase()
+        public DataTableBase(string searchCol)
         {
+            SearchCol = searchCol;
             Refresh();
         }
 
@@ -124,6 +127,7 @@ namespace ExamBankSystem.ViewModels
         {
             var items = await DbHelper.SearchAsync<T>(SearchCol, text, CurrentPage);
             TotalPage = (items.Count + 14) / 15;
+            Debug.WriteLine(items.Count);
             Items.Clear();
             foreach (var item in items)
             {
@@ -190,6 +194,24 @@ namespace ExamBankSystem.ViewModels
             {
                 TipMode = TipMode.Show,
                 ActionMode = ActionMode.Delete,
+                Source = obj
+            });
+        }
+        /// <summary>
+        /// 重置按钮是否亮起
+        /// </summary>
+        [ObservableProperty] private bool canReset;
+        /// <summary>
+        /// 重置
+        /// </summary>
+        /// <param name="obj">选中的列</param>
+        [RelayCommand]
+        private void Reset(object obj)
+        {
+            ActionEvent?.Invoke(this, new ActionEventArg()
+            {
+                TipMode = TipMode.Show,
+                ActionMode = ActionMode.Reset,
                 Source = obj
             });
         }

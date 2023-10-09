@@ -15,7 +15,7 @@ namespace ExamBankSystem.Helpers
         /// </summary>
         private static void CreateUsersTable()
         {
-            ExecuteReaderAsync(command =>
+            ExecuteReader(command =>
             {
                 command.CommandText = "CREATE TABLE IF NOT EXISTS `Users` (" +
                                       "`id` INTEGER PRIMARY KEY AUTOINCREMENT , " +
@@ -73,7 +73,7 @@ namespace ExamBankSystem.Helpers
         /// </summary>
         public static void InsertUser(string name, string password, string role)
         {
-            ExecuteReaderAsync(selectCommand =>
+            ExecuteReader(selectCommand =>
             {
                 selectCommand.CommandText =
                     "INSERT INTO `Users` VALUES (NULL, @User, @Password, @Role, @CreateTime, @UpdateTime);";
@@ -92,7 +92,7 @@ namespace ExamBankSystem.Helpers
         /// </summary>
         public static void UpdateUserLoginTime(int id)
         {
-            ExecuteReaderAsync(selectCommand =>
+            ExecuteReader(selectCommand =>
             {
                 selectCommand.CommandText = "UPDATE `Users` SET `lastLoginTime` = @loginTime WHERE `id` = @ID;";
                 selectCommand.Parameters.AddWithValue("@loginTime", DateTimeHelper.GetTimeStamp());
@@ -106,7 +106,7 @@ namespace ExamBankSystem.Helpers
         /// </summary>
         public static void UpdateUserPassword(int id, string newPassword)
         {
-            ExecuteReaderAsync(selectCommand =>
+            ExecuteReader(selectCommand =>
             {
                 selectCommand.CommandText = "UPDATE `Users` SET `password` = @Password WHERE `id` = @ID;";
                 selectCommand.Parameters.AddWithValue("@Password", newPassword);

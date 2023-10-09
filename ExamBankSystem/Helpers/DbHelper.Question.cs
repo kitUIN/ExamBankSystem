@@ -9,76 +9,53 @@ namespace ExamBankSystem.Helpers
 {
     public partial class DbHelper
     {
-         /// <summary>
-         /// 创建题目表
-         /// </summary>
-         private static async void CreateQuestionsTable(SqliteConnection db)
+        /// <summary>
+        /// 创建题目表
+        /// </summary>
+        private static void CreateQuestionsTable()
          {
-             var tableCommand = "CREATE TABLE IF NOT EXISTS `Questions` (" +
+            ExecuteReader(command =>
+            {
+                command.CommandText = "CREATE TABLE IF NOT EXISTS `Questions` (" +
                                 "`id` INTEGER PRIMARY KEY AUTOINCREMENT , " +
                                 "`subjectId` INT NOT NULL, " +
                                 "`type` INT NOT NULL, " +
                                 "`question` NTEXT NOT NULL, " +
-                                "`choices` NTEXT NOT NULL, " +
+                                "`point` REAL NOT NULL, " +
                                 "`answer` NTEXT NOT NULL, " +
-                                "`point` DOUBLE NOT NULL, " +
                                 "`rank` INT NOT NULL, " +
-                                "`KnowledgeId` INT NOT NULL, " +
+                                "`knowledgeId` INT NOT NULL, " +
                                 "`uploadUserId` INT NOT NULL, " +
                                 "`createTime` TIMESTAMP NOT NULL, " +
                                 "`updateTime` TIMESTAMP NULL " +
                                 ")";
-             var createTable = new SqliteCommand(tableCommand, db);
-             await createTable.ExecuteReaderAsync();
-         }
-         /// <summary>
-         /// 从数据库中获取题目
-         /// </summary>
-         public static async Task<List<Question>> GetQuestionsAsync(long page = 1, int limit = 15)
-         {
-             return await GetAsync<Question>(page, limit);
+                return command;
+            }
+            );
          }
 
-         /// <summary>
-         /// 从数据库中获取题目
-         /// </summary>
-         public static async Task<Question> GetQuestionAsync(int id)
-         {
-             return await GetByIdAsync<Question>(id);
-         }
-
-         /// <summary>
-         /// 从数据库中获取题目
-         /// </summary>
-         public static Question GetQuestion(int id)
-         {
-             return GetById<Question>(id);
-         }
-        
-        
         /// <summary>
         /// 插入题目到数据库中
         /// </summary>
-        public static void InsertQuestion(Question instance)
+        public static void InsertQuestion(int subjectId,int mode,string name,double point, string answer,
+            int rank, int knowledgeId,int uploadUserId)
         {
             using (var db = new SqliteConnection($"Filename={_dbpath}"))
             {
                 db.Open();
 
                 var insertCommand = db.CreateCommand();
-                insertCommand.CommandText = $"INSERT INTO {DbTableName.Questions} (" +
-                                            "subject, type, question, answer, point, rank, knowledgeName, " +
-                                            "uploadUser, createTime, updateTime) " +
-                                            "VALUES (@Subject, @Type, @Question, @Answer, " +
-                                            "@Point, @Rank, @KnowledgeName, @UploadUser, @CreateTime, @UpdateTime);";
-                insertCommand.Parameters.AddWithValue("@Subject", instance.SubjectId);
-                insertCommand.Parameters.AddWithValue("@Type", instance.Type);
-                insertCommand.Parameters.AddWithValue("@Question", instance.Name);
-                insertCommand.Parameters.AddWithValue("@Answer", instance.Answer);
-                insertCommand.Parameters.AddWithValue("@Point", instance.Point);
-                insertCommand.Parameters.AddWithValue("@Rank", instance.Rank);
-                insertCommand.Parameters.AddWithValue("@KnowledgeName", instance.KnowledgeId);
-                insertCommand.Parameters.AddWithValue("@UploadUser", instance.UploadUserId);
+                insertCommand.CommandText = $"INSERT INTO `Questions` "+
+                                            "VALUES (NULL, @Subject, @Type, @Question, @Choices, @Answer, " +
+                                            " @Rank, @KnowledgeName, @UploadUser, @CreateTime, @UpdateTime);";
+                insertCommand.Parameters.AddWithValue("@Subject", subjectId);
+                insertCommand.Parameters.AddWithValue("@Type", mode);
+                insertCommand.Parameters.AddWithValue("@Question", name);
+                insertCommand.Parameters.AddWithValue("@Choices", point);
+                insertCommand.Parameters.AddWithValue("@Answer", answer);
+                insertCommand.Parameters.AddWithValue("@Rank", rank);
+                insertCommand.Parameters.AddWithValue("@KnowledgeName", knowledgeId);
+                insertCommand.Parameters.AddWithValue("@UploadUser", uploadUserId);
                 var t = DateTimeHelper.GetTimeStamp();
                 insertCommand.Parameters.AddWithValue("@CreateTime", t);
                 insertCommand.Parameters.AddWithValue("@UpdateTime", t);
@@ -88,40 +65,44 @@ namespace ExamBankSystem.Helpers
         /// <summary>
         /// 更新题目
         /// </summary>
-        public static void UpdateQuestion(Question obj, int key)
+        public static void UpdateQuestion(int id,int subjectId, int mode, string name, double point, string answer,
+            int rank, int knowledgeId, int uploadUserId)
         {
             using (var db = new SqliteConnection($"Filename={_dbpath}"))
             {
                 db.Open();
 
                 var insertCommand = db.CreateCommand();
-                insertCommand.CommandText = $"UPDATE {DbTableName.Questions} SET question = @Question, " +
-                    "answer = @Answer, updateTime = @UpdateTime " +
-                    "subject = @Subject, type = @Type " +
-                    "point = @Point, rank = @Rank " +
+                insertCommand.CommandText = $"UPDATE `Questions` SET question = @Question, " +
+                    "answer = @Answer, updateTime = @UpdateTime, " +
+                    "subject = @Subject, type = @Type, " +
+                    "rank = @Rank, " +
                     "knowledgeName = @KnowledgeName " +
-                    "WHERE id = @OldName;";
-                insertCommand.Parameters.AddWithValue("@Subject", obj.SubjectId);
-                insertCommand.Parameters.AddWithValue("@Type", (int)obj.Type);
-                insertCommand.Parameters.AddWithValue("@Question", obj.Name);
-                insertCommand.Parameters.AddWithValue("@Answer", obj.Answer);
-                insertCommand.Parameters.AddWithValue("@Point", obj.Point);
-                insertCommand.Parameters.AddWithValue("@Rank", obj.Rank);
-                insertCommand.Parameters.AddWithValue("@KnowledgeName", obj.KnowledgeId);
-                obj.UpdateTime = DateTime.Now;
-                insertCommand.Parameters.AddWithValue("@UpdateTime", DateTimeHelper.ToTimeStamp(obj.UpdateTime));
-                insertCommand.Parameters.AddWithValue("@OldName", key);
+                    "WHERE id = @ID;";
+                insertCommand.Parameters.AddWithValue("@Subject", subjectId);
+                insertCommand.Parameters.AddWithValue("@Type", mode);
+                insertCommand.Parameters.AddWithValue("@Question", name);
+                insertCommand.Parameters.AddWithValue("@Choices", point);
+                insertCommand.Parameters.AddWithValue("@Answer", answer);
+                insertCommand.Parameters.AddWithValue("@Rank", rank);
+                insertCommand.Parameters.AddWithValue("@KnowledgeName", knowledgeId);
+                insertCommand.Parameters.AddWithValue("@UploadUser", uploadUserId);
+                insertCommand.Parameters.AddWithValue("@UpdateTime", DateTimeHelper.ToTimeStamp(DateTime.Now));
+                insertCommand.Parameters.AddWithValue("@ID", id);
                 insertCommand.ExecuteReader();
             }
         }
         /// <summary>
-        /// 搜索题目
+        /// 题目是否被任何试卷采用
         /// </summary>
-        public static async Task<List<Question>> SearchQuestionAsync(string keyword, long page = 1,
-            int limit = 15)
+        public static async Task<bool> QuestionHasAnyTestPaperAsync(int questionId)
         {
-            return await SearchAsync<Question>("title", keyword, page, limit);
+            return ((long)await ExecuteScalarAsync(selectCommand =>
+            {
+                selectCommand.CommandText = "SELECT COUNT(*) FROM QuestionPapers WHERE questionId = @ID;";
+                selectCommand.Parameters.AddWithValue("@ID", questionId);
+                return selectCommand;
+            })) > 0;
         }
-
     }
 }

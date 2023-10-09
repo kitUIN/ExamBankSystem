@@ -12,15 +12,12 @@ namespace ExamBankSystem.ViewModels
 {
     public partial class ExamSubjectViewModel : DataTableBase<ExamSubject>
     {
-        
-        /// <summary>
-        /// 操作事件
-        /// </summary>
-        public event EventHandler<ActionEventArg> ActionEvent;
 
-        protected new string SearchCol = "subject";
+        public ExamSubjectViewModel(string searchCol = "subject") : base(searchCol)
+        {
 
-        
+        }
+
         /// <summary>
         /// 列表选择变化响应
         /// </summary>
@@ -29,6 +26,5 @@ namespace ExamBankSystem.ViewModels
             CanEdit = count == 1;
             CanDelete = count > 0;
         }
-        
     }
 }

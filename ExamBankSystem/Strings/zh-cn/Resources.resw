@@ -336,4 +336,43 @@
   <data name="ExamSubjectsDeleteFail" xml:space="preserve">
     <value>删除失败(考试科目下有题目)</value>
   </data>
+  <data name="KnowledgePointDeleteFail" xml:space="preserve">
+    <value>删除失败(知识点下有题目)</value>
+  </data>
+  <data name="KnowledgePointContent" xml:space="preserve">
+    <value>知识点内容</value>
+  </data>
+  <data name="NotNull" xml:space="preserve">
+    <value>不能为空</value>
+  </data>
+  <data name="NotExist" xml:space="preserve">
+    <value>不存在</value>
+  </data>
+  <data name="QuestionFail" xml:space="preserve">
+    <value>失败(题目已被使用)</value>
+  </data>
+  <data name="Choices" xml:space="preserve">
+    <value>选项</value>
+  </data>
+  <data name="SelectWord" xml:space="preserve">
+    <value>选择试卷文档</value>
+  </data>
+  <data name="CheckWord" xml:space="preserve">
+    <value>查重</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>统计</value>
+  </data>
+  <data name="Point" xml:space="preserve">
+    <value>分数</value>
+  </data>
+  <data name="SiglePaper" xml:space="preserve">
+    <value>单卷</value>
+  </data>
+  <data name="ABPaper" xml:space="preserve">
+    <value>AB组卷</value>
+  </data>
+  <data name="SelectLastYearsWords" xml:space="preserve">
+    <value>选择往年试卷</value>
+  </data>
 </root>

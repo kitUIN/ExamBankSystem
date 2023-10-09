@@ -5,7 +5,7 @@
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$USER_HOME$/AppData/Local/Packages/ae5038af-6c74-4c59-a533-432abff16a74_ssncz3j6xqbzw/LocalState/bank.sqlite</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\15854\AppData\Local\Packages\ae5038af-6c74-4c59-a533-432abff16a74_ssncz3j6xqbzw\LocalState\bank.sqlite</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

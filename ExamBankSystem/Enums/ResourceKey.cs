@@ -78,5 +78,18 @@
         PrePage,
         NextPage,
         ExamSubjectsDeleteFail,
+        KnowledgePointDeleteFail,
+        NotNull,
+        KnowledgePointContent,
+        NotExist,
+        QuestionFail,
+        Choices,
+        SelectWord,
+        CheckWord,
+        Statistics,
+        Point,
+        SiglePaper,
+        ABPaper,
+        SelectLastYearsWords,
     }
 }

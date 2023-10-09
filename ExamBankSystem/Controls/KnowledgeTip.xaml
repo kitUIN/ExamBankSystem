@@ -21,6 +21,8 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" ColumnSpacing="15">
                         <Grid.ColumnDefinitions>
@@ -30,15 +32,40 @@
                         <TextBlock
                             Grid.Column="0"
                             VerticalAlignment="Center"
+                            Text="{ex:Locale Key=KnowledgePoints}" />
+                        <TextBox
+                            x:Name="KnowledgeName"
+                            Grid.Column="1"
+                            MaxLength="100" />
+                    </Grid>
+                    <Grid Grid.Row="1" ColumnSpacing="15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="{ex:Locale Key=KnowledgePointContent}" />
+                        <TextBox x:Name="Knowledge" Grid.Column="1" />
+                    </Grid>
+                    <Grid Grid.Row="2" ColumnSpacing="15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
                             Text="{ex:Locale Key=ExamSubjects}" />
                         <TextBox
-                            x:Name="ExamSubject"
+                            x:Name="Subject"
                             Grid.Column="1"
                             MaxLength="30" />
                     </Grid>
                     <Button
                         x:Name="AddButton"
-                        Grid.Row="1"
+                        Grid.Row="3"
                         HorizontalAlignment="Right"
                         Click="AddButton_Click"
                         Content="{ex:Locale Key=Submit}"

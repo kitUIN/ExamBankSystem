@@ -11,9 +11,11 @@ namespace ExamBankSystem.Helpers
         /// <summary>
         /// 创建知识点表
         /// </summary>
-        private static async void CreateKnowledgePointsTable(SqliteConnection db)
+        private static void CreateKnowledgePointsTable()
         {
-            var tableCommand = "CREATE TABLE IF NOT EXISTS `KnowledgePoints` (" +
+            ExecuteReader(command =>
+            {
+                command.CommandText = "CREATE TABLE IF NOT EXISTS `KnowledgePoints` (" +
                                "`id` INTEGER PRIMARY KEY AUTOINCREMENT , " +
                                "`subjectId` INTEGER NOT NULL, " +
                                "`name` NVARCHAR(100) NOT NULL, " +
@@ -21,17 +23,10 @@ namespace ExamBankSystem.Helpers
                                "`createTime` TIMESTAMP NOT NULL, " +
                                "`updateTime` TIMESTAMP NULL " +
                                ")";
-            var createTable = new SqliteCommand(tableCommand, db);
-            await createTable.ExecuteReaderAsync();
+                return command;
+            }
+            );
         }
-        /// <summary>
-        /// 从数据库中获取知识点
-        /// </summary>
-        public static async Task<List<KnowledgePoint>> GetKnowledgePointsAsync(long page = 1, int limit = 15)
-        {
-            return await GetAsync<KnowledgePoint>(page, limit);
-        }
-
         /// <summary>
         /// 从数据库中获取知识点
         /// </summary>
@@ -54,27 +49,11 @@ namespace ExamBankSystem.Helpers
         }
 
         /// <summary>
-        /// 从数据库中获取知识点
-        /// </summary>
-        public static async Task<KnowledgePoint> GetKnowledgePointAsync(int id)
-        {
-            return await GetByIdAsync<KnowledgePoint>(id);
-        }
-
-        /// <summary>
-        /// 从数据库中获取知识点
-        /// </summary>
-        public static KnowledgePoint GetKnowledgePoint(int id)
-        {
-            return GetById<KnowledgePoint>(id);
-        }
-
-        /// <summary>
         /// 插入知识点到数据库中
         /// </summary>
         public static void InsertKnowledgePoint(string name,string knowledge,int subject)
         {
-            ExecuteReaderAsync(selectCommand =>
+            ExecuteReader(selectCommand =>
             {
                 selectCommand.CommandText =
                     $"INSERT INTO `KnowledgePoints` VALUES (NULL, @Subject, @Name, @Knowledge, @CreateTime, @UpdateTime);";
@@ -89,25 +68,31 @@ namespace ExamBankSystem.Helpers
         }
 
         /// <summary>
-        /// 从数据库中删除知识点
+        /// 知识点下是否有问题
         /// </summary>
-        public static void DeleteKnowledgePoint(int id)
+        public static async Task<bool> KnowledgeHasAnyQuestionAsync(int id)
         {
-            DeleteById<KnowledgePoint>(id);
+            return ((long)await ExecuteScalarAsync(selectCommand =>
+            {
+                selectCommand.CommandText = "SELECT COUNT(*) FROM Questions WHERE knowledgeId = @ID;";
+                selectCommand.Parameters.AddWithValue("@ID", id);
+                return selectCommand;
+            })) > 0;
         }
-
         /// <summary>
         /// 更新知识点名称
         /// </summary>
-        public static void UpdateKnowledgePointName(int id, string newName)
+        public static void UpdateKnowledgePoint(int id, string newName,string content,int subject)
         {
-            ExecuteReaderAsync(selectCommand =>
+            ExecuteReader(selectCommand =>
             {
                 selectCommand.CommandText =
-                    $"UPDATE `KnowledgePoints` SET `name` = @Name, `updateTime` = @UpdateTime WHERE `id` = @ID;";
+                    $"UPDATE `KnowledgePoints` SET `name` = @Name,`knowledge` = @Knowledge,`subject` = @Subject, `updateTime` = @UpdateTime WHERE `id` = @ID;";
                 selectCommand.Parameters.AddWithValue("@Name", newName);
                 selectCommand.Parameters.AddWithValue("@UpdateTime", DateTimeHelper.GetTimeStamp());
                 selectCommand.Parameters.AddWithValue("@ID", id);
+                selectCommand.Parameters.AddWithValue("@Knowledge", content);
+                selectCommand.Parameters.AddWithValue("@Subject", subject);
                 return selectCommand;
             });
         }

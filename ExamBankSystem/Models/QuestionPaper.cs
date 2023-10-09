@@ -33,6 +33,11 @@ namespace ExamBankSystem.Models
         [ObservableProperty]
         private int questionId;
         /// <summary>
+        /// 问题
+        /// </summary>
+        [ObservableProperty]
+        private Question question;
+        /// <summary>
         /// 上传用户
         /// </summary>
         [ObservableProperty]

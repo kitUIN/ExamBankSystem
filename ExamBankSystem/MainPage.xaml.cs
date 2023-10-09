@@ -53,7 +53,6 @@ namespace ExamBankSystem
             EventHelper.LogoutEvent -= EventHelper_LogoutEvent;
         }
 
-
         private void EventHelper_LogoutEvent(object sender, EventArgs e)
         {
             CurrentData.CurrentUser = null;
@@ -101,10 +100,13 @@ namespace ExamBankSystem
                         ContentFrame.Navigate(typeof(QuestionView));
                         break;
                     case CategoryTag.FindTestPaper:
-                        ContentFrame.Navigate(typeof(TestPaperView));
+                        ContentFrame.Navigate(typeof(FindTestPaperView));
                         break;
                     case CategoryTag.ManageTestPaper:
-                        ContentFrame.Navigate(typeof(TestPaperView));
+                        ContentFrame.Navigate(typeof(ManageTestPaper));
+                        break;
+                    case CategoryTag.MergeTestPaper:
+                        ContentFrame.Navigate(typeof(MergeTestPaperView));
                         break;
                 }
             }

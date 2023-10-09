@@ -16,12 +16,9 @@ namespace ExamBankSystem.ViewModels
 {
     public partial class KnowledgePointViewModel : DataTableBase<KnowledgePoint>
     {
-        
-        /// <summary>
-        /// 操作事件
-        /// </summary>
-        public event EventHandler<ActionEventArg> ActionEvent;
-        
+        public KnowledgePointViewModel(string searchCol="name") : base(searchCol)
+        {
+        }
         /// <summary>
         /// 列表选择变化响应
         /// </summary>

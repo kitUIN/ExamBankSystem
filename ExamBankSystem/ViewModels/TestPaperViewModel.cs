@@ -13,13 +13,10 @@ using System.Threading.Tasks;
 
 namespace ExamBankSystem.ViewModels
 {
-    public partial class TestPaperViewModel: DataTableBase<TestPaper>
+    public partial class TestPaperViewModel : DataTableBase<TestPaper>
     {
-        /// <summary>
-        /// 操作事件
-        /// </summary>
-        public event EventHandler<ActionEventArg> ActionEvent;
-        
-        
+        public TestPaperViewModel(string searchCol="") : base(searchCol)
+        {
+        }
     }
 }

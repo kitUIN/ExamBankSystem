@@ -33,13 +33,6 @@ namespace ExamBankSystem.Helpers
             var dbCommand = command(db.CreateCommand());
             return res(dbCommand.ExecuteReader());
         }
-        private static void ExecuteReader(Func<SqliteCommand,SqliteCommand> command)
-        {
-            using var db = new SqliteConnection($"Filename={_dbpath}");
-            db.Open();
-            var dbCommand = command(db.CreateCommand());
-            dbCommand.ExecuteReader();
-        }
         private static object ExecuteScalar(Func<SqliteCommand,SqliteCommand> command)
         {
             using var db = new SqliteConnection($"Filename={_dbpath}");
@@ -61,7 +54,7 @@ namespace ExamBankSystem.Helpers
             var dbCommand = command(db.CreateCommand());
             return res(await dbCommand.ExecuteReaderAsync());
         }
-        private static async void ExecuteReaderAsync(Func<SqliteCommand,SqliteCommand> command)
+        private static async void ExecuteReader(Func<SqliteCommand,SqliteCommand> command)
         {
             using var db = new SqliteConnection($"Filename={_dbpath}");
             db.Open();
@@ -82,11 +75,11 @@ namespace ExamBankSystem.Helpers
             {
                 db.Open();
                 CreateUsersTable();
-                CreateKnowledgePointsTable(db);
+                CreateKnowledgePointsTable();
                 CreateExamSubjectsTable();
-                CreateQuestionsTable(db);
-                CreateTestPapersTable(db);
-                CreateQuestionPapersTable(db);
+                CreateQuestionsTable();
+                CreateTestPapersTable();
+                CreateQuestionPapersTable();
             }
         }
         /// <summary>
@@ -118,7 +111,7 @@ namespace ExamBankSystem.Helpers
         /// <summary>
         /// 获取实体类
         /// </summary>
-        private static async Task<T> GetByIdAsync<T>(int id) where T: OrderModel
+        public static async Task<T> GetByIdAsync<T>(int id) where T: OrderModel
         { 
             return await ExecuteReaderAsync(selectCommand =>
             {
@@ -137,7 +130,7 @@ namespace ExamBankSystem.Helpers
         }/// <summary>
         /// 获取实体类
         /// </summary>
-        private static T GetById<T>(int id) where T: OrderModel
+        public static T GetById<T>(int id) where T: OrderModel
         { 
             return  ExecuteReader(selectCommand =>
             {
@@ -157,9 +150,9 @@ namespace ExamBankSystem.Helpers
         /// <summary>
         /// 删除实体类
         /// </summary>
-        private static void DeleteById<T>(int id) where T: OrderModel
+        public static void DeleteById<T>(int id) where T: OrderModel
         { 
-            ExecuteReaderAsync(selectCommand =>
+            ExecuteReader(selectCommand =>
             {
                 var table = GetTable<T>();
                 selectCommand.CommandText = $"DELETE FROM {table} WHERE `id` = @Name;";
@@ -209,41 +202,6 @@ namespace ExamBankSystem.Helpers
                 }
                 return res;
             });
-        }
-        /// <summary>
-        /// 创建试卷表
-        /// </summary>
-        private static async void CreateTestPapersTable(SqliteConnection db)
-        {
-            var tableCommand = "CREATE TABLE IF NOT EXISTS `TestPapers` (" +
-                               "`id` INTEGER PRIMARY KEY AUTOINCREMENT , " +
-                               "`name` NVARCHAR(2048) NOT NULL, " +
-                               "`point` INT NOT NULL, " +
-                               "`isExamine` BOOLEAN NOT NULL, " +
-                               "`uploadUser` NVARCHAR(2048) NOT NULL, " +
-                               "`createTime` TIMESTAMP NOT NULL, " +
-                               "`updateTime` TIMESTAMP NULL " +
-                               ")";
-            var createTable = new SqliteCommand(tableCommand, db);
-            await createTable.ExecuteReaderAsync();
-        }
-
-        /// <summary>
-        /// 创建试卷题目链接表
-        /// </summary>
-        private static async void CreateQuestionPapersTable(SqliteConnection db)
-        {
-            var tableCommand = "CREATE TABLE IF NOT EXISTS `QuestionPapers` (" +
-                               "`id` INTEGER PRIMARY KEY AUTOINCREMENT , " +
-                               "`testPaperId` INT NOT NULL, " +
-                               "`questionIndex` INT NOT NULL, " +
-                               "`questionId` INT NOT NULL, " +
-                               "`uploadUser` NVARCHAR(2048) NOT NULL, " +
-                               "`createTime` TIMESTAMP NOT NULL, " +
-                               "`updateTime` TIMESTAMP NULL " +
-                               ")";
-            var createTable = new SqliteCommand(tableCommand, db);
-            await createTable.ExecuteReaderAsync();
         }
 
         #endregion

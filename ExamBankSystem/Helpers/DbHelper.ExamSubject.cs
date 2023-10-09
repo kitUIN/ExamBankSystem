@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ExamBankSystem.Enums;
 using ExamBankSystem.Models;
@@ -13,7 +14,7 @@ namespace ExamBankSystem.Helpers
         /// </summary>
         private static void CreateExamSubjectsTable()
         {
-            ExecuteReaderAsync(command =>
+            ExecuteReader(command =>
                 {
                     command.CommandText = "CREATE TABLE IF NOT EXISTS `ExamSubjects` (" +
                                           "`id` INTEGER PRIMARY KEY AUTOINCREMENT , " +
@@ -76,7 +77,7 @@ namespace ExamBankSystem.Helpers
         /// </summary>
         public static void InsertExamSubject(string name)
         {
-            ExecuteReaderAsync(selectCommand =>
+            ExecuteReader(selectCommand =>
             {
                 selectCommand.CommandText =
                     $"INSERT INTO `ExamSubjects` VALUES (NULL, @Name, @CreateTime, @UpdateTime);";
@@ -101,7 +102,7 @@ namespace ExamBankSystem.Helpers
         /// </summary>
         public static void UpdateExamSubjectName(int id, string newName)
         {
-            ExecuteReaderAsync(selectCommand =>
+            ExecuteReader(selectCommand =>
             {
                 selectCommand.CommandText =
                     $"UPDATE `ExamSubjects` SET `subject` = @Name, `updateTime` = @UpdateTime WHERE `id` = @ID;";
@@ -113,33 +114,17 @@ namespace ExamBankSystem.Helpers
         }
 
         /// <summary>
-        /// 获取科目总数
-        /// </summary>
-        public static async Task<long> GetExamSubjectCountAsync()
-        {
-            return await CountAsync<ExamSubject>();
-        }
-
-        /// <summary>
         /// 考试科目下是否有问题
         /// </summary>
         public static async Task<bool> ExamSubjectHasAnyQuestionAsync(int id)
         {
-            return (bool)await ExecuteScalarAsync(selectCommand =>
+            return ((long)await ExecuteScalarAsync(selectCommand =>
             {
-                selectCommand.CommandText = "SELECT EXISTS(SELECT 1 FROM Questions WHERE subjectId = @ID);";
+                selectCommand.CommandText = "SELECT COUNT(*) FROM Questions WHERE subjectId = @ID;";
                 selectCommand.Parameters.AddWithValue("@ID", id);
                 return selectCommand;
-            });
+            })) > 0;
         }
 
-        /// <summary>
-        /// 搜索考试科目
-        /// </summary>
-        public static async Task<List<ExamSubject>> SearchExamSubjectAsync(string keyword, long page = 1,
-            int limit = 15)
-        {
-            return await SearchAsync<ExamSubject>("subject", keyword, page, limit);
-        }
     }
 }
