@@ -1,16 +1,21 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ExamBankSystem.Controls;
+using ExamBankSystem.Enums;
+using ExamBankSystem.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ExamBankSystem.Models
 {
     /// <summary>
     /// 试卷内题目
     /// </summary>
-    public partial class QuestionPaper : ObservableObject
+    public partial class QuestionPaper : OrderModel
     {
         /// <summary>
         /// ID
@@ -41,7 +46,7 @@ namespace ExamBankSystem.Models
         /// 上传用户
         /// </summary>
         [ObservableProperty]
-        private string uploadUser;
+        private int uploadUserId;
         /// <summary>
         /// 创建时间
         /// </summary>
@@ -52,5 +57,16 @@ namespace ExamBankSystem.Models
         /// </summary>
         [ObservableProperty]
         private DateTime updateTime;
+        public QuestionPaper() { }
+        public QuestionPaper(IDataRecord query) : base(query)
+        {
+            Id = query.GetInt32(0);
+            TestPaperId = query.GetInt32(1);
+            QuestionIndex =  query.GetInt32(2);
+            QuestionId = query.GetInt32(3);
+            UploadUserId = query.GetInt32(4);
+            CreateTime = DateTimeHelper.ToDateTime(query.GetInt64(5));
+            UpdateTime = DateTimeHelper.ToDateTime(query.GetInt64(6));
+        }
     }
 }

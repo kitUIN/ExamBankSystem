@@ -16,7 +16,7 @@ namespace ExamBankSystem.ViewModels
         /// <summary>
         /// 搜索的列
         /// </summary>
-        private string SearchCol;
+        public string SearchCol;
 
         /// <summary>
         /// 列表
@@ -154,7 +154,6 @@ namespace ExamBankSystem.ViewModels
                 }
             }
         }
-        
         /// <summary>
         /// 添加按钮响应
         /// </summary> 

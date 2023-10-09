@@ -1,10 +1,10 @@
 ﻿using ExamBankSystem.Args;
 using ExamBankSystem.Enums;
+using ExamBankSystem.Models;
 using ExamBankSystem.ViewModels;
 using System;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-
 
 namespace ExamBankSystem.Views
 {
@@ -55,6 +55,14 @@ namespace ExamBankSystem.Views
             ViewModel.SelectionChanged(MainList.SelectedItems.Count);
         }
 
-        
+        private void SearchBar3_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SearchBar1.Text = SearchBar3.SelectedIndex.ToString();
+        }
+
+        private void SearchBar2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SearchBar1.Text = (SearchBar2.SelectedItem as ComboBoxItem).Tag.ToString();
+        }
     }
 }

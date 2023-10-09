@@ -14,7 +14,12 @@
             <ColumnDefinition Width="300" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ListView Grid.Column="0" ItemsSource="{x:Bind ViewModel.LeftItems}">
+        <ListView
+            x:Name="LeftList"
+            Grid.Column="0"
+            ItemClick="LeftList_ItemClick"
+            ItemsSource="{x:Bind ViewModel.LeftItems}"
+            SelectionMode="Single">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:TestPaper">
                     <Grid>
@@ -30,11 +35,15 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <StackPanel Grid.Column="1">
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
             <ListView
                 x:Name="RightList"
                 ItemsSource="{x:Bind ViewModel.RightItems}"
-                SelectionMode="Single">
+                SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:QuestionPaper">
                         <Grid>
@@ -55,6 +64,7 @@
                                 TextTrimming="CharacterEllipsis" />
                             <TextBlock
                                 Grid.Column="2"
+                                Height="32"
                                 Text="{x:Bind Question.Answer, Mode=OneWay}"
                                 TextTrimming="CharacterEllipsis" />
                             <TextBlock
@@ -69,8 +79,12 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button x:Name="StatisticsButton" Content="{ex:Locale Key=Statistics}" />
-        </StackPanel>
+            <Button x:Name="StatisticsButton" Content="{ex:Locale Key=Statistics}">
+                <Button.Flyout>
+                    <Flyout />
+                </Button.Flyout>
+            </Button>
+        </Grid>
 
     </Grid>
 </Page>

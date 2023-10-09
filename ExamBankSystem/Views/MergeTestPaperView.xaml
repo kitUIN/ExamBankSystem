@@ -6,6 +6,7 @@
     xmlns:ex="using:ExamBankSystem.Extensions"
     xmlns:local="using:ExamBankSystem.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
 
     <Grid Padding="10">
@@ -23,6 +24,7 @@
                             Text="{ex:Locale Key=KnowledgePoints}" />
                         <TextBox x:Name="KnowledgePoints" Grid.Column="1" />
                     </Grid>
+                    <TextBlock Margin="0,10,0,0" Text="题目分布:" />
                     <Grid ColumnSpacing="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="50" />
@@ -32,7 +34,11 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Text="{ex:Locale Key=SingleChoice}" />
-                        <TextBox x:Name="SingleChoice" Grid.Column="1" />
+                        <muxc:NumberBox
+                            x:Name="SingleChoice"
+                            Grid.Column="1"
+                            Minimum="0"
+                            Value="0" />
                     </Grid>
                     <Grid ColumnSpacing="10">
                         <Grid.ColumnDefinitions>
@@ -43,7 +49,11 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Text="{ex:Locale Key=MultipleChoice}" />
-                        <TextBox x:Name="MultipleChoice" Grid.Column="1" />
+                        <muxc:NumberBox
+                            x:Name="MultipleChoice"
+                            Grid.Column="1"
+                            Minimum="0"
+                            Value="0" />
                     </Grid>
                     <Grid ColumnSpacing="10">
                         <Grid.ColumnDefinitions>
@@ -54,7 +64,11 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Text="{ex:Locale Key=FillBlank}" />
-                        <TextBox x:Name="FillBlank" Grid.Column="1" />
+                        <muxc:NumberBox
+                            x:Name="FillBlank"
+                            Grid.Column="1"
+                            Minimum="0"
+                            Value="0" />
                     </Grid>
                     <Grid ColumnSpacing="10">
                         <Grid.ColumnDefinitions>
@@ -65,7 +79,11 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Text="{ex:Locale Key=Judgment}" />
-                        <TextBox x:Name="Judgment" Grid.Column="1" />
+                        <muxc:NumberBox
+                            x:Name="Judgment"
+                            Grid.Column="1"
+                            Minimum="0"
+                            Value="0" />
                     </Grid>
                     <Grid ColumnSpacing="10">
                         <Grid.ColumnDefinitions>
@@ -76,7 +94,11 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Text="{ex:Locale Key=ShortAnswer}" />
-                        <TextBox x:Name="ShortAnswer" Grid.Column="1" />
+                        <muxc:NumberBox
+                            x:Name="ShortAnswer"
+                            Grid.Column="1"
+                            Minimum="0"
+                            Value="0" />
                     </Grid>
                     <Grid ColumnSpacing="10">
                         <Grid.ColumnDefinitions>
@@ -87,7 +109,11 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Text="{ex:Locale Key=Design}" />
-                        <TextBox x:Name="Design" Grid.Column="1" />
+                        <muxc:NumberBox
+                            x:Name="Design"
+                            Grid.Column="1"
+                            Minimum="0"
+                            Value="0" />
                     </Grid>
                     <Grid ColumnSpacing="10">
                         <Grid.ColumnDefinitions>
@@ -98,7 +124,11 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Text="{ex:Locale Key=Program}" />
-                        <TextBox x:Name="Program" Grid.Column="1" />
+                        <muxc:NumberBox
+                            x:Name="Program"
+                            Grid.Column="1"
+                            Minimum="0"
+                            Value="0" />
                     </Grid>
                     <StackPanel>
                         <Button
@@ -124,16 +154,23 @@
                         Orientation="Horizontal"
                         Spacing="20">
                         <Button x:Name="SelectWordA" Content="{ex:Locale Key=SelectWord}" />
-                        <TextBlock x:Name="WordA" Text="WordA:" />
+                        <TextBlock x:Name="WordA" VerticalAlignment="Center">
+                            <Run Text="WordA:" />
+                        </TextBlock>
                     </StackPanel>
                     <StackPanel
                         Grid.Row="1"
                         Orientation="Horizontal"
                         Spacing="20">
                         <Button x:Name="SelectWordB" Content="{ex:Locale Key=SelectWord}" />
-                        <TextBlock x:Name="WordB" Text="WordB:" />
+                        <TextBlock x:Name="WordB" VerticalAlignment="Center">
+                            <Run Text="WordB:" />
+                        </TextBlock>
                     </StackPanel>
-                    <Button x:Name="MergeButton" Content="{ex:Locale Key=Merge}" />
+                    <Button
+                        x:Name="MergeButton"
+                        Grid.Row="2"
+                        Content="{ex:Locale Key=Merge}" />
                 </Grid>
             </PivotItem>
         </Pivot>

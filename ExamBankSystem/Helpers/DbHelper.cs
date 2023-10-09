@@ -206,24 +206,6 @@ namespace ExamBankSystem.Helpers
 
         #endregion
 
-        public static void InsertQuestionPaper(QuestionPaper instance)
-        {
-            using (var db = new SqliteConnection($"Filename={_dbpath}"))
-            {
-                db.Open();
-
-                var insertCommand = db.CreateCommand();
-                insertCommand.CommandText = $"INSERT INTO {DbTableName.QuestionPapers} (testPaperId, questionIndex, questionId, uploadUser, createTime, updateTime) VALUES (@TestPaperId, @QuestionIndex, @QuestionId, @UploadUser, @CreateTime, @UpdateTime);";
-                insertCommand.Parameters.AddWithValue("@TestPaperId", instance.TestPaperId);
-                insertCommand.Parameters.AddWithValue("@QuestionIndex", instance.QuestionIndex);
-                insertCommand.Parameters.AddWithValue("@QuestionId", instance.QuestionId);
-                insertCommand.Parameters.AddWithValue("@UploadUser", instance.UploadUser);
-                var t = DateTimeHelper.GetTimeStamp();
-                insertCommand.Parameters.AddWithValue("@CreateTime", t);
-                insertCommand.Parameters.AddWithValue("@UpdateTime", t);
-                insertCommand.ExecuteReader();
-            }
-        }
         /*#region TestPaper
         /// <summary>
         /// 从数据库中获取试卷
