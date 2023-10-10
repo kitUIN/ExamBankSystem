@@ -79,6 +79,7 @@
                             <TextBlock Grid.Column="3" Text="{ex:Locale Key=Examine}" />
                         </Grid>
                         <ListView
+                            x:Name="MainList"
                             Grid.Row="2"
                             ItemsSource="{x:Bind ViewModel.Items}"
                             SelectionChanged="MainList_SelectionChanged"
@@ -180,10 +181,7 @@
                         <Run Text="相似度过高个数:" />
                         <Run Text="{x:Bind ViewModel.CheckWords.Count, Mode=OneWay}" />
                     </TextBlock>
-                    <ListView
-                        x:Name="MainList"
-                        Grid.Row="4"
-                        ItemsSource="{x:Bind ViewModel.CheckWords}">
+                    <ListView Grid.Row="4" ItemsSource="{x:Bind ViewModel.CheckWords}">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:CheckWordModel">
                                 <Grid ColumnSpacing="30">

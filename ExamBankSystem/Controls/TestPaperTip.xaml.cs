@@ -73,7 +73,7 @@ namespace ExamBankSystem.Controls
         /// </summary>
         private void ReplaceButton_OnClick(object sender, RoutedEventArgs e)
         {
-            
+            Hide();
         }
         private int CurrentQuestionTypeId { get; set; }
         private void RightList_OnItemClick(object sender, ItemClickEventArgs e)

@@ -10,7 +10,7 @@
 
     <Grid Padding="10">
         <StackPanel>
-            <Grid ColumnSpacing="10">
+            <Grid ColumnSpacing="10" Visibility="Collapsed">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="Auto" />
