@@ -85,7 +85,7 @@ namespace ExamBankSystem.Helpers
             ExecuteReader(selectCommand =>
             {
                 selectCommand.CommandText =
-                    $"UPDATE `KnowledgePoints` SET `name` = @Name,`knowledge` = @Knowledge,`subject` = @Subject, `updateTime` = @UpdateTime WHERE `id` = @ID;";
+                    $"UPDATE `KnowledgePoints` SET `name` = @Name,`knowledge` = @Knowledge,`subjectId` = @Subject, `updateTime` = @UpdateTime WHERE `id` = @ID;";
                 selectCommand.Parameters.AddWithValue("@Name", newName);
                 selectCommand.Parameters.AddWithValue("@UpdateTime", DateTimeHelper.GetTimeStamp());
                 selectCommand.Parameters.AddWithValue("@ID", id);
