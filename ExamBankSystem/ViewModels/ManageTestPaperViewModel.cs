@@ -49,17 +49,18 @@ namespace ExamBankSystem.ViewModels
         {
             if(obj is TestPaper paper)
             {
-                WordHelper.ExportPaper(paper.Id);
-                EventHelper.InvokeTipPopup(this,
-                                        ResourcesHelper.GetString(ResourceKey.ExpoertSuccess),
-                                        InfoBarSeverity.Success
-                                    );
+                WordHelper.ExportPaper(paper.Id); 
             }
         }
 
         [RelayCommand]
         public void ExportAnswer(object obj)
         {
+            if (obj is TestPaper paper)
+            {
+                WordHelper.ExportAnswer(paper.Id);
+                
+            }
         }
         
         [ObservableProperty]

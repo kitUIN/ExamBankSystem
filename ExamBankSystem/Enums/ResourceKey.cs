@@ -102,5 +102,6 @@
         TestPaperName,
         GeneratePaperSuccess,
         ExpoertSuccess,
+        ExpoertError,
     }
 }

@@ -130,10 +130,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <RichEditBox
-                    x:Name="Answer"
-                    Grid.Column="0"
-                    BorderThickness="0" />
+
                 <Button
                     x:Name="StatisticsButton"
                     Grid.Column="1"

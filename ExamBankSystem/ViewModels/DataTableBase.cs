@@ -126,6 +126,9 @@ namespace ExamBankSystem.ViewModels
         public virtual async void SearchRefresh(string text)
         {
             var items = await DbHelper.SearchAsync<T>(SearchCol, text, CurrentPage);
+            Debug.WriteLine(SearchCol);
+            Debug.WriteLine(text);
+            Debug.WriteLine(items.Count);
             TotalPage = (DbHelper.GetCount<T>() + 14) / 15; 
             Items.Clear();
             foreach (var item in items)

@@ -100,7 +100,7 @@
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Text="{ex:Locale Key=Answer}" />
-                            <RichEditBox x:Name="Answer" Grid.Column="1" />
+                            <TextBox x:Name="Answer" Grid.Column="1" />
                         </Grid>
                         <Grid Grid.Row="5" ColumnSpacing="10">
                             <Grid.ColumnDefinitions>

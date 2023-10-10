@@ -40,35 +40,55 @@ namespace ExamBankSystem.ViewModels
                 if (text == "0" && SearchCol == "rank") text = "1";
                 items = await DbHelper.GetQuestionAsync(SearchCol, Convert.ToInt32(text), CurrentPage);
                 TotalPage = (DbHelper.GetQuestionCountAsync(SearchCol, Convert.ToInt32(text)) + 14) / 15;
+                Items.Clear();
+                foreach (var item in items)
+                { 
+                    Items.Add(item);
+                }
             }
             else if (SearchCol == "subjectId")
             {
+                int order = 1;
                 var subjects = await DbHelper.SearchAsync<ExamSubject>("subject", text);
                 foreach (var subject in subjects)
                 {
                     items.AddRange(await DbHelper.GetQuestionAsync(SearchCol, subject.Id));
                 }
                 TotalPage = 1;
+                Items.Clear();
+                foreach (var item in items)
+                {
+                    item.Order = order++;
+                    Items.Add(item);
+                }
             }
             else if (SearchCol == "knowledgeId")
             {
+                int order = 1;
                 var subjects = await DbHelper.SearchAsync<KnowledgePoint>("name", text);
                 foreach (var subject in subjects)
                 {
                     items.AddRange(await DbHelper.GetQuestionAsync(SearchCol, subject.Id));
                 }
                 TotalPage = 1;
+                Items.Clear();
+                foreach (var item in items)
+                {
+                    item.Order = order++;
+                    Items.Add(item);
+                }
             }
             else
             {
                 items = await DbHelper.GetAsync<Question>(CurrentPage);
                 TotalPage = (DbHelper.GetCount<Question>() + 14) / 15;
+                Items.Clear();
+                foreach (var item in items)
+                {
+                    Items.Add(item);
+                }
             }
-            Items.Clear();
-            foreach (var item in items)
-            {
-                Items.Add(item);
-            }
+            
         }
     }
 }

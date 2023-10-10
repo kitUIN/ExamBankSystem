@@ -9,6 +9,7 @@ using Microsoft.Data.Sqlite;
 using ExamBankSystem.Models;
 using ExamBankSystem.Enums;
 using Path = System.IO.Path;
+using System.Diagnostics;
 
 namespace ExamBankSystem.Helpers
 {
@@ -204,10 +205,10 @@ namespace ExamBankSystem.Helpers
             int limit = 15) where T : OrderModel
         {
             page--;
-            if (keyword.Contains("%") && !keyword.Contains("_")) keyword = "%" + keyword + "%";
+            if (!keyword.Contains("%") && !keyword.Contains("_")) keyword = "%" + keyword + "%";
             return await ExecuteReaderAsync(selectCommand =>
             {
-                var table = GetTable<T>();
+                var table = GetTable<T>(); 
                 selectCommand.CommandText =
                     $"SELECT * FROM {table} WHERE {col} LIKE @Keyword LIMIT @Limit OFFSET @Offset;";
                 selectCommand.Parameters.AddWithValue("@Keyword", keyword);
@@ -233,7 +234,7 @@ namespace ExamBankSystem.Helpers
         /// </summary>
         public static async Task<List<T>> SearchAsync<T>(string col, string keyword) where T : OrderModel
         {
-            if (keyword.Contains("%") && !keyword.Contains("_")) keyword = "%" + keyword + "%";
+            if (!keyword.Contains("%") && !keyword.Contains("_")) keyword = "%" + keyword + "%";
             return await ExecuteReaderAsync(selectCommand =>
             {
                 var table = GetTable<T>();

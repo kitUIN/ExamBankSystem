@@ -47,7 +47,7 @@ namespace ExamBankSystem.Controls
                     QuestionType.SelectedIndex = 0;
                     Question.Text = "";
                     Choices.Text = "";
-                    Answer.Document.SetText(TextSetOptions.FormatRtf, "");
+                    Answer.Text = "";
                     Rank.SelectedIndex = 0;
                     KnowledgePoint.Text = "";
                     break;
@@ -177,10 +177,8 @@ namespace ExamBankSystem.Controls
                 );
                 return;
             }
-
-            var answer = "";
-            Answer.Document.GetText(TextGetOptions.FormatRtf, out answer);
-            if (string.IsNullOrEmpty(answer))
+             
+            if (string.IsNullOrEmpty(Answer.Text))
             {
                 EventHelper.InvokeTipPopup(this,
                     ResourcesHelper.GetString(ResourceKey.Answer) +
@@ -199,16 +197,6 @@ namespace ExamBankSystem.Controls
             {
                 EventHelper.InvokeTipPopup(this,
                     ResourcesHelper.GetString(ResourceKey.Point) +
-                    ResourcesHelper.GetString(ResourceKey.NotNull),
-                    InfoBarSeverity.Error
-                );
-                return;
-            }
-
-            if (string.IsNullOrEmpty(answer))
-            {
-                EventHelper.InvokeTipPopup(this,
-                    ResourcesHelper.GetString(ResourceKey.Answer) +
                     ResourcesHelper.GetString(ResourceKey.NotNull),
                     InfoBarSeverity.Error
                 );
@@ -246,7 +234,7 @@ namespace ExamBankSystem.Controls
                     {
                         DbHelper.InsertQuestion(
                             subjectId, QuestionType.SelectedIndex, Question.Text,
-                            point, answer, Rank.SelectedIndex + 1, knowledgeId, CurrentData.CurrentUser.Id
+                            point, Answer.Text, Rank.SelectedIndex + 1, knowledgeId, CurrentData.CurrentUser.Id
                         );
                         EventHelper.InvokeTipPopup(this,
                             ResourcesHelper.GetString(ResourceKey.AddSuccess),
@@ -258,7 +246,7 @@ namespace ExamBankSystem.Controls
                     break;
                 case ActionMode.Edit:
                     DbHelper.UpdateQuestion(_question.Id, subjectId, QuestionType.SelectedIndex, Question.Text,
-                        point, answer, Rank.SelectedIndex + 1, knowledgeId, CurrentData.CurrentUser.Id
+                        point, Answer.Text, Rank.SelectedIndex + 1, knowledgeId, CurrentData.CurrentUser.Id
                     );
                     EventHelper.InvokeTipPopup(this,
                         ResourcesHelper.GetString(ResourceKey.EditSuccess),
