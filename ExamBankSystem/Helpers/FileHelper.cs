@@ -19,6 +19,21 @@ namespace ExamBankSystem.Helpers
             openPicker.FileTypeFilter.Add(".docx");
             return await openPicker.PickSingleFileAsync();
         }
+        public static async Task<List<string>> GetMultipleDocxAsync()
+        {
+            IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(App.m_window);
+            FileOpenPicker openPicker = new FileOpenPicker();
+            WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
+            openPicker.SuggestedStartLocation = PickerLocationId.Desktop;
+            openPicker.FileTypeFilter.Add(".doc");
+            openPicker.FileTypeFilter.Add(".docx");
+            var res = new List<string>();
+            foreach(var i in await openPicker.PickMultipleFilesAsync())
+            {
+                res.Add(i.Path);
+            }
+            return res;
+        }
         public static async Task<StorageFile> SaveSingleDocxAsync(string suggestedFileName = "New Document")
         {
             IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(App.m_window);

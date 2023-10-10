@@ -195,17 +195,15 @@ namespace ExamBankSystem.Helpers
                 }
             }
             return false;
-        }
-        public static List<Question> GetQuestionsToTest(int type, int knowledge, int rank, int count)
+        } 
+        public static List<Question> GetQuestionsToTest(int type, int count)
         {
             return ExecuteReader(selectCommand =>
             {
                 selectCommand.CommandText =
-                    "SELECT * FROM Questions WHERE type = @Ty AND knowledgeId = @Knowledge AND rank = @Rank  ORDER BY RANDOM() LIMIT @Count;";
-                selectCommand.Parameters.AddWithValue("@Ty", type);
-                selectCommand.Parameters.AddWithValue("@Knowledge", knowledge);
-                selectCommand.Parameters.AddWithValue("@Count", count);
-                selectCommand.Parameters.AddWithValue("@Rank", rank);
+                    "SELECT * FROM Questions WHERE type = @Ty ORDER BY RANDOM() LIMIT @Count;";
+                selectCommand.Parameters.AddWithValue("@Ty", type); 
+                selectCommand.Parameters.AddWithValue("@Count", count); 
                 return selectCommand;
             }, query =>
             { 
@@ -219,15 +217,16 @@ namespace ExamBankSystem.Helpers
             });
         }
 
-        public static List<Question> GetQuestionsToTest(int type, int rank, int count)
+        public static List<Question> GetQuestionsToTest(int type, int count,int total, bool A)
         {
             return ExecuteReader(selectCommand =>
             {
                 selectCommand.CommandText =
-                    "SELECT * FROM Questions WHERE type = @Ty AND rank = @Rank ORDER BY RANDOM() LIMIT @Count;";
+                    "SELECT * FROM (SELECT * FROM Questions WHERE type= @Ty LIMIT @Part OFFSET @A) ORDER BY RANDOM() LIMIT @Count;";
                 selectCommand.Parameters.AddWithValue("@Ty", type);
                 selectCommand.Parameters.AddWithValue("@Count", count);
-                selectCommand.Parameters.AddWithValue("@Rank", rank);
+                selectCommand.Parameters.AddWithValue("@Part", total / 2);
+                selectCommand.Parameters.AddWithValue("@A", A ? 0: total / 2);
                 return selectCommand;
             }, query =>
             {

@@ -9,7 +9,7 @@
     mc:Ignorable="d">
 
     <Grid Padding="10">
-        <StackPanel Loaded="StackPanel_Loaded">
+        <StackPanel>
             <Grid ColumnSpacing="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50" />
@@ -156,17 +156,24 @@
             </Grid>
             <StackPanel Margin="0,10,0,0" Spacing="10">
                 <TextBox x:Name="TestPaperName" PlaceholderText="{ex:Locale Key=TestPaperName}" />
-                <Button x:Name="SelectWords" Content="{ex:Locale Key=SelectLastYearsWords}" />
-                <StackPanel Orientation="Horizontal" Spacing="20">
+                <StackPanel Orientation="Horizontal" Spacing="10">
                     <Button
-                        x:Name="SingleCButton"
-                        Click="SingleCButton_Click"
-                        Content="{ex:Locale Key=SinglePaperGen}" />
-                    <Button
-                        x:Name="ABButton"
-                        Click="ABButton_Click"
-                        Content="{ex:Locale Key=ABPaper}" />
+                        x:Name="SelectWords"
+                        Click="SelectWords_Click"
+                        Content="{ex:Locale Key=SelectLastYearsWords}" />
+                    <TextBlock x:Name="SelectWordsText" />
                 </StackPanel>
+                <ComboBox
+                    x:Name="GenType"
+                    SelectedIndex="0"
+                    SelectionChanged="GenType_SelectionChanged">
+                    <ComboBoxItem Content="{ex:Locale Key=SinglePaperGen}" />
+                    <ComboBoxItem Content="{ex:Locale Key=ABPaper}" />
+                </ComboBox>
+                <Button
+                    x:Name="Gen"
+                    Click="Gen_Click"
+                    Content="{ex:Locale Key=Gen}" />
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -103,5 +103,6 @@
         GeneratePaperSuccess,
         ExpoertSuccess,
         ExpoertError,
+        Gen,
     }
 }
