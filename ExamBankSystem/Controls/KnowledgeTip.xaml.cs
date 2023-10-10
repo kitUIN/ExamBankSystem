@@ -181,11 +181,24 @@ namespace ExamBankSystem.Controls
 
                     break;
                 case ActionMode.Edit:
-                    DbHelper.UpdateKnowledgePoint(_knowledge.Id ,KnowledgeName.Text, Knowledge.Text, subjectId);
-                    EventHelper.InvokeTipPopup(this,
-                        ResourcesHelper.GetString(ResourceKey.EditSuccess),
-                        InfoBarSeverity.Success
-                    );
+                    if (await DbHelper.GetKnowledgePointAsync(KnowledgeName.Text) == null)
+                    {
+                        DbHelper.UpdateKnowledgePoint(_knowledge.Id, KnowledgeName.Text, Knowledge.Text, subjectId);
+                        EventHelper.InvokeTipPopup(this,
+                            ResourcesHelper.GetString(ResourceKey.EditSuccess),
+                            InfoBarSeverity.Success
+                        );
+                    }
+                    else
+                    {
+                        EventHelper.InvokeTipPopup(this,
+                            ResourcesHelper.GetString(ResourceKey.KnowledgePoints) +
+                            ResourcesHelper.GetString(ResourceKey.Exist),
+                            InfoBarSeverity.Error
+                        );
+                        return;
+                    }
+
                     break;
             }
             Hide();

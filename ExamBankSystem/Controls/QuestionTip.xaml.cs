@@ -245,13 +245,23 @@ namespace ExamBankSystem.Controls
                 case ActionMode.AddMul:
                     break;
                 case ActionMode.Edit:
-                    DbHelper.UpdateQuestion(_question.Id, subjectId, QuestionType.SelectedIndex, Question.Text,
+                    if (await DbHelper.CheckQuestionPercent(Question.Text, QuestionType.SelectedIndex))
+                    {
+                        EventHelper.InvokeTipPopup(this,
+                            ResourcesHelper.GetString(ResourceKey.QuestionPercentError),
+                            InfoBarSeverity.Error
+                        );
+                    }
+                    else
+                    {
+                        DbHelper.UpdateQuestion(_question.Id, subjectId, QuestionType.SelectedIndex, Question.Text,
                         point, Answer.Text, Rank.SelectedIndex + 1, knowledgeId, CurrentData.CurrentUser.Id
                     );
-                    EventHelper.InvokeTipPopup(this,
-                        ResourcesHelper.GetString(ResourceKey.EditSuccess),
-                        InfoBarSeverity.Success
-                    );
+                        EventHelper.InvokeTipPopup(this,
+                            ResourcesHelper.GetString(ResourceKey.EditSuccess),
+                            InfoBarSeverity.Success
+                        );
+                    }
                     break;
             }
 

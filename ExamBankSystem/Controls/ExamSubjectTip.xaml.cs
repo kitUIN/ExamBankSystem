@@ -146,11 +146,23 @@ namespace ExamBankSystem.Controls
 
                     break;
                 case ActionMode.Edit:
-                    DbHelper.UpdateExamSubjectName(_subject.Id, ExamSubject.Text);
-                    EventHelper.InvokeTipPopup(this,
-                        ResourcesHelper.GetString(ResourceKey.EditSuccess),
-                        InfoBarSeverity.Success
-                    );
+                    if (await DbHelper.GetExamSubjectAsync(ExamSubject.Text) == null)
+                    {
+                        DbHelper.UpdateExamSubjectName(_subject.Id, ExamSubject.Text);
+                        EventHelper.InvokeTipPopup(this,
+                            ResourcesHelper.GetString(ResourceKey.EditSuccess),
+                            InfoBarSeverity.Success
+                        );
+                    }
+                    else
+                    {
+                        EventHelper.InvokeTipPopup(this,
+                            ResourcesHelper.GetString(ResourceKey.ExamSubjects) +
+                            ResourcesHelper.GetString(ResourceKey.Exist),
+                            InfoBarSeverity.Error
+                        );
+                        return;
+                    }
                     break;
             }
 

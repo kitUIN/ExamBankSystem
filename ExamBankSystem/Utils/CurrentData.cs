@@ -12,6 +12,6 @@ namespace ExamBankSystem.Utils
         /// </summary>
         public static User CurrentUser { get; set; }
 
-        public static double CheckedPercent { get; } = 0.95;
+        public static double CheckedPercent { get; } = 0.85;
     }
 }

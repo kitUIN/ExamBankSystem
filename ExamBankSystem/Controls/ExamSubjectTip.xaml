@@ -33,6 +33,7 @@
                         <TextBox
                             x:Name="ExamSubject"
                             Grid.Column="1"
+                            KeyDown="Button_KeyDown"
                             MaxLength="30" />
                     </Grid>
                     <Button
@@ -41,7 +42,6 @@
                         HorizontalAlignment="Right"
                         Click="AddButton_Click"
                         Content="{ex:Locale Key=Submit}"
-                        KeyDown="Button_KeyDown"
                         Style="{ThemeResource AccentButtonStyle}" />
                 </Grid>
             </TeachingTip.Content>
