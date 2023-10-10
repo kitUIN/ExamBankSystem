@@ -74,7 +74,7 @@ namespace ExamBankSystem.Helpers
                     }
                 }
             }
-            // 删除与之前的重复
+            // 删除与往期试卷重复
             foreach (var item in questions)
             {
                 for (int i = 0; i < ints.Count; ++i)
