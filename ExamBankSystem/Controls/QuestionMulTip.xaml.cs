@@ -1,10 +1,12 @@
 ﻿using ExamBankSystem.Enums;
 using ExamBankSystem.Helpers;
+using ExamBankSystem.Models;
 using ExamBankSystem.Utils;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using System;
+using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.System;
 
@@ -52,7 +54,7 @@ namespace ExamBankSystem.Controls
         /// <summary>
         /// 添加按钮响应
         /// </summary>
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
             if(paperFile != null && answerFile != null)
             {
@@ -61,9 +63,13 @@ namespace ExamBankSystem.Controls
                 for (int i = 0; i < res2.Count; i++)
                 {
                     res1[i].Answer = (res2[i]);
-                    DbHelper.InsertQuestion(0, (int)res1[i].Type, res1[i].Name,
-                        res1[i].Point, res1[i].Answer, res1[i].Rank,0,
+                    if (!await DbHelper.CheckQuestionPercent(res1[i].Name, (int)res1[i].Type))
+                    {
+                        DbHelper.InsertQuestion(0, (int)res1[i].Type, res1[i].Name,
+                        res1[i].Point, res1[i].Answer, res1[i].Rank, 0,
                         CurrentData.CurrentUser.Id);
+                    }
+                    
                 }
                 paperFile = answerFile = null;
                 Hide();

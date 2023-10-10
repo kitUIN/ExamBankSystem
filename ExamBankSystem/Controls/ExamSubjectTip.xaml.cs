@@ -89,7 +89,7 @@ namespace ExamBankSystem.Controls
                                             EventHelper.InvokeTipPopup(this,
                                                 ResourcesHelper.GetString(ResourceKey.ExamSubjectsDeleteFail) + ": " +
                                                 fail,
-                                                InfoBarSeverity.Success
+                                                InfoBarSeverity.Error
                                             );
                                         }
                                         RefreshEvent?.Invoke(this, EventArgs.Empty);
