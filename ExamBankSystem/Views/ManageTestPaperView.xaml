@@ -144,6 +144,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <StackPanel
@@ -192,18 +193,17 @@
                                     </Grid.ColumnDefinitions>
                                     <TextBlock
                                         Grid.Column="0"
+                                        MaxLines="1"
                                         Text="{x:Bind Left.Name, Mode=OneWay}"
                                         TextTrimming="WordEllipsis" />
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        Text="{x:Bind Left.Name, Mode=OneWay}"
-                                        TextTrimming="WordEllipsis">
+                                    <TextBlock Grid.Column="1">
                                         <Run Text=" &gt; " />
                                         <Run Text="{x:Bind Percent, Mode=OneWay}" />
                                         <Run Text=" &lt; " />
                                     </TextBlock>
                                     <TextBlock
                                         Grid.Column="2"
+                                        MaxLines="1"
                                         Text="{x:Bind Right.Name, Mode=OneWay}"
                                         TextTrimming="WordEllipsis" />
                                 </Grid>
