@@ -6,11 +6,16 @@ using CommunityToolkit.Mvvm.Input;
 using ExamBankSystem.Helpers;
 using ExamBankSystem.Enums;
 using Microsoft.UI.Xaml.Controls;
+using ExamBankSystem.Utils;
+using System.Drawing.Printing;
+using System;
+using System.Collections.ObjectModel;
 
 namespace ExamBankSystem.ViewModels
 {
     public partial class ManageTestPaperViewModel : DataTableBase<TestPaper>
     {
+        public ObservableCollection<CheckWordModel> CheckWords { get; } = new ObservableCollection<CheckWordModel>();
         public ManageTestPaperViewModel(string searchCol = "") : base(searchCol)
         {
         }
@@ -89,9 +94,36 @@ namespace ExamBankSystem.ViewModels
         }
         [RelayCommand]
         public void CheckWord()
-        {
-            wordBFile = null;
-            wordAFile = null;
+        { 
+            if (wordAFile != null && wordBFile != null)
+            {
+                var res1 = WordHelper.ImportPaper(wordAFile.Path);
+                var res2 = WordHelper.ImportPaper(wordBFile.Path);
+                CheckWords.Clear();
+                for (int i = 0; i < res1.Count; i++)
+                {
+                    for (int j = 0; j < res2.Count; j++)
+                    {
+                        double percent = TextHelper.CheckText(res1[i].Name, res2[j].Name);
+                        if (percent > CurrentData.CheckedPercent)
+                        {
+                            CheckWords.Add(new CheckWordModel
+                            {
+                                Left = res1[i],
+                                Right = res2[j],
+                                Percent = percent,
+                            });
+                        }
+                    }
+                }
+                wordAFile = wordBFile = null; 
+                WordB = WordA = "";
+                EventHelper.InvokeTipPopup(this,
+                    ResourcesHelper.GetString(ResourceKey.CheckWord)+
+                    ResourcesHelper.GetString(ResourceKey.Success),
+                    InfoBarSeverity.Success
+                    );
+            }
         }
     }
 }

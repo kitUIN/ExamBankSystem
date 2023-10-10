@@ -79,7 +79,6 @@
                             <TextBlock Grid.Column="3" Text="{ex:Locale Key=Examine}" />
                         </Grid>
                         <ListView
-                            x:Name="MainList"
                             Grid.Row="2"
                             ItemsSource="{x:Bind ViewModel.Items}"
                             SelectionChanged="MainList_SelectionChanged"
@@ -144,6 +143,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <StackPanel
                         Grid.Row="0"
@@ -176,6 +176,42 @@
                         Grid.Row="2"
                         Command="{x:Bind ViewModel.CheckWordCommand}"
                         Content="{ex:Locale Key=CheckWord}" />
+                    <TextBlock Grid.Row="3">
+                        <Run Text="相似度过高个数:" />
+                        <Run Text="{x:Bind ViewModel.CheckWords.Count, Mode=OneWay}" />
+                    </TextBlock>
+                    <ListView
+                        x:Name="MainList"
+                        Grid.Row="4"
+                        ItemsSource="{x:Bind ViewModel.CheckWords}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:CheckWordModel">
+                                <Grid ColumnSpacing="30">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Text="{x:Bind Left.Name, Mode=OneWay}"
+                                        TextTrimming="WordEllipsis" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        Text="{x:Bind Left.Name, Mode=OneWay}"
+                                        TextTrimming="WordEllipsis">
+                                        <Run Text=" &gt; " />
+                                        <Run Text="{x:Bind Percent, Mode=OneWay}" />
+                                        <Run Text=" &lt; " />
+                                    </TextBlock>
+                                    <TextBlock
+                                        Grid.Column="2"
+                                        Text="{x:Bind Right.Name, Mode=OneWay}"
+                                        TextTrimming="WordEllipsis" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Grid>
             </PivotItem>
         </Pivot>

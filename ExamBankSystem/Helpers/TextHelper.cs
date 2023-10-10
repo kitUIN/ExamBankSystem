@@ -160,7 +160,7 @@ namespace ExamBankSystem.Helpers
                 var res = new List<Question>();
                 foreach (var item in files)
                 {
-                    res.AddRange(ImportWord(item));
+                    res.AddRange(WordHelper.ImportPaper(item));
                 }
                 GeneratePaper1(name, rank, ints, res);
             }
@@ -169,17 +169,11 @@ namespace ExamBankSystem.Helpers
                 var res = new List<Question>();
                 foreach (var item in files)
                 {
-                    res.AddRange(ImportWord(item));
+                    res.AddRange(WordHelper.ImportPaper(item));
                 }
                 GeneratePaper2(name, rank, ints, res);
             }
-        }
-
-        public static List<Question> ImportWord(string path)
-        {
-            var res = new List<Question>();
-            return res;
-        }
+        } 
 
         public static void InserPage(string name, List<List<Question>> questions)
         {

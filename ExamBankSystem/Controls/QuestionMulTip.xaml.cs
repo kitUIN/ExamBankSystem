@@ -1,5 +1,6 @@
 ﻿using ExamBankSystem.Enums;
 using ExamBankSystem.Helpers;
+using ExamBankSystem.Utils;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -53,8 +54,25 @@ namespace ExamBankSystem.Controls
         /// </summary>
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            Hide();
-            RefreshEvent?.Invoke(this, EventArgs.Empty);
+            if(paperFile != null && answerFile != null)
+            {
+                var res1 = WordHelper.ImportPaper(paperFile.Path);
+                var res2 = WordHelper.ImportAnswer(answerFile.Path);
+                for (int i = 0; i < res2.Count; i++)
+                {
+                    res1[i].Answer = (res2[i]);
+                    DbHelper.InsertQuestion(0, (int)res1[i].Type, res1[i].Name,
+                        res1[i].Point, res1[i].Answer, res1[i].Rank,0,
+                        CurrentData.CurrentUser.Id);
+                }
+                paperFile = answerFile = null;
+                Hide();
+                RefreshEvent?.Invoke(this, EventArgs.Empty);
+                EventHelper.InvokeTipPopup(this,
+                    ResourcesHelper.GetString(ResourceKey.AddSuccess),
+                    InfoBarSeverity.Success
+                    );
+            }
         }
         /// <summary>
         /// 回车响应

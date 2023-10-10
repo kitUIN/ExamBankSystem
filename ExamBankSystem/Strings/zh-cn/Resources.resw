@@ -414,4 +414,7 @@
   <data name="Gen" xml:space="preserve">
     <value>生成</value>
   </data>
+  <data name="Success" xml:space="preserve">
+    <value>成功</value>
+  </data>
 </root>

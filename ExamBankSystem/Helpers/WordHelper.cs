@@ -143,7 +143,7 @@ namespace ExamBankSystem.Helpers
                                     );
         }
 
-        public static void ImportPaper(string path)
+        public static List<Question> ImportPaper(string path)
         {
             Regex regex = new Regex(@"[\(\（](\d+)分[\)）]", RegexOptions.IgnoreCase);
             var res = new List<Question>();
@@ -405,9 +405,159 @@ namespace ExamBankSystem.Helpers
                             tempText += "\n" + paragraph.Text;
                         }
                     }
-                    return res;
+                    
                 }
             }
+            return res;
+        }
+        public static List<string> ImportAnswer(string path)
+        {
+            var res = new List<string>();
+            Document doc = new Document();
+            doc.LoadFromFile(path);
+            foreach (Section section in doc.Sections)
+            {
+                var current = 0;
+                int j = 0;
+                var tempText = "";
+                for (int i = 0; i < section.Paragraphs.Count; i++)
+                {
+                    Paragraph paragraph = section.Paragraphs[i];
+                    if (paragraph.Text.Length >= 5 && paragraph.Text.Substring(2, 3) == "选择题")
+                    {
+                        if (tempText != "")
+                        {
+                            res.Add(tempText.Trim());
+                        }
+                        current = 0;
+                        j = 1;
+                        tempText = "";
+                    }
+                    else if (paragraph.Text.Length >= 5 && paragraph.Text.Substring(2, 3) == "多选题")
+                    {
+                        if (tempText != "")
+                        {
+                            res.Add(tempText.Trim());
+                        }
+                        Console.WriteLine(tempText);
+                        current = 1;
+                        j = 1;
+                        tempText = "";
+                    }
+                    else if (paragraph.Text.Length >= 5 && paragraph.Text.Substring(2, 3) == "填空题")
+                    {
+                        if (tempText != "")
+                        {
+                            res.Add(tempText.Trim());
+                        }
+                        current = 2;
+                        j = 1;
+                        tempText = "";
+                    }
+                    else if (paragraph.Text.Length >= 5 && paragraph.Text.Substring(2, 3) == "判断题")
+                    {
+                        if (tempText != "")
+                        {
+                            res.Add(tempText.Trim());
+                        }
+                        current = 3;
+                        j = 1;
+                        tempText = "";
+                    }
+                    else if (paragraph.Text.Length >= 5 && paragraph.Text.Substring(2, 3) == "简答题")
+                    {
+                        if (tempText != "")
+                        {
+                            res.Add(tempText.Trim());
+                        }
+                        current = 4;
+                        j = 1;
+                        tempText = "";
+                    }
+                    else if (paragraph.Text.Length >= 5 && paragraph.Text.Substring(2, 3) == "设计题")
+                    {
+                        if (tempText != "")
+                        {
+                            res.Add(tempText.Trim());
+                        }
+                        current = 5;
+                        j = 1;
+                        tempText = "";
+                    }
+                    else if (paragraph.Text.Length >= 5 && (paragraph.Text.Substring(2, 3) == "编程题" || paragraph.Text.Substring(2, 3) == "程序题"))
+                    {
+                        if (tempText != "")
+                        {
+                            res.Add(tempText.Trim());
+                        }
+                        current = 6;
+                        j = 1;
+                        tempText = "";
+                    }
+                    else
+                    {
+                        if (paragraph.Text.StartsWith($"{j}."))
+                        {
+
+                            int l = j;
+                            while (true)
+                            {
+                                if (paragraph.Text.Contains(l.ToString()))
+                                {
+                                    l++;
+                                    continue;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            if (l != j + 1)
+                            {
+                                var tt = paragraph.Text.Substring(2);
+
+                                for (int k = j + 1; k <= l; k++)
+                                {
+                                    var ttt = tt.Split($"{k}.");
+                                    if (ttt.Length == 0)
+                                    {
+                                        ttt = tt.Split($"{k} .");
+                                    }
+
+                                    if (ttt.Length==1)
+                                    {
+                                        if (ttt[0].Trim() != "")
+                                        {
+                                            res.Add(ttt[0].Trim());
+                                        }
+                                        break;
+                                    }
+                                    tt = ttt[1];
+                                    if (ttt[0].Trim() != "")
+                                    {
+                                        res.Add(ttt[0].Trim());
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (tempText != "")
+                                {
+                                    res.Add(tempText);
+                                    tempText = paragraph.Text.Substring(2);
+                                }
+                            }
+                            j = l;
+                        }
+                        else
+                        {
+                            tempText += "\n" + paragraph.Text;
+                        }
+                    }
+
+                }
+            }
+            return res;
         }
     }
         
