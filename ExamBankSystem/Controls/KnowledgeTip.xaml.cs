@@ -152,7 +152,7 @@ namespace ExamBankSystem.Controls
             {
                 EventHelper.InvokeTipPopup(this,
                 ResourcesHelper.GetString(ResourceKey.ExamSubjects) +
-                ResourcesHelper.GetString(ResourceKey.NotNull),
+                ResourcesHelper.GetString(ResourceKey.NotExist),
                 InfoBarSeverity.Error
             );
                 return;
@@ -181,7 +181,7 @@ namespace ExamBankSystem.Controls
 
                     break;
                 case ActionMode.Edit:
-                    if (await DbHelper.GetKnowledgePointAsync(KnowledgeName.Text) == null)
+                    if (_knowledge.Name == KnowledgeName.Text || await DbHelper.GetKnowledgePointAsync(KnowledgeName.Text) == null)
                     {
                         DbHelper.UpdateKnowledgePoint(_knowledge.Id, KnowledgeName.Text, Knowledge.Text, subjectId);
                         EventHelper.InvokeTipPopup(this,

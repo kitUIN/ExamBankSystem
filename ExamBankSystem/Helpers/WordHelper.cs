@@ -53,7 +53,7 @@ namespace ExamBankSystem.Helpers
             var ord = 1;
             for (int i = 0; i < 7; i++)
             {
-                var order = 0;
+                var order = 1;
                 if(questionPapers[i].Count > 0)
                 {
                     Paragraph paragraph = section.AddParagraph(); 

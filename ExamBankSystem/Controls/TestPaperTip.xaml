@@ -38,14 +38,14 @@
                             <TextBlock Grid.Column="0" Text="{ex:Locale Key=Order}" />
                             <TextBlock Grid.Column="1" Text="{ex:Locale Key=QuestionType}" />
                             <TextBlock Grid.Column="2" Text="{ex:Locale Key=Questions}" />
-                            <TextBlock Grid.Column="3" Text="{ex:Locale Key=Rank}" />
+                            <TextBlock Grid.Column="3" Text="{ex:Locale Key=Id}" />
                         </Grid>
                         <ScrollView Grid.Row="1">
                             <ListView
                                 x:Name="RightList"
                                 IsItemClickEnabled="True"
-                                ItemClick="RightList_OnItemClick"
                                 ItemsSource="{x:Bind RightItems}"
+                                SelectionChanged="RightList_SelectionChanged"
                                 SelectionMode="Single">
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="models:QuestionPaper">
@@ -71,7 +71,7 @@
                                                 TextTrimming="CharacterEllipsis" />
                                             <TextBlock
                                                 Grid.Column="3"
-                                                Text="{x:Bind Question.Rank, Mode=OneWay}"
+                                                Text="{x:Bind Question.Id, Mode=OneWay}"
                                                 TextTrimming="CharacterEllipsis" />
                                         </Grid>
                                     </DataTemplate>
@@ -79,7 +79,7 @@
                             </ListView>
                         </ScrollView>
                     </Grid>
-                    <Grid Grid.Row="2">
+                    <Grid Grid.Row="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -89,11 +89,10 @@
                             <Run Text="当前题型:" />
                             <Run x:Name="CurrentQuestionType" />
                         </TextBlock>
-                        <AutoSuggestBox
+                        <TextBox
                             x:Name="SearchBox"
                             Grid.Row="1"
-                            PlaceholderText="替换为"
-                            TextChanged="SearchBox_OnTextChanged" />
+                            PlaceholderText="替换为,题目编号" />
                         <Button
                             x:Name="ReplaceButton"
                             Grid.Row="2"

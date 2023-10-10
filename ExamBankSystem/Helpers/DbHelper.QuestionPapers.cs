@@ -45,6 +45,24 @@ namespace ExamBankSystem.Helpers
             });
         }
          
+        public static QuestionPaper GetQuestionsPapers(int id, int questionId)
+        {
+            return ExecuteReader(selectCommand =>
+            {
+                selectCommand.CommandText = $"SELECT * FROM `QuestionPapers` WHERE `testPaperId` = @TestPaperId AND questionId = @QuestionId;";
+                selectCommand.Parameters.AddWithValue("@TestPaperId", id);
+                selectCommand.Parameters.AddWithValue("@QuestionId", questionId);
+                return selectCommand;
+            }, query =>
+            { 
+                while (query.Read())
+                {
+                    return new QuestionPaper(query);
+                }
+
+                return null;
+            });
+        }
         public static void InsertQuestionPaper(int testPaperId, int index, int questionId, int uploadUserId)
         {
             using (var db = new SqliteConnection($"Filename={_dbpath}"))
@@ -59,6 +77,21 @@ namespace ExamBankSystem.Helpers
                 insertCommand.Parameters.AddWithValue("@UploadUser", uploadUserId);
                 var t = DateTimeHelper.GetTimeStamp();
                 insertCommand.Parameters.AddWithValue("@CreateTime", t);
+                insertCommand.Parameters.AddWithValue("@UpdateTime", t);
+                insertCommand.ExecuteReader();
+            }
+        }
+        public static void UpdateQuestionPaper(int testPaperId, int index, int questionId)
+        {
+            using (var db = new SqliteConnection($"Filename={_dbpath}"))
+            {
+                db.Open();
+                var insertCommand = db.CreateCommand();
+                insertCommand.CommandText = $"UPDATE  `QuestionPapers` SET questionId = @QuestionId Where testPaperId =  @TestPaperId AND questionIndex = @QuestionIndex;";
+                insertCommand.Parameters.AddWithValue("@TestPaperId", testPaperId);
+                insertCommand.Parameters.AddWithValue("@QuestionIndex", index);
+                insertCommand.Parameters.AddWithValue("@QuestionId", questionId);
+                var t = DateTimeHelper.GetTimeStamp();
                 insertCommand.Parameters.AddWithValue("@UpdateTime", t);
                 insertCommand.ExecuteReader();
             }
