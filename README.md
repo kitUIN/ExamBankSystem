@@ -2,7 +2,7 @@
 
 ## 运行要求/编译要求
 - 最低版本为`Win10 17763`
-- 请在该应用`设置`中`打开数据库`,将[测试数据库]()放入该文件夹并命名为`bank.sqlite`
+- 请在该应用`设置`中`打开数据库`,将[测试数据库](https://github.com/kitUIN/ExamBankSystem/releases/tag/1.0.0.0)放入该文件夹并命名为`bank.sqlite`
 - 编译要求:
   - Visual Studio 2020 以上
   - 负载中安装了`.NET 桌面开发`中的`Windos 应用 SDK C# 模板`
