@@ -96,8 +96,11 @@ namespace ExamBankSystem.Controls
             answerFile = await FileHelper.GetSingleDocxAsync();
             if (answerFile != null)
             {
-
                 Answer.Content = answerFile.DisplayName;
+            }
+            else
+            {
+                TestPapers.Content = ResourcesHelper.GetString(ResourceKey.SelectWord);
             }
             AddButton.IsEnabled = paperFile != null && answerFile != null;
         }
@@ -108,6 +111,10 @@ namespace ExamBankSystem.Controls
             if (paperFile != null)
             {
                 TestPapers.Content = paperFile.DisplayName;
+            }
+            else
+            {
+                TestPapers.Content = ResourcesHelper.GetString(ResourceKey.SelectWord);
             }
             AddButton.IsEnabled = paperFile != null && answerFile != null;
         }

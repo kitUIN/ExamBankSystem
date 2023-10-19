@@ -82,6 +82,10 @@ namespace ExamBankSystem.ViewModels
             {
                 WordA = wordAFile.DisplayName;
             }
+            else
+            {
+                WordA = "";
+            }
         }
         [RelayCommand]
         public async Task SelectWordB()
@@ -90,6 +94,10 @@ namespace ExamBankSystem.ViewModels
             if (wordBFile != null)
             {
                 WordB = wordBFile.DisplayName;
+            }
+            else
+            {
+                WordB = "";
             }
         }
         [RelayCommand]
