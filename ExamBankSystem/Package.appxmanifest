@@ -9,7 +9,7 @@
 
   <Identity
     Name="d24b0c6d-5e09-48ba-bef4-ca97679709de"
-    Publisher="CN=15854"
+    Publisher="CN=kitUIN"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="d24b0c6d-5e09-48ba-bef4-ca97679709de" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>

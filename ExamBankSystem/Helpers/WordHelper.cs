@@ -157,7 +157,7 @@ namespace ExamBankSystem.Helpers
                 for (int i = 0; i < section.Paragraphs.Count; i++)
                 {
                     Paragraph paragraph = section.Paragraphs[i];
-                    if (paragraph.Text.Length >= 5 && paragraph.Text.Substring(2, 3) == "选择题")
+                    if (paragraph.Text.Length >= 5 && paragraph.Text.Substring(2, 3) == "选择题" || paragraph.Text.Length >= 3 && paragraph.Text.TrimStart().StartsWith("选择题"))
                     {
                         if (tempText != "")
                         {
@@ -187,7 +187,7 @@ namespace ExamBankSystem.Helpers
                         j = 1;
                         tempText = "";
                     }
-                    else if (paragraph.Text.Length >= 5 && paragraph.Text.Substring(2, 3) == "多选题")
+                    else if (paragraph.Text.Length >= 5 && paragraph.Text.Substring(2, 3) == "多选题"|| paragraph.Text.Length >= 3 && paragraph.Text.TrimStart().StartsWith("多选题"))
                     {
                         if (tempText != "")
                         {
@@ -218,7 +218,7 @@ namespace ExamBankSystem.Helpers
                         j = 1;
                         tempText = "";
                     }
-                    else if (paragraph.Text.Length >= 5 && paragraph.Text.Substring(2, 3) == "填空题")
+                    else if (paragraph.Text.Length >= 5 && paragraph.Text.Substring(2, 3) == "填空题" || paragraph.Text.Length >= 3 && paragraph.Text.TrimStart().StartsWith("填空题"))
                     {
                         if (tempText != "")
                         {
@@ -248,7 +248,7 @@ namespace ExamBankSystem.Helpers
                         j = 1;
                         tempText = "";
                     }
-                    else if (paragraph.Text.Length >= 5 && paragraph.Text.Substring(2, 3) == "判断题")
+                    else if (paragraph.Text.Length >= 5 && paragraph.Text.Substring(2, 3) == "判断题" || paragraph.Text.Length >= 3 && paragraph.Text.TrimStart().StartsWith("判断题"))
                     {
                         if (tempText != "")
                         {
@@ -278,7 +278,7 @@ namespace ExamBankSystem.Helpers
                         j = 1;
                         tempText = "";
                     }
-                    else if (paragraph.Text.Length >= 5 && paragraph.Text.Substring(2, 3) == "简答题")
+                    else if (paragraph.Text.Length >= 5 && paragraph.Text.Substring(2, 3) == "简答题" || paragraph.Text.Length >= 3 && paragraph.Text.TrimStart().StartsWith("简答题"))
                     {
                         if (tempText != "")
                         {
@@ -308,7 +308,7 @@ namespace ExamBankSystem.Helpers
                         j = 1;
                         tempText = "";
                     }
-                    else if (paragraph.Text.Length >= 5 && paragraph.Text.Substring(2, 3) == "设计题")
+                    else if (paragraph.Text.Length >= 5 && paragraph.Text.Substring(2, 3) == "设计题" || paragraph.Text.Length >= 3 && paragraph.Text.TrimStart().StartsWith("设计题"))
                     {
                         if (tempText != "")
                         {
@@ -338,7 +338,7 @@ namespace ExamBankSystem.Helpers
                         j = 1;
                         tempText = "";
                     }
-                    else if (paragraph.Text.Length >= 5 && (paragraph.Text.Substring(2, 3) == "编程题" || paragraph.Text.Substring(2, 3) == "程序题"))
+                    else if (paragraph.Text.Length >= 5 && (paragraph.Text.Substring(2, 3) == "编程题" || paragraph.Text.Substring(2, 3) == "程序题") || paragraph.Text.Length >= 3 && paragraph.Text.TrimStart().StartsWith("编程题"))
                     {
                         if (tempText != "")
                         {
